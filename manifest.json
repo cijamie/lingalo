@@ -1,0 +1,16 @@
+{
+  "name": "Lingalo - Master Languages",
+  "short_name": "Lingalo",
+  "description": "Professional language learning platform for Japanese and Korean.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0b",
+  "theme_color": "#0b0b0b",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

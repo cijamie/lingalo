@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lingalo - Master Languages Professionally</title>
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="Master Japanese and Korean with Lingalo. Sleek, professional language learning with spaced repetition, XP gamification, and custom vocabulary tools.">
+    <meta name="keywords" content="Japanese, Korean, Hiragana, Katakana, Hangul, SRS, Language Learning">
+    <meta property="og:title" content="Lingalo - Master Languages">
+    <meta property="og:description" content="Elevate your language skills with a professional, dashboard-driven learning experience.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0b0b">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="ambient-light">
+        <div class="orb orb-1" id="orb-1"></div>
+        <div class="orb orb-2" id="orb-2"></div>
+    </div>
+
+    <!-- MOBILE HEADER -->
+    <header class="mobile-header">
+        <div class="flex items-center gap-3">
+            <img src="logo.png" alt="Logo" style="height: 32px; width: auto;">
+            <h1 class="logo-text" style="font-size: 1.25rem;">Lingalo</h1>
+        </div>
+        <button type="button" id="menu-toggle" class="btn-outline" style="padding: 0.5rem 0.75rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </header>
+
+    <div id="menu-overlay" class="mobile-menu-overlay"></div>
+    <div id="mobile-drawer" class="mobile-drawer">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="Logo" style="height: 32px; width: auto;">
+                <h1 class="logo-text" style="font-size: 1.5rem;">Lingalo</h1>
+            </div>
+            <button type="button" id="menu-close" class="text-white opacity-50">&times;</button>
+        </div>
+        
+        <div class="xp-container" style="margin-bottom: 2rem;">
+            <div class="flex justify-between items-center mb-1">
+                <span class="xp-text">Level <span class="m-user-level">1</span></span>
+                <span class="xp-text" style="opacity: 0.6;"><span class="m-user-xp">0</span> XP</span>
+            </div>
+            <div class="xp-bar-bg"><div class="xp-bar-fill m-xp-bar-fill"></div></div>
+        </div>
+
+        <nav class="nav-links">
+            <div class="nav-item" data-lang="japanese" onclick="selectLanguage('japanese'); toggleMenu(false)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 12h.01"/></svg>
+                Japanese
+            </div>
+            <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean'); toggleMenu(false)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Korean
+            </div>
+            <div class="nav-item" onclick="showSettings(); toggleMenu(false)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Settings
+            </div>
+        </nav>
+    </div>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo-container flex items-center gap-4">
+                <img src="logo.png" alt="Logo" style="height: 48px; width: auto;">
+                <h1 class="logo-text">Lingalo</h1>
+            </div>
+
+            <!-- XP / LEVEL CARD -->
+            <div class="xp-container">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="xp-text">Level <span id="user-level">1</span></span>
+                    <span class="xp-text" style="opacity: 0.6;"><span id="user-xp">0</span> / <span id="xp-next">100</span> XP</span>
+                </div>
+                <div class="xp-bar-bg">
+                    <div id="xp-bar-fill" class="xp-bar-fill"></div>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <div class="nav-item active" data-lang="japanese" onclick="selectLanguage('japanese')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 12h.01"/></svg>
+                    Japanese
+                </div>
+                <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Korean
+                </div>
+                <div class="nav-item" id="nav-settings" onclick="showSettings()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    Settings
+                </div>
+            </nav>
+            
+            <div style="margin-top: 2rem;">
+                <p class="stat-label" style="font-size: 9px; margin-bottom: 0.5rem;">Global Stats</p>
+                <div class="flex flex-col gap-2">
+                    <div class="pill-stat" style="background: transparent; padding: 0;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+                        <span id="global-streak" style="font-size: 11px;">0 Day Streak</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border);">
+                <button onclick="showAbout()" class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40 hover:opacity-100 transition-opacity">About & Legal</button>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40 mt-2">© <span id="year"></span> Lingalo</p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <div id="progress-container" class="hidden progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+
+            <!-- SETTINGS VIEW -->
+            <section id="settings-screen" class="hidden content-body fade-in">
+                <div class="max-w-2xl w-full glass-panel space-y-12">
+                    <h2 class="text-5xl font-bold serif-font italic text-center">Settings</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl border border-white/5">
+                            <div>
+                                <h4 class="font-bold">Sound Effects</h4>
+                                <p class="text-sm text-muted">Audio feedback for answers</p>
+                            </div>
+                            <button id="toggle-sfx" class="btn-primary" style="padding: 0.5rem 1.5rem;">ON</button>
+                        </div>
+                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl border border-white/5">
+                            <div>
+                                <h4 class="font-bold">Reset Progress</h4>
+                                <p class="text-sm text-muted">Clear all XP, Levels, and Mastery</p>
+                            </div>
+                            <button onclick="resetAllProgress()" class="btn-outline !text-red-500 !border-red-500/20">RESET</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="showScreen('language')" class="btn-primary w-full">Save & Close</button>
+                </div>
+            </section>
+
+            <!-- ABOUT VIEW -->
+            <section id="about-screen" class="hidden content-body fade-in">
+                <div class="max-w-2xl w-full glass-panel space-y-8 text-left">
+                    <h2 class="text-5xl font-bold serif-font italic text-center mb-12">About Lingalo</h2>
+                    <p class="text-lg">Lingalo is a professional-grade language learning tool designed for rapid mastery of Japanese and Korean script and vocabulary.</p>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-xl">The Branding</h4>
+                        <p class="text-muted">You may notice our logo is an elephant. We chose this because an elephant never forgets, a perfect symbol for your journey toward language mastery and long-term memory retention.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-xl">The Methodology</h4>
+                        <p class="text-muted">We combine Spaced Repetition (SRS) logic with immediate sensory feedback to create an optimal learning environment. Every session adapts to your personal mastery levels.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-xl">Privacy First</h4>
+                        <p class="text-muted">Lingalo does not collect or store your personal data on any server. All your progress is saved locally in your browser's memory. We respect your privacy.</p>
+                    </div>
+                    <button type="button" onclick="showScreen('language')" class="btn-primary w-full mt-12">Back to Dashboard</button>
+                </div>
+            </section>
+
+            <!-- LANGUAGE SCREEN -->
+            <section id="language-screen" class="content-body fade-in">
+                <div class="text-center space-y-8 max-w-4xl">
+                    <div class="space-y-4 mb-12">
+                        <h2 class="text-6xl font-bold serif-font italic">Select Your Journey</h2>
+                        <p class="text-base tracking-widest text-blue-500 font-bold opacity-80 uppercase">Empower your mind through language</p>
+                    </div>
+                    <div class="grid grid-cols-1 md\:grid-cols-2 gap-8">
+                        <div class="hero-card" onclick="selectLanguage('japanese')">
+                            <div class="text-6xl mb-6">⛩️</div>
+                            <h3 class="text-2xl font-bold mb-2">Japanese</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Hiragana, Katakana & More</p>
+                        </div>
+                        <div class="hero-card" onclick="selectLanguage('korean')">
+                            <div class="text-6xl mb-6">🏯</div>
+                            <h3 class="text-2xl font-bold mb-2">Korean</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Hangul & Vocabulary</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- APP SCREEN (Flow Steps) -->
+            <section id="app-screen" class="hidden content-body">
+                <!-- STEP 0: INTRO -->
+                <div id="flow-step-0" class="step-container text-center space-y-12">
+                    <div class="space-y-6">
+                        <div class="text-8xl mb-4" id="intro-emoji">⛩️</div>
+                        <h1 class="text-8xl font-bold serif-font italic" id="intro-title">QuickKana</h1>
+                        <p class="text-lg tracking-widest text-blue-500 uppercase font-bold opacity-80" id="intro-subtitle">Master the Art of Japanese</p>
+                    </div>
+                    <button type="button" onclick="nextStep(1)" class="btn-primary">GET STARTED →</button>
+                    <div class="pt-8 opacity-30 text-sm uppercase tracking-widest font-bold" id="intro-tags">
+                        Hiragana • Katakana • Vocabulary
+                    </div>
+                </div>
+
+                <!-- STEP 1: PATH SELECTOR -->
+                <div id="flow-step-1" class="hidden step-container space-y-10">
+                    <div class="text-center space-y-2">
+                        <p class="text-sm tracking-widest text-blue-500 uppercase font-bold">Step 1: Choose Path</p>
+                        <h2 class="text-6xl font-bold serif-font italic">What are we learning today?</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md\:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                        <div class="hero-card" onclick="selectFlow('chars', event)">
+                            <div class="text-7xl mb-6 opacity-40" id="path-chars-icon">あア</div>
+                            <h3 class="text-2xl font-bold mb-2">Characters</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">The Fundamentals</p>
+                        </div>
+                        <div class="hero-card" onclick="selectFlow('vocab', event)">
+                            <div class="text-7xl mb-6 opacity-40" id="path-vocab-icon">りんご</div>
+                            <h3 class="text-2xl font-bold mb-2">Vocabulary</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Applied Language</p>
+                        </div>
+                    </div>
+                    <div class="text-center pt-8">
+                        <button type="button" onclick="prevStep(0)" class="btn-outline">← Back to Intro</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: CATEGORY SELECTOR -->
+                <div id="flow-step-2" class="hidden step-container space-y-12">
+                    <div class="text-center space-y-4">
+                        <p id="step-2-label" class="text-sm tracking-widest text-blue-500 uppercase font-bold">Step 2</p>
+                        <h2 class="text-5xl font-bold serif-font italic">Refine your focus</h2>
+                    </div>
+
+                    <div id="filter-chars" class="hidden grid grid-cols-2 md\:grid-cols-4 gap-6"></div>
+
+                    <div id="filter-vocab" class="hidden space-y-12 text-center">
+                        <div class="flex justify-center gap-6 mb-8">
+                            <button type="button" class="btn-outline segment-btn active" onclick="switchVocabTab('curated', event)">Curated</button>
+                            <button type="button" class="btn-outline segment-btn" onclick="switchVocabTab('library', event)">My Library</button>
+                        </div>
+                        <div id="vocab-curated" class="grid grid-cols-3 gap-6"></div>
+                        <div id="vocab-library" class="hidden space-y-8">
+                            <div id="custom-word-bank" class="max-h-80 overflow-y-auto space-y-4 custom-scrollbar glass-panel text-left"></div>
+                            <button type="button" class="btn-outline w-full" id="custom-cat-btn">+ Add More Words</button>
+                            <div id="custom-importer" class="hidden glass-panel text-left fade-in">
+                                <div id="importer-input-step" class="space-y-4">
+                                    <textarea id="custom-input" placeholder="apple, water, cat..." class="w-full h-40 bg-black/60 border border-white/10 rounded-2xl p-6 text-white outline-none focus:border-blue-500 transition-all text-lg"></textarea>
+                                    <button type="button" id="translate-btn" class="btn-primary w-full">Translate Words</button>
+                                </div>
+                                <div id="importer-preview-step" class="hidden space-y-6">
+                                    <div id="preview-list" class="max-h-80 overflow-y-auto space-y-3 custom-scrollbar"></div>
+                                    <button type="button" id="add-to-list-btn" class="btn-primary w-full">Add All to Library</button>
+                                </div>
+                                <div id="import-status" class="mt-4 text-sm uppercase opacity-50 font-bold text-center"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-6 pt-12">
+                        <button type="button" onclick="prevStep(1)" class="btn-outline">← Back</button>
+                        <button type="button" onclick="nextStep(3)" class="btn-primary px-12">Continue →</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: MODE SELECTOR -->
+                <div id="flow-step-3" class="hidden step-container space-y-12">
+                    <div class="text-center space-y-4">
+                        <p class="text-sm tracking-widest text-blue-500 uppercase font-bold">Final Step</p>
+                        <h2 class="text-5xl font-bold serif-font italic">Select training mode</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md\:grid-cols-2 gap-12">
+                        <div class="space-y-8">
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60 text-left">1. Choose Activity</p>
+                            <div class="grid gap-4">
+                                <div class="mode-card" data-mode="quiz">
+                                    <div class="mode-card-icon">🎯</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">QUIZ</span>
+                                        <span class="mode-card-desc">Multiple choice practice</span>
+                                    </div>
+                                </div>
+                                <div class="mode-card" data-mode="flashcards">
+                                    <div class="mode-card-icon">🃏</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">CARDS</span>
+                                        <span class="mode-card-desc">Spaced repetition deck</span>
+                                    </div>
+                                </div>
+                                <div class="mode-card" data-mode="typing">
+                                    <div class="mode-card-icon">⌨️</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">TYPE</span>
+                                        <span class="mode-card-desc">Keyboard input training</span>
+                                    </div>
+                                </div>
+                                <div class="mode-card" data-mode="speedMatch">
+                                    <div class="mode-card-icon">⚡</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">SPEED</span>
+                                        <span class="mode-card-desc">Timed rapid-fire challenge</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-8">
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60 text-left">2. Customize Session</p>
+                            <div class="grid gap-4">
+                                <div class="mode-card" id="opt-reverse">
+                                    <div class="mode-card-icon">🔄</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">REVERSE MODE</span>
+                                        <p id="reverse-desc" class="mode-card-desc"></p>
+                                    </div>
+                                    <div class="status-dot"></div>
+                                </div>
+                                <div class="mode-card" id="opt-test-all">
+                                    <div class="mode-card-icon">♾️</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">TEST ALL</span>
+                                        <span class="mode-card-desc">Practice every single item</span>
+                                    </div>
+                                    <div class="status-dot"></div>
+                                </div>
+                                <div class="mode-card" id="opt-teach">
+                                    <div class="mode-card-icon">👨‍🏫</div>
+                                    <div class="mode-card-content">
+                                        <span class="mode-card-title">TEACH MODE</span>
+                                        <span class="mode-card-desc">Repeat missed questions</span>
+                                    </div>
+                                    <div class="status-dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-6 pt-12">
+                        <button type="button" onclick="prevStep(2)" class="btn-outline">← Back</button>
+                        <button type="button" id="start-button" class="btn-primary px-12">Start Session</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STUDY SCREEN -->
+            <section id="study-screen" class="hidden w-full flex-grow flex flex-col">
+                <header class="screen-header">
+                    <button type="button" id="quit-button" class="btn-outline !text-red-500 !border-red-500/20 hover:!bg-red-500/10">🚪 Quit</button>
+                    <div class="flex gap-4">
+                        <div id="timer-display" class="hidden pill-stat !text-yellow-500 border-yellow-500/20">⚡ <span id="timer-val">60s</span></div>
+                        <button type="button" id="audio-button" class="pill-stat">🔊 REPLAY</button>
+                        <div class="pill-stat">SCORE: <span id="score-counter">0</span></div>
+                        <div class="pill-stat">STREAK: <span id="streak-counter" class="text-[var(--accent)]">0</span></div>
+                    </div>
+                </header>
+                <div class="content-body">
+                    <div class="quiz-container">
+                        <div id="question-display" class="question-display"></div>
+                        <div id="options-grid" class="options-grid"></div>
+                        <div id="typing-controls" class="hidden space-y-8">
+                            <div id="typing-display" class="text-4xl font-bold tracking-widest bg-white/5 p-8 rounded-2xl border border-white/10 min-w-[300px]"></div>
+                            <div id="virtual-keyboard" class="virtual-keyboard"></div>
+                        </div>
+                        <div id="fc-controls" class="hidden flex justify-center gap-8">
+                            <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" id="prev-fc">←</button>
+                            <button type="button" class="btn-primary !rounded-full w-24 h-24 text-4xl" id="flip-fc">↻</button>
+                            <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" id="next-fc">→</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESULTS SCREEN -->
+            <section id="results-screen" class="hidden content-body fade-in">
+                <div class="text-center space-y-12 w-full max-w-4xl">
+                    <div class="space-y-4">
+                        <div class="text-8xl mb-4">🏆</div>
+                        <h2 class="text-5xl font-bold serif-font italic">Session Complete</h2>
+                        <p class="text-base tracking-widest text-blue-500 uppercase font-bold">Outstanding Performance!</p>
+                    </div>
+                    <div class="grid grid-cols-3 gap-8">
+                        <div class="glass-panel text-center">
+                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Final Score</p>
+                            <p id="final-score" class="text-5xl font-bold">0</p>
+                        </div>
+                        <div class="glass-panel text-center">
+                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Accuracy</p>
+                            <p id="final-acc" class="text-5xl font-bold">0%</p>
+                        </div>
+                        <div class="glass-panel text-center">
+                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Best Streak</p>
+                            <p id="final-streak" class="text-5xl font-bold text-[var(--accent)]">0</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center gap-6 pt-8">
+                        <button type="button" id="home-btn" class="btn-outline px-10">Main Menu</button>
+                        <button type="button" id="retry-btn" class="btn-primary px-10">Retry Session</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
