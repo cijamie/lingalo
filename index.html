@@ -266,7 +266,7 @@
                             <button type="button" class="btn-outline segment-btn active" onclick="switchVocabTab('curated', event)">Curated</button>
                             <button type="button" class="btn-outline segment-btn" onclick="switchVocabTab('library', event)">My Library</button>
                         </div>
-                        <div id="vocab-curated" class="grid grid-cols-3 gap-6"></div>
+                        <div id="vocab-curated" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
                         <div id="vocab-library" class="hidden space-y-8">
                             <div id="custom-word-bank" class="max-h-80 overflow-y-auto space-y-4 custom-scrollbar glass-panel text-left"></div>
                             <button type="button" class="btn-outline w-full" id="custom-cat-btn">+ Add More Words</button>
@@ -405,21 +405,21 @@
                         <h2 class="text-5xl font-bold serif-font italic">Session Complete</h2>
                         <p class="text-base tracking-widest text-blue-500 uppercase font-bold">Outstanding Performance!</p>
                     </div>
-                    <div class="grid grid-cols-3 gap-8">
-                        <div class="glass-panel text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                        <div class="glass-panel text-center p-6 md:p-8">
                             <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Final Score</p>
-                            <p id="final-score" class="text-5xl font-bold">0</p>
+                            <p id="final-score" class="text-4xl md:text-5xl font-bold">0</p>
                         </div>
-                        <div class="glass-panel text-center">
+                        <div class="glass-panel text-center p-6 md:p-8">
                             <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Accuracy</p>
-                            <p id="final-acc" class="text-5xl font-bold">0%</p>
+                            <p id="final-acc" class="text-4xl md:text-5xl font-bold">0%</p>
                         </div>
-                        <div class="glass-panel text-center">
+                        <div class="glass-panel text-center p-6 md:p-8">
                             <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Best Streak</p>
-                            <p id="final-streak" class="text-5xl font-bold text-[var(--accent)]">0</p>
+                            <p id="final-streak" class="text-4xl md:text-5xl font-bold text-[var(--accent)]">0</p>
                         </div>
                     </div>
-                    <div class="flex justify-center gap-6 pt-8">
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 pt-8">
                         <button type="button" id="home-btn" class="btn-outline px-10">Main Menu</button>
                         <button type="button" id="retry-btn" class="btn-primary px-10">Retry Session</button>
                     </div>
