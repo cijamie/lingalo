@@ -31,21 +31,6 @@ Lingalo is a sleek, professional language learning platform designed for masteri
 -   **Persistence**: Browser `localStorage` for saving user state and progress.
 -   **Offline Support**: Manifest-driven PWA configuration.
 
-## 📂 Project Structure
-
--   `index.html` / `app.js`: The central hub and dashboard.
--   `quickkana.html` / `quickkana.js`: Japanese learning module.
--   `quickhangul.html` / `quickhangul.js`: Korean learning module.
--   `quickfrench.html` / `quickfrench.js`: French learning module.
--   `styles.css`: Global styling and component library.
--   `manifest.json`: Web app manifest for PWA installation.
-
-## 🏁 Getting Started
-
-1.  Clone the repository.
-2.  Open `index.html` in any modern web browser.
-3.  No build step required—it's pure, high-performance vanilla web tech.
-
 ## 📱 Mobile Installation
 
 Lingalo is built as a Progressive Web App (PWA). To install:
