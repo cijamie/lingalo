@@ -8,7 +8,7 @@ Lingalo is a sleek, professional language learning platform designed for masteri
 
 ## 🚀 Features
 
--   **Multi-Language Support**: Dedicated modules for Japanese (QuickKana), Korean (QuickHangul), and French (QuickFrench).
+-   **Multi-Language Support**: Dedicated modules for Japanese, Korean, French, and Spanish
 -   **Interactive Learning Modes**:
     -   **Quiz Mode**: Test your knowledge with multiple-choice questions.
     -   **Flashcards**: Classic study method for rapid memorization.
