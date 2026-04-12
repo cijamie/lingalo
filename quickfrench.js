@@ -1,8 +1,6 @@
 const State = {
     mode: 'quiz',
     isReverse: false,
-    isTestAll: false,
-    isTeachMode: false,
     wrongQueue: [],
     testPool: [],
     currentDict: {},
@@ -31,13 +29,9 @@ const State = {
 };
 
 const DATA = {
-    consonants: { 'ㄱ': 'g', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄹ': 'r', 'ㅁ': 'm', 'ㅂ': 'b', 'ㅅ': 's', 'ㅇ': 'ng', 'ㅈ': 'j', 'ㅊ': 'ch', 'ㅋ': 'k', 'ㅌ': 't', 'ㅍ': 'p', 'ㅎ': 'h' },
-    doubleConsonants: { 'ㄲ': 'kk', 'ㄸ': 'tt', 'ㅃ': 'pp', 'ㅆ': 'ss', 'ㅉ': 'jj' },
-    vowels: { 'ㅏ': 'a', 'ㅑ': 'ya', 'ㅓ': 'eo', 'ㅕ': 'yeo', 'ㅗ': 'o', 'ㅛ': 'yo', 'ㅜ': 'u', 'ㅠ': 'yu', 'ㅡ': 'eu', 'ㅣ': 'i' },
-    diphthongs: { 'ㅐ': 'ae', 'ㅒ': 'yae', 'ㅔ': 'e', 'ㅖ': 'ye', 'ㅘ': 'wa', 'ㅙ': 'wae', 'ㅚ': 'oe', 'ㅝ': 'wo', 'ㅞ': 'we', 'ㅟ': 'wi', 'ㅢ': 'ui' },
-    vocabulary: { '사과': { rom: 'sagwa', def: 'Apple' }, '우유': { rom: 'uyu', def: 'Milk' }, '고기': { rom: 'gogi', def: 'Meat' }, '나라': { rom: 'nara', def: 'Country' }, '도시': { rom: 'dosi', def: 'City' }, '아이': { rom: 'ai', def: 'Child' }, '오이': { rom: 'oi', def: 'Cucumber' }, '모자': { rom: 'moja', def: 'Hat' }, '학교': { rom: 'hakgyo', def: 'School' }, '바다': { rom: 'bada', def: 'Sea' }, '하늘': { rom: 'haneul', def: 'Sky' }, '물': { rom: 'mul', def: 'Water' }, '사랑': { rom: 'sarang', def: 'Love' } },
-    travel: { '안녕하세요': { rom: 'annyeonghaseyo', def: 'Hello' }, '감사합니다': { rom: 'gamsahamnida', def: 'Thank you' }, '화장실': { rom: 'hwajangsil', def: 'Restroom' }, '여권': { rom: 'yeogwon', def: 'Passport' }, '비행기': { rom: 'bihaenggi', def: 'Airplane' }, '택시': { rom: 'taeksi', def: 'Taxi' }, '한국': { rom: 'hanguk', def: 'Korea' } },
-    school: { '선생님': { rom: 'seonsaengnim', def: 'Teacher' }, '학생': { rom: 'haksaeng', def: 'Student' }, '교실': { rom: 'gyosil', def: 'Classroom' }, '책': { rom: 'chaek', def: 'Book' }, '대학교': { rom: 'daehakgyo', def: 'University' }, '친구': { rom: 'chingu', def: 'Friend' } }
+    vocabulary: { 'Pomme': 'Apple', 'Pain': 'Bread', 'Eau': 'Water', 'Lait': 'Milk', 'Chat': 'Cat', 'Chien': 'Dog', 'Maison': 'House', 'Voiture': 'Car', 'Livre': 'Book', 'École': 'School', 'Ami': 'Friend', 'Famille': 'Family', 'Amour': 'Love' },
+    travel: { 'Bonjour': 'Hello', 'Merci': 'Thank you', 'Pardon': 'Excuse me', 'Oui': 'Yes', 'Non': 'No', 'Toilettes': 'Restroom', 'Gare': 'Station', 'Hôtel': 'Hotel', 'Aéroport': 'Airport', 'Taxi': 'Taxi', 'Passeport': 'Passport' },
+    school: { 'Professeur': 'Teacher', 'Étudiant': 'Student', 'Classe': 'Classroom', 'Bureau': 'Desk', 'Chaise': 'Chair', 'Crayon': 'Pencil', 'Stylo': 'Pen', 'Cahier': 'Notebook' }
 };
 
 const ui = {};
@@ -62,13 +56,13 @@ function init() {
 
 function loadStats() {
     try {
-        const s = localStorage.getItem('quickhangul_stats');
+        const s = localStorage.getItem('quickfrench_stats');
         if (s) State.persistence = JSON.parse(s);
     } catch(e) {}
 }
 
 function saveStats() {
-    localStorage.setItem('quickhangul_stats', JSON.stringify(State.persistence));
+    localStorage.setItem('quickfrench_stats', JSON.stringify(State.persistence));
 }
 
 function showScreen(n) {
@@ -118,15 +112,9 @@ function setMode(m, el) {
 
 function startSession() {
     State.currentDict = {};
-    if (State.topCategory === 'chars') {
-        ['consonants', 'vowels', 'doubleConsonants', 'diphthongs'].forEach(c => {
-            if (State.activeCats && State.activeCats.includes(c)) Object.assign(State.currentDict, DATA[c]);
-        });
-    } else {
-        ['vocabulary', 'travel', 'school'].forEach(c => {
-            if (State.activeCats && State.activeCats.includes(c)) Object.assign(State.currentDict, DATA[c]);
-        });
-    }
+    ['vocabulary', 'travel', 'school'].forEach(c => {
+        if (State.activeCats && State.activeCats.includes(c)) Object.assign(State.currentDict, DATA[c]);
+    });
     
     if (Object.keys(State.currentDict).length === 0) {
         alert('Please select at least one category');
@@ -135,14 +123,7 @@ function startSession() {
 
     State.currentKeys = Object.keys(State.currentDict);
     State.score = 0; State.streak = 0; State.qCount = 0; State.sessionAttempts = 0;
-    
-    if (State.isTestAll || State.isTeachMode) {
-        State.testPool = [...State.currentKeys].sort(() => Math.random() - 0.5);
-        if (State.isTeachMode && !State.isTestAll) State.testPool = State.testPool.slice(0, 20);
-        State.maxQ = State.testPool.length;
-    } else {
-        State.maxQ = Math.min(20, State.currentKeys.length || 1);
-    }
+    State.maxQ = Math.min(20, State.currentKeys.length || 1);
 
     State.flashcards.pool = [...State.currentKeys].sort(() => Math.random() - 0.5);
     State.flashcards.index = 0;
@@ -160,9 +141,7 @@ function startSession() {
 
 function nextQuestion() {
     if (State.qCount >= State.maxQ && State.mode !== 'flashcards' && State.mode !== 'speedMatch') {
-        if (State.isTeachMode && State.wrongQueue.length > 0) {
-            State.testPool = [...State.wrongQueue]; State.wrongQueue = []; State.qCount = 0; State.maxQ = State.testPool.length;
-        } else { endSession(); return; }
+        endSession(); return;
     }
     
     State.isProcessing = false;
@@ -170,20 +149,18 @@ function nextQuestion() {
 
     let c;
     if (State.mode === 'flashcards') c = State.flashcards.pool[State.flashcards.index];
-    else c = (State.isTestAll || State.isTeachMode) ? State.testPool[State.qCount % State.testPool.length] : State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
+    else c = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
 
     let a = State.currentDict[c];
-    const def = typeof a === 'object' ? a.def : a;
-    const rom = typeof a === 'object' ? a.rom : a;
 
-    State.currentQ = { char: c, answer: State.isReverse ? c : def, display: State.isReverse ? def : c, rom: rom, def: def };
+    State.currentQ = { display: c, answer: a };
     ui.question.textContent = State.currentQ.display;
 
     if (!['typing', 'flashcards'].includes(State.mode)) {
         const ops = [State.currentQ.answer];
         while (ops.length < Math.min(4, State.currentKeys.length)) {
             const k = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
-            const v = State.isReverse ? k : (typeof State.currentDict[k] === 'object' ? State.currentDict[k].def : State.currentDict[k]);
+            const v = State.currentDict[k];
             if (!ops.includes(v)) ops.push(v);
         }
         ops.sort(() => Math.random() - 0.5);
@@ -212,7 +189,6 @@ function submitAnswer(s, b) {
         } else {
             State.streak = 0;
             if (b) b.classList.add('wrong');
-            if (State.isTeachMode && !State.wrongQueue.includes(State.currentQ.char)) State.wrongQueue.push(State.currentQ.char);
         }
         ui.score.textContent = State.score; ui.streak.textContent = State.streak;
         setTimeout(nextQuestion, 1000);
@@ -237,17 +213,9 @@ function startSpeedMatch() {
     nextQuestion();
 }
 
-function speak(t) {
-    window.speechSynthesis.cancel();
-    const m = new SpeechSynthesisUtterance(t);
-    m.lang = 'ko-KR';
-    window.speechSynthesis.speak(m);
-}
-
 function moveFlashcard(d) {
     State.flashcards.index = (State.flashcards.index + d + State.flashcards.pool.length) % State.flashcards.pool.length;
     nextQuestion();
-    speak(State.currentQ.char);
 }
 
 function updateTypingDisplay() {
@@ -255,7 +223,7 @@ function updateTypingDisplay() {
 }
 
 function renderKeyboard() {
-    const layout = [['ㅂ','ㅈ','ㄷ','ㄱ','ㅅ','ㅛ','ㅕ','ㅑ','ㅐ','ㅔ'], ['ㅁ','ㄴ','ㅇ','ㄹ','ㅎ','ㅗ','ㅓ','ㅏ','ㅣ'], ['ㅋ','ㅌ','ㅊ','ㅍ','ㅠ','ㅜ','ㅡ']];
+    const layout = [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l'], ['z','x','c','v','b','n','m']];
     const c = document.getElementById('virtual-keyboard');
     c.innerHTML = '';
     layout.forEach(r => {

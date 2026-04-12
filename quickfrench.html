@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>QuickHangul - Professional Korean Learning</title>
+    <title>QuickFrench - Professional French Learning</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         :root {
-            --accent: #d4af37;
-            --accent-glow: rgba(212, 175, 55, 0.4);
+            --accent: #3498db;
+            --accent-glow: rgba(52, 152, 219, 0.4);
         }
     </style>
 </head>
@@ -51,12 +51,12 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 12h.01"/></svg>
                 Japanese
             </div>
-            <div class="nav-item active">
-                <span>🏯</span> Korean
+            <div class="nav-item" onclick="location.href='quickhangul.html'; toggleMenu(false)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Korean
             </div>
-            <div class="nav-item" onclick="location.href='quickfrench.html'; toggleMenu(false)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 18-18"/><path d="M15 3h6v6"/><path d="M3 21v-6h6"/></svg>
-                French
+            <div class="nav-item active">
+                <span>🇫🇷</span> French
             </div>
         </nav>
     </div>
@@ -66,18 +66,18 @@
         <aside class="sidebar">
             <div class="logo-container flex items-center gap-4">
                 <img src="logo.png" alt="Logo" style="height: 48px; width: auto;">
-                <h1 class="logo-text">QuickHangul</h1>
+                <h1 class="logo-text">QuickFrench</h1>
             </div>
             <nav class="nav-links">
                 <div class="nav-item active">
-                    <span>🏯</span> Korean
+                    <span>🇫🇷</span> French
                 </div>
                 <a href="index.html" class="nav-item">
                     <span>🏠</span> Lingalo Home
                 </a>
             </nav>
             <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border);">
-                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40">© <span id="year"></span> QuickHangul</p>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40">© <span id="year"></span> QuickFrench</p>
             </div>
         </aside>
 
@@ -91,13 +91,13 @@
             <section id="intro-screen" class="content-body fade-in">
                 <div class="text-center space-y-12">
                     <div class="space-y-4">
-                        <div class="text-8xl mb-4">🏯</div>
-                        <h1 class="text-7xl font-bold serif-font italic">QuickHangul</h1>
-                        <p class="text-[12px] tracking-[0.4em] text-[var(--accent)] uppercase font-bold opacity-80">Master the Art of Korean</p>
+                        <div class="text-8xl mb-4">🇫🇷</div>
+                        <h1 class="text-7xl font-bold serif-font italic">QuickFrench</h1>
+                        <p class="text-[12px] tracking-[0.4em] text-[var(--accent)] uppercase font-bold opacity-80">Master French Vocabulary</p>
                     </div>
-                    <button type="button" onclick="nextStep(0)" class="btn-primary">GET STARTED →</button>
+                    <button type="button" onclick="nextStep(1)" class="btn-primary">GET STARTED →</button>
                     <div class="pt-8 opacity-30 text-[10px] uppercase tracking-widest font-medium">
-                        Consonants • Vowels • Vocabulary
+                        Vocabulary • Phrases • Travel
                     </div>
                 </div>
             </section>
@@ -107,20 +107,13 @@
                 <!-- STEP 1: PATH SELECTOR -->
                 <div id="flow-step-1" class="step-container space-y-10">
                     <div class="text-center space-y-2">
-                        <p class="text-[10px] tracking-[0.3em] text-[var(--accent)] uppercase font-bold">Step 1: Choose Path</p>
+                        <p class="text-[10px] tracking-[0.3em] text-[var(--accent)] uppercase font-bold">Step 1: Focus</p>
                         <h2 class="text-5xl font-bold serif-font italic">What are we learning today?</h2>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-                        <div class="hero-card flex flex-col items-center gap-10 h-auto" onclick="selectFlow('chars')">
-                            <div class="flex items-center justify-center h-32">
-                                <div class="text-7xl opacity-40 lang-font">ㄱㄴ</div>
-                            </div>
-                            <h3 class="text-2xl font-bold">Characters</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">THE FUNDAMENTALS</p>
-                        </div>
+                    <div class="grid grid-cols-1 gap-8 max-w-xl mx-auto">
                         <div class="hero-card flex flex-col items-center gap-10 h-auto" onclick="selectFlow('vocab')">
                             <div class="flex items-center justify-center h-32">
-                                <div class="text-7xl opacity-40 lang-font">사과</div>
+                                <div class="text-7xl opacity-40 lang-font">Pomme</div>
                             </div>
                             <h3 class="text-2xl font-bold">Vocabulary</h3>
                             <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">APPLIED LANGUAGE</p>
@@ -139,12 +132,9 @@
                         <div class="space-y-6">
                             <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-60 text-left">1. Select Categories</p>
                             <div id="category-grid" class="grid grid-cols-2 gap-3">
-                                <button type="button" class="btn-outline" onclick="toggleCategory('consonants', this)">Consonants</button>
-                                <button type="button" class="btn-outline" onclick="toggleCategory('vowels', this)">Vowels</button>
-                                <button type="button" class="btn-outline" onclick="toggleCategory('doubleConsonants', this)">Double</button>
-                                <button type="button" class="btn-outline" onclick="toggleCategory('diphthongs', this)">Diphthongs</button>
                                 <button type="button" class="btn-outline" onclick="toggleCategory('vocabulary', this)">General</button>
                                 <button type="button" class="btn-outline" onclick="toggleCategory('travel', this)">Travel</button>
+                                <button type="button" class="btn-outline" onclick="toggleCategory('school', this)">School</button>
                             </div>
                         </div>
                         <div class="space-y-6">
@@ -208,7 +198,7 @@
                         </div>
                         <div id="fc-controls" class="hidden flex justify-center gap-8">
                             <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" onclick="moveFlashcard(-1)">←</button>
-                            <button type="button" class="btn-primary !rounded-full w-24 h-24 text-4xl" id="flip-fc" onclick="ui.question.textContent = (ui.question.textContent === State.currentQ.char) ? State.currentQ.def : State.currentQ.char">↻</button>
+                            <button type="button" class="btn-primary !rounded-full w-24 h-24 text-4xl" id="flip-fc" onclick="ui.question.textContent = (ui.question.textContent === State.currentQ.display) ? State.currentQ.answer : State.currentQ.display">↻</button>
                             <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" onclick="moveFlashcard(1)">→</button>
                         </div>
                     </div>
@@ -244,6 +234,6 @@
         </main>
     </div>
 
-    <script src="quickhangul.js"></script>
+    <script src="quickfrench.js"></script>
 </body>
 </html>

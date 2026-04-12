@@ -54,6 +54,36 @@ const LANGUAGES = {
         romanMap: {},
         basicWords: { "hello": "안녕하세요", "hi": "안녕", "water": "물", "apple": "사과", "love": "사랑", "school": "학교" },
         keyboardLayout: [['ㅂ','ㅈ','ㄷ','ㄱ','ㅅ','ㅛ','ㅕ','ㅑ','ㅐ','ㅔ'], ['ㅁ','ㄴ','ㅇ','ㄹ','ㅎ','ㅗ','ㅓ','ㅏ','ㅣ'], ['ㅋ','ㅌ','ㅊ','ㅍ','ㅠ','ㅜ','ㅡ']]
+    },
+    french: {
+        id: 'french',
+        name: 'French',
+        accent: '#3498db',
+        accentGlow: 'rgba(52, 152, 219, 0.4)',
+        font: "'Inter', sans-serif",
+        icon: '🇫🇷',
+        title: 'QuickFrench',
+        subtitle: 'Master French Vocabulary',
+        tags: 'Vocabulary • Phrases • Travel',
+        pathIcons: ['ABC', 'Pomme'],
+        fundamentals: [],
+        fundamentalLabels: [],
+        reverseDesc: 'Guess French from English',
+        speechLang: 'fr-FR',
+        data: {
+            vocabulary: { 'pomme': { rom: 'pomme', def: 'Apple' }, 'chat': { rom: 'chat', def: 'Cat' }, 'chien': { rom: 'chien', def: 'Dog' }, 'eau': { rom: 'eau', def: 'Water' }, 'thé': { rom: 'thé', def: 'Tea' }, 'poisson': { rom: 'poisson', def: 'Fish' }, 'oiseau': { rom: 'oiseau', def: 'Bird' }, 'maison': { rom: 'maison', def: 'House' }, 'voiture': { rom: 'voiture', def: 'Car' }, 'livre': { rom: 'livre', def: 'Book' }, 'soleil': { rom: 'soleil', def: 'Sun' }, 'lune': { rom: 'lune', def: 'Moon' }, 'ciel': { rom: 'ciel', def: 'Sky' }, 'fleur': { rom: 'fleur', def: 'Flower' }, 'arbre': { rom: 'arbre', def: 'Tree' } },
+            travel: { 'bonjour': { rom: 'bonjour', def: 'Hello' }, 'merci': { rom: 'merci', def: 'Thank you' }, 'pardon': { rom: 'pardon', def: 'Excuse me' }, 'oui': { rom: 'oui', def: 'Yes' }, 'non': { rom: 'non', def: 'No' }, 'toilettes': { rom: 'toilettes', def: 'Toilet' }, 'gare': { rom: 'gare', def: 'Station' }, 'hôtel': { rom: 'hôtel', def: 'Hotel' }, 'aéroport': { rom: 'aéroport', def: 'Airport' }, 'billet': { rom: 'billet', def: 'Ticket' } },
+            school: { 'professeur': { rom: 'professeur', def: 'Teacher' }, 'étudiant': { rom: 'étudiant', def: 'Student' }, 'classe': { rom: 'classe', def: 'Classroom' }, 'bureau': { rom: 'bureau', def: 'Desk' }, 'chaise': { rom: 'chaise', def: 'Chair' }, 'ami': { rom: 'ami', def: 'Friend' }, 'stylo': { rom: 'stylo', def: 'Pen' }, 'cahier': { rom: 'cahier', def: 'Notebook' }, 'école': { rom: 'école', def: 'School' } }
+        },
+        romanMap: {},
+        basicWords: { 
+            "hello": "bonjour", "hi": "salut", "water": "eau", "apple": "pomme", "love": "amour", "school": "école",
+            "mom": "maman", "mother": "mère", "dad": "papa", "father": "père", "daughter": "fille", "son": "fils",
+            "brother": "frère", "sister": "soeur", "friend": "ami", "cat": "chat", "dog": "chien",
+            "house": "maison", "car": "voiture", "book": "livre", "sun": "soleil", "moon": "lune",
+            "how are you": "comment ça va", "goodbye": "au revoir", "please": "s'il vous plaît", "thank you": "merci"
+        },
+        keyboardLayout: [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l'], ['z','x','c','v','b','n','m']]
     }
 };
 
@@ -130,6 +160,12 @@ function selectLanguage(langId) {
     document.getElementById('path-vocab-icon').textContent = State.lang.pathIcons[1];
     document.getElementById('reverse-desc').textContent = State.lang.reverseDesc;
     
+    // Hide characters option if no fundamentals
+    const charsCard = document.querySelector('[onclick*="selectFlow(\'chars\'"]');
+    if (charsCard) {
+        charsCard.style.display = State.lang.fundamentals.length === 0 ? 'none' : 'flex';
+    }
+
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.toggle('active', item.dataset.lang === langId);
     });
@@ -190,7 +226,12 @@ function updateStepIndicator(n) {
 
 function selectFlow(flow, e) {
     State.topCategory = flow;
-    State.activeCats = flow === 'chars' ? [State.lang.fundamentals[0], State.lang.fundamentals[1]] : ['vocabulary'];
+    if (flow === 'chars') {
+        State.activeCats = State.lang.fundamentals.length > 0 ? [State.lang.fundamentals[0]] : [];
+        if (State.lang.fundamentals.length > 1) State.activeCats.push(State.lang.fundamentals[1]);
+    } else {
+        State.activeCats = ['vocabulary'];
+    }
     
     document.querySelectorAll('[data-cat]').forEach(b => {
         b.classList.toggle('selected', State.activeCats.includes(b.dataset.cat));
@@ -388,6 +429,60 @@ function showScreen(n) {
     if (target) target.classList.remove('hidden');
 }
 
+async function fetchTranslation(word, targetLang) {
+    const isSingleWord = !word.trim().includes(' ');
+    let gTrans = null;
+    let mTrans = null;
+
+    // API 1: Google (via gtx endpoint)
+    try {
+        const gRes = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(word)}`);
+        const gData = await gRes.json();
+        if (gData && gData[0] && gData[0][0]) gTrans = gData[0][0][0];
+    } catch(e) { console.error("Google API failed", e); }
+
+    // API 2: MyMemory
+    try {
+        const pair = `en|${targetLang}`;
+        const mRes = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=${pair}&mt=1`);
+        const mData = await mRes.json();
+        if (mData.matches && mData.matches.length > 0) {
+            // Sort by quality and find something not identical to source
+            const candidates = mData.matches.sort((a,b) => b.quality - a.quality);
+            const match = candidates.find(m => m.translation.toLowerCase() !== word.toLowerCase()) || candidates[0];
+            mTrans = match.translation;
+        } else {
+            mTrans = mData.responseData.translatedText;
+        }
+    } catch(e) { console.error("MyMemory API failed", e); }
+
+    // COMPARISON & SELECTION LOGIC
+    if (!gTrans && !mTrans) return word;
+    if (gTrans && !mTrans) return gTrans;
+    if (!gTrans && mTrans) return mTrans;
+
+    // If they match exactly (ignoring case), perfect
+    if (gTrans.toLowerCase() === mTrans.toLowerCase()) return gTrans;
+
+    // For single word inputs, if one API gives a sentence and other gives a word, pick the word
+    if (isSingleWord) {
+        const gWords = gTrans.split(' ').length;
+        const mWords = mTrans.split(' ').length;
+        
+        // If Google gave a single word, trust it.
+        if (gWords === 1) return gTrans;
+        
+        // If Google failed to give a single word but MyMemory did, use MyMemory
+        if (mWords === 1) return mTrans;
+        
+        // If both are sentences, still trust Google's first word or the whole thing
+        return gTrans;
+    }
+
+    // For phrases, Google usually has better grammar
+    return gTrans;
+}
+
 function init() {
     document.getElementById('year').textContent = new Date().getFullYear();
     ui.progressBar = document.getElementById('progress-bar'); ui.question = document.getElementById('question-display'); ui.options = document.getElementById('options-grid');
@@ -429,15 +524,15 @@ function init() {
         if (words.length === 0) return;
         status.textContent = 'Translating...';
         list.innerHTML = '';
-        const pair = State.lang.id === 'japanese' ? 'en|ja' : 'en|ko';
+        
+        let targetLang = 'ja';
+        if (State.lang.id === 'korean') targetLang = 'ko';
+        if (State.lang.id === 'french') targetLang = 'fr';
+
         for (const word of words) {
             let trans = State.lang.basicWords[word.toLowerCase()] || '';
             if (!trans) {
-                try {
-                    const res = await fetch(`https://api.mymemory.translated.net/get?q=${word}&langpair=${pair}&mt=1`);
-                    const data = await res.json();
-                    trans = data.responseData.translatedText;
-                } catch(e) { trans = word; }
+                trans = await fetchTranslation(word, targetLang);
             }
             const row = document.createElement('div');
             row.className = 'flex items-center gap-2 p-3 bg-black/40 rounded-xl border border-white/10 mb-2';

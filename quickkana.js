@@ -53,6 +53,10 @@ function init() {
     ui.timer = document.getElementById('timer-display');
     
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('menu-toggle').onclick = () => toggleMenu(true);
+    document.getElementById('menu-close').onclick = () => toggleMenu(false);
+    document.getElementById('menu-overlay').onclick = () => toggleMenu(false);
     
     loadStats();
 }
@@ -71,6 +75,18 @@ function saveStats() {
 function showScreen(n) {
     Object.values(ui.screens).forEach(s => s.classList.add('hidden'));
     ui.screens[n].classList.remove('hidden');
+}
+
+function toggleMenu(show) {
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('menu-overlay');
+    if (show) {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+    } else {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+    }
 }
 
 function nextStep(n) {
