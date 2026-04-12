@@ -1,6 +1,8 @@
 # 🌍 Lingalo - Master Languages Professionally
 
-Lingalo is a sleek, professional language learning platform designed for mastering Japanese, Korean, and French through a focused, dashboard-driven experience. Built with a modern aesthetic and performance in mind, it combines spaced repetition concepts, XP-based gamification, and interactive tools to help learners achieve fluency.
+Lingalo is a sleek, professional language learning platform designed for mastering Japanese, Korean, and French through a focused, dashboard-driven experience.
+
+**🌐 Live Demo: [https://cijamie.github.io/lingalo/](https://cijamie.github.io/lingalo/)**
 
 ![Lingalo Logo](logo.png)
 
