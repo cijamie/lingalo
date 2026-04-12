@@ -84,6 +84,36 @@ const LANGUAGES = {
             "how are you": "comment ça va", "goodbye": "au revoir", "please": "s'il vous plaît", "thank you": "merci"
         },
         keyboardLayout: [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l'], ['z','x','c','v','b','n','m']]
+    },
+    spanish: {
+        id: 'spanish',
+        name: 'Spanish',
+        accent: '#f1c40f',
+        accentGlow: 'rgba(241, 196, 15, 0.4)',
+        font: "'Inter', sans-serif",
+        icon: '🇪🇸',
+        title: 'QuickSpanish',
+        subtitle: 'Master Spanish Vocabulary',
+        tags: 'Vocabulary • Phrases • Travel',
+        pathIcons: ['ABC', 'Manzana'],
+        fundamentals: [],
+        fundamentalLabels: [],
+        reverseDesc: 'Guess Spanish from English',
+        speechLang: 'es-ES',
+        data: {
+            vocabulary: { 'manzana': { rom: 'manzana', def: 'Apple' }, 'gato': { rom: 'gato', def: 'Cat' }, 'perro': { rom: 'perro', def: 'Dog' }, 'agua': { rom: 'agua', def: 'Water' }, 'té': { rom: 'té', def: 'Tea' }, 'pescado': { rom: 'pescado', def: 'Fish' }, 'pájaro': { rom: 'pájaro', def: 'Bird' }, 'casa': { rom: 'casa', def: 'House' }, 'coche': { rom: 'coche', def: 'Car' }, 'libro': { rom: 'libro', def: 'Book' }, 'sol': { rom: 'sol', def: 'Sun' }, 'luna': { rom: 'luna', def: 'Moon' }, 'cielo': { rom: 'cielo', def: 'Sky' }, 'flor': { rom: 'flor', def: 'Flower' }, 'árbol': { rom: 'árbol', def: 'Tree' } },
+            travel: { 'hola': { rom: 'hola', def: 'Hello' }, 'gracias': { rom: 'gracias', def: 'Thank you' }, 'perdón': { rom: 'perdón', def: 'Excuse me' }, 'sí': { rom: 'sí', def: 'Yes' }, 'no': { rom: 'no', def: 'No' }, 'baño': { rom: 'baño', def: 'Toilet' }, 'estación': { rom: 'estación', def: 'Station' }, 'hotel': { rom: 'hotel', def: 'Hotel' }, 'aeropuerto': { rom: 'aeropuerto', def: 'Airport' }, 'billete': { rom: 'billete', def: 'Ticket' } },
+            school: { 'profesor': { rom: 'profesor', def: 'Teacher' }, 'estudiante': { rom: 'estudiante', def: 'Student' }, 'clase': { rom: 'clase', def: 'Classroom' }, 'escritorio': { rom: 'escritorio', def: 'Desk' }, 'silla': { rom: 'silla', def: 'Chair' }, 'amigo': { rom: 'amigo', def: 'Friend' }, 'bolígrafo': { rom: 'bolígrafo', def: 'Pen' }, 'cuaderno': { rom: 'cuaderno', def: 'Notebook' }, 'escuela': { rom: 'escuela', def: 'School' } }
+        },
+        romanMap: {},
+        basicWords: { 
+            "hello": "hola", "hi": "hola", "water": "agua", "apple": "manzana", "love": "amor", "school": "escuela",
+            "mom": "mamá", "mother": "madre", "dad": "papá", "father": "padre", "daughter": "hija", "son": "hijo",
+            "brother": "hermano", "sister": "hermana", "friend": "amigo", "cat": "gato", "dog": "perro",
+            "house": "casa", "car": "coche", "book": "libro", "sun": "sol", "moon": "luna",
+            "how are you": "cómo estás", "goodbye": "adiós", "please": "por favor", "thank you": "gracias"
+        },
+        keyboardLayout: [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l','ñ'], ['z','x','c','v','b','n','m']]
     }
 };
 
@@ -97,7 +127,7 @@ Object.keys(LANGUAGES).forEach(lang => {
 
 const State = {
     lang: null, step: 0, topCategory: 'chars', mode: 'quiz', activeCats: [], isReverse: false, isTestAll: false, isTeachMode: false, wrongQueue: [], testPool: [], currentDict: {}, currentKeys: [], score: 0, sessionAttempts: 0, streak: 0, maxStreak: 0, qCount: 0, maxQ: 15, currentQ: null, isProcessing: false, flashcards: { index: 0, pool: [] }, typingInput: '', timer: { count: 60, interval: null }, 
-    persistence: { mastery: {}, customList: {}, totalXP: 0, level: 1, streak: 0, lastActive: null, sfxEnabled: true }
+    persistence: { mastery: {}, customList: {}, totalXP: 0, level: 1, streak: 0, lastActive: null, lastStreakUpdate: null, sfxEnabled: true }
 };
 
 const ui = {};
@@ -339,15 +369,22 @@ function loadStats() {
             if (!State.persistence.mastery[State.lang.id]) State.persistence.mastery[State.lang.id] = {};
         }
         
-        // Handle global streak
-        const now = new Date().toDateString();
-        if (State.persistence.lastActive && State.persistence.lastActive !== now) {
-            const last = new Date(State.persistence.lastActive);
-            const diff = (new Date(now) - last) / (1000 * 60 * 60 * 24);
-            if (diff > 1) State.persistence.streak = 0;
-        }
-        State.persistence.lastActive = now;
+        // Handle global streak reset
+        const now = new Date();
+        const todayStr = now.toDateString();
         
+        if (State.persistence.lastActive) {
+            const last = new Date(State.persistence.lastActive);
+            const d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const d2 = new Date(last.getFullYear(), last.getMonth(), last.getDate());
+            const diff = Math.round((d1 - d2) / (1000 * 60 * 60 * 24));
+            
+            if (diff > 1) {
+                State.persistence.streak = 0;
+            }
+        }
+        
+        State.persistence.lastActive = todayStr;
         updateXPUI();
     } catch (e) { console.error(e); }
 }
@@ -528,6 +565,7 @@ function init() {
         let targetLang = 'ja';
         if (State.lang.id === 'korean') targetLang = 'ko';
         if (State.lang.id === 'french') targetLang = 'fr';
+        if (State.lang.id === 'spanish') targetLang = 'es';
 
         for (const word of words) {
             let trans = State.lang.basicWords[word.toLowerCase()] || '';
@@ -703,7 +741,13 @@ function endSession() {
     document.getElementById('final-score').textContent = State.score; 
     document.getElementById('final-acc').textContent = Math.round((State.score/(State.sessionAttempts||1))*100) + '%'; 
     document.getElementById('final-streak').textContent = State.maxStreak; 
-    if (State.score > 0) { State.persistence.streak++; saveStats(); }
+    
+    const now = new Date().toDateString();
+    if (State.score > 0 && State.persistence.lastStreakUpdate !== now) {
+        State.persistence.streak++;
+        State.persistence.lastStreakUpdate = now;
+        saveStats();
+    }
 }
 
 function startSpeedMatch() { State.timer.count = 60; ui.timer.classList.remove('hidden'); State.timer.interval = setInterval(() => { State.timer.count--; document.getElementById('timer-val').textContent = State.timer.count + 's'; if (State.timer.count <= 0) { clearInterval(State.timer.interval); endSession(); } }, 1000); nextQuestion(); }

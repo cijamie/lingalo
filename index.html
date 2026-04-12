@@ -59,19 +59,23 @@
 
         <nav class="nav-links">
             <div class="nav-item" data-lang="japanese" onclick="selectLanguage('japanese'); toggleMenu(false)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 12h.01"/></svg>
+                <span>⛩️</span>
                 Japanese
             </div>
             <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean'); toggleMenu(false)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>🏯</span>
                 Korean
             </div>
             <div class="nav-item" data-lang="french" onclick="selectLanguage('french'); toggleMenu(false)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 18-18"/><path d="M15 3h6v6"/><path d="M3 21v-6h6"/></svg>
+                <span>🇫🇷</span>
                 French
             </div>
+            <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish'); toggleMenu(false)">
+                <span>🇪🇸</span>
+                Spanish
+            </div>
             <div class="nav-item" onclick="showSettings(); toggleMenu(false)">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>⚙️</span>
                 Settings
             </div>
         </nav>
@@ -98,19 +102,23 @@
 
             <nav class="nav-links">
                 <div class="nav-item active" data-lang="japanese" onclick="selectLanguage('japanese')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 12h.01"/></svg>
+                    <span>⛩️</span>
                     Japanese
                 </div>
                 <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>🏯</span>
                     Korean
                 </div>
                 <div class="nav-item" data-lang="french" onclick="selectLanguage('french')">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 18-18"/><path d="M15 3h6v6"/><path d="M3 21v-6h6"/></svg>
+                    <span>🇫🇷</span>
                     French
                 </div>
+                <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish')">
+                    <span>🇪🇸</span>
+                    Spanish
+                </div>
                 <div class="nav-item" id="nav-settings" onclick="showSettings()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>⚙️</span>
                     Settings
                 </div>
             </nav>
@@ -190,7 +198,7 @@
                         <h2 class="text-6xl font-bold serif-font italic">Select Your Journey</h2>
                         <p class="text-base tracking-widest text-blue-500 font-bold opacity-80 uppercase">Empower your mind through language</p>
                     </div>
-                    <div class="grid grid-cols-1 md\:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="hero-card" onclick="selectLanguage('japanese')">
                             <div class="text-6xl mb-6">⛩️</div>
                             <h3 class="text-2xl font-bold mb-2">Japanese</h3>
@@ -204,6 +212,11 @@
                         <div class="hero-card" onclick="selectLanguage('french')">
                             <div class="text-6xl mb-6">🇫🇷</div>
                             <h3 class="text-2xl font-bold mb-2">French</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
+                        </div>
+                        <div class="hero-card" onclick="selectLanguage('spanish')">
+                            <div class="text-6xl mb-6">🇪🇸</div>
+                            <h3 class="text-2xl font-bold mb-2">Spanish</h3>
                             <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
                         </div>
                     </div>
