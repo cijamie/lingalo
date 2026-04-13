@@ -15,10 +15,10 @@ const LANGUAGES = {
         reverseDesc: 'Guess Japanese from English',
         speechLang: 'ja-JP',
         data: {
-            hiragana: { 'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o', 'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko', 'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so', 'た': 'ta', 'ち': 'chi', 'つ': 'tsu', 'て': 'te', 'と': 'to', 'な': 'na', 'に': 'ni', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no', 'は': 'ha', 'ひ': 'hi', 'ふ': 'fu', 'へ': 'he', 'ほ': 'ho', 'ま': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo', 'や': 'ya', 'ゆ': 'yu', 'よ': 'yo', 'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro', 'わ': 'wa', 'を': 'wo', 'ん': 'n' },
-            katakana: { 'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o', 'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko', 'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so', 'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'テ': 'te', 'ト': 'to', 'ナ': 'na', 'ニ': 'ni', 'ヌ': 'nu', 'ネ': 'ne', 'ノ': 'no', 'ハ': 'ha', 'ヒ': 'hi', 'フ': 'fu', 'ヘ': 'he', 'ホ': 'ho', 'マ': 'ma', 'ミ': 'mi', 'ム': 'mu', 'メ': 'me', 'モ': 'mo', 'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo', 'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro', 'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n' },
-            dakuten: { 'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go', 'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo', '다': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do', 'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo', 'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po', 'ガ': 'ga', 'ギ': 'gi', 'グ': 'gu', 'ゲ': 'ge', 'ゴ': 'go', 'ザ': 'za', 'ジ': 'ji', 'ズ': 'zu', 'ゼ': 'ze', 'ゾ': 'zo', 'ダ': 'da', 'ヂ': 'ji', 'ヅ': 'zu', 'デ': 'de', 'ド': 'do', 'バ': 'ba', 'ビ': 'bi', 'ブ': 'bu', 'ベ': 'be', 'ボ': 'bo', 'パ': 'pa', 'ピ': 'pi', 'プ': 'pu', 'ペ': 'pe', 'ポ': 'po' },
-            combos: { 'きゃ': 'kya', 'きゅ': 'kyu', 'きょ': 'kyo', 'しゃ': 'sha', 'しゅ': 'shu', 'しょ': 'sho', 'ちゃ': 'cha', 'ちゅ': 'chu', 'ちょ': 'cho', 'にゃ': 'nya', 'にゅ': 'nyu', 'にょ': 'nyo', 'ひゃ': 'hya', 'ひゅ': 'hyu', 'ひょ': 'hyo', 'みゃ': 'mya', 'みゅ': 'myu', 'みょ': 'myo', 'りゃ': 'rya', 'りゅ': 'ryu', 'りょ': 'ryo', 'ぎゃ': 'gya', 'ぎゅ': 'gyu', 'ぎょ': 'gyo', 'じゃ': 'ja', 'じゅ': 'ju', 'じょ': 'jo', 'びゃ': 'bya', 'びゅ': 'byu', 'びょ': 'byo', 'ぴゃ': 'pya', 'ぴゅ': 'pyu', 'ぴょ': 'pyo' },
+            hiragana: { 'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o', 'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko', 'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so', 'た': 'ta', 'ち': 'chi', 'つ': 'tsu', 'て': 'te', 'と': 'to', 'な': 'na', 'に': 'ni', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no', 'は': 'ha', 'ひ': 'hi', 'ふ': 'fu', 'へ': 'he', 'ほ': 'ho', 'ま': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo', 'や': 'ya', '유': 'yu', 'よ': 'yo', 'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro', 'わ': 'wa', 'を': 'wo', 'ん': 'n' },
+            katakana: { 'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o', 'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko', 'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'そ': 'so', 'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'て': 'te', 'と': 'to', 'ナ': 'na', 'ニ': 'ni', 'ぬ': 'nu', 'ネ': 'ne', 'ノ': 'no', 'ハ': 'ha', 'ヒ': 'hi', 'フ': 'fu', 'ヘ': 'he', 'ほ': 'ho', 'マ': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo', 'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo', 'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro', 'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n' },
+            dakuten: { 'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go', 'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo', 'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do', 'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo', 'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po', 'ガ': 'ga', 'ギ': 'gi', 'グ': 'go', 'ゲ': 'ge', 'ゴ': 'go', 'ザ': 'za', 'ジ': 'ji', 'ズ': 'zu', 'ゼ': 'ze', 'ゾ': 'zo', 'ダ': 'da', 'ヂ': 'ji', 'ヅ': 'zu', 'デ': 'de', 'ド': 'do', 'バ': 'ba', 'ビ': 'bi', 'ブ': 'bu', 'ベ': 'be', 'ボ': 'bo', 'パ': 'pa', 'ピ': 'pi', 'プ': 'pu', 'ペ': 'pe', 'ポ': 'po' },
+            combos: { 'きゃ': 'kya', 'きゅ': 'kyu', 'きょ': 'kyo', 'しゃ': 'sha', 'しゅ': 'shu', 'しょ': 'sho', 'ちゃ': 'cha', 'ちゅ': 'chu', 'ちょ': 'cho', 'にゃ': 'nya', '에': 'nye', '뇨': 'nyo', 'ひゃ': 'hya', 'ひゅ': 'hyu', 'ひょ': 'hyo', 'みゃ': 'mya', 'みゅ': 'myu', 'みょ': 'myo', 'りゃ': 'rya', 'りゅ': 'ryu', 'りょ': 'ryo', 'ぎゃ': 'gya', 'ぎゅ': 'gyu', 'ぎょ': 'gyo', 'じゃ': 'ja', 'じゅ': 'ju', 'じょ': 'jo', 'びゃ': 'bya', 'びゅ': 'byu', 'びょ': 'byo', 'ぴゃ': 'pya', 'ぴゅ': 'pyu', 'ぴょ': 'pyo' },
             vocabulary: { 'りんご': { rom: 'ringo', def: 'Apple' }, 'ねこ': { rom: 'neko', def: 'Cat' }, 'いぬ': { rom: 'inu', def: 'Dog' }, 'みず': { rom: 'mizu', def: 'Water' }, 'おちゃ': { rom: 'ocha', def: 'Tea' }, 'さかな': { rom: 'sakana', def: 'Fish' }, 'とり': { rom: 'tori', def: 'Bird' }, 'いえ': { rom: 'ie', def: 'House' }, 'くるま': { rom: 'kuruma', def: 'Car' }, 'ほん': { rom: 'hon', def: 'Book' } },
             travel: { 'こんにちは': { rom: 'konnichiwa', def: 'Hello' }, 'ありがとう': { rom: 'arigatou', def: 'Thank you' }, 'すみません': { rom: 'sumimasen', def: 'Excuse me' }, 'はい': { rom: 'hai', def: 'Yes' }, 'いいえ': { rom: 'iie', def: 'No' }, 'トイレ': { rom: 'toire', def: 'Toilet' }, 'えき': { rom: 'eki', def: 'Station' }, 'ホテル': { rom: 'hoteru', def: 'Hotel' } },
             school: { 'せんせい': { rom: 'sensei', def: 'Teacher' }, 'がくせい': { rom: 'gakusei', def: 'Student' }, 'きょうしつ': { rom: 'kyoushitsu', def: 'Classroom' }, 'つくえ': { rom: 'tsukue', def: 'Desk' }, 'いす': { rom: 'isu', def: 'Chair' }, 'ともだち': { rom: 'tomodachi', def: 'Friend' } }
@@ -107,7 +107,7 @@ const LANGUAGES = {
         },
         romanMap: {},
         basicWords: { 
-            "hello": "hola", "hi": "hola", "water": "agua", "apple": "manzana", "love": "amor", "school": "escuela",
+            "hello": "hola", "hi": "hola", "water": "agua", "apple": "manzana", "love": "amour", "school": "escuela",
             "mom": "mamá", "mother": "madre", "dad": "papá", "father": "padre", "daughter": "hija", "son": "hijo",
             "brother": "hermano", "sister": "hermana", "friend": "amigo", "cat": "gato", "dog": "perro",
             "house": "casa", "car": "coche", "book": "libro", "sun": "sol", "moon": "luna",
@@ -126,16 +126,18 @@ Object.keys(LANGUAGES).forEach(lang => {
 });
 
 const State = {
-    lang: null, step: 0, topCategory: 'chars', mode: 'quiz', activeCats: [], isReverse: false, isTestAll: false, isTeachMode: false, wrongQueue: [], testPool: [], currentDict: {}, currentKeys: [], score: 0, sessionAttempts: 0, streak: 0, maxStreak: 0, qCount: 0, maxQ: 15, currentQ: null, isProcessing: false, flashcards: { index: 0, pool: [] }, typingInput: '', timer: { count: 60, interval: null }, 
-    persistence: { mastery: {}, customList: {}, totalXP: 0, level: 1, streak: 0, lastActive: null, lastStreakUpdate: null, sfxEnabled: true }
+    lang: null, step: 0, topCategory: 'chars', mode: 'quiz', activeCats: [], isReverse: false, isTestAll: false, isTeachMode: false, wrongQueue: [], struggledWords: new Set(), testPool: [], currentDict: {}, currentKeys: [], score: 0, sessionAttempts: 0, streak: 0, maxStreak: 0, qCount: 0, maxQ: 15, currentQ: null, isProcessing: false, flashcards: { index: 0, pool: [] }, typingInput: '', timer: { count: 60, interval: null }, 
+    persistence: { version: 3, mastery: {}, customList: {}, totalXP: 0, level: 1, streak: 0, lastActive: null, lastStreakUpdate: null, sfxEnabled: true }
 };
 
 const ui = {};
 
 // SFX Generator
 const SFX = {
-    ctx: new (window.AudioContext || window.webkitAudioContext)(),
+    ctx: null,
+    init() { if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
     play(freq, type, dur) {
+        this.init();
         if (State.persistence.sfxEnabled === false) return;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -152,6 +154,12 @@ const SFX = {
     wrong() { this.play(220, 'triangle', 0.3); },
     levelUp() { this.play(440, 'square', 0.1); this.play(554, 'square', 0.1); this.play(659, 'square', 0.3); }
 };
+
+function haptic(type) {
+    if (!navigator.vibrate) return;
+    if (type === 'success') navigator.vibrate(10);
+    else if (type === 'error') navigator.vibrate([50, 30, 50]);
+}
 
 function createConfetti(x, y) {
     for (let i = 0; i < 20; i++) {
@@ -316,7 +324,12 @@ function renderCustomLibrary() {
     const words = State.lang.data.custom || {};
     const keys = Object.keys(words);
     if (keys.length === 0) { 
-        container.innerHTML = '<p class="text-[10px] opacity-40 italic py-6 text-center border border-dashed border-white/10 rounded-xl">Your word bank is currently empty.</p>'; 
+        container.innerHTML = `
+            <div class="empty-library-state">
+                <div class="empty-library-icon">📚</div>
+                <p class="empty-library-text">Your word bank is currently empty.<br>Import words below to start practicing.</p>
+            </div>
+        `; 
         return; 
     }
     keys.forEach(k => {
@@ -351,15 +364,19 @@ function clearLibrary() {
 }
 
 function saveStats() { 
-    localStorage.setItem('lingalo_stats_v2', JSON.stringify(State.persistence)); 
+    localStorage.setItem('lingalo_stats_v3', JSON.stringify(State.persistence)); 
     updateXPUI();
 }
 
 function loadStats() {
     try {
-        const s = localStorage.getItem('lingalo_stats_v2');
+        const s = localStorage.getItem('lingalo_stats_v3') || localStorage.getItem('lingalo_stats_v2');
         if (s) {
             const p = JSON.parse(s);
+            if (!p.version || p.version < 3) {
+                p.version = 3;
+                console.log("Migrated to v3");
+            }
             State.persistence = { ...State.persistence, ...p };
         }
         
@@ -369,7 +386,6 @@ function loadStats() {
             if (!State.persistence.mastery[State.lang.id]) State.persistence.mastery[State.lang.id] = {};
         }
         
-        // Handle global streak reset
         const now = new Date();
         const todayStr = now.toDateString();
         
@@ -397,7 +413,6 @@ function updateXPUI() {
     document.getElementById('xp-bar-fill').style.width = (State.persistence.totalXP / xpNext * 100) + '%';
     document.getElementById('global-streak').textContent = `${State.persistence.streak} Day Streak`;
     
-    // Update mobile drawer stats too
     const mLevel = document.querySelector('.m-user-level');
     if (mLevel) {
         mLevel.textContent = State.persistence.level;
@@ -463,7 +478,11 @@ function showScreen(n) {
         if (el) el.classList.add('hidden');
     });
     const target = document.getElementById(`${n}-screen`);
-    if (target) target.classList.remove('hidden');
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('shimmer');
+        setTimeout(() => target.classList.remove('shimmer'), 1000);
+    }
 }
 
 async function fetchTranslation(word, targetLang) {
@@ -471,20 +490,17 @@ async function fetchTranslation(word, targetLang) {
     let gTrans = null;
     let mTrans = null;
 
-    // API 1: Google (via gtx endpoint)
     try {
         const gRes = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(word)}`);
         const gData = await gRes.json();
         if (gData && gData[0] && gData[0][0]) gTrans = gData[0][0][0];
     } catch(e) { console.error("Google API failed", e); }
 
-    // API 2: MyMemory
     try {
         const pair = `en|${targetLang}`;
         const mRes = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=${pair}&mt=1`);
         const mData = await mRes.json();
         if (mData.matches && mData.matches.length > 0) {
-            // Sort by quality and find something not identical to source
             const candidates = mData.matches.sort((a,b) => b.quality - a.quality);
             const match = candidates.find(m => m.translation.toLowerCase() !== word.toLowerCase()) || candidates[0];
             mTrans = match.translation;
@@ -493,34 +509,25 @@ async function fetchTranslation(word, targetLang) {
         }
     } catch(e) { console.error("MyMemory API failed", e); }
 
-    // COMPARISON & SELECTION LOGIC
     if (!gTrans && !mTrans) return word;
     if (gTrans && !mTrans) return gTrans;
     if (!gTrans && mTrans) return mTrans;
-
-    // If they match exactly (ignoring case), perfect
     if (gTrans.toLowerCase() === mTrans.toLowerCase()) return gTrans;
-
-    // For single word inputs, if one API gives a sentence and other gives a word, pick the word
     if (isSingleWord) {
         const gWords = gTrans.split(' ').length;
         const mWords = mTrans.split(' ').length;
-        
-        // If Google gave a single word, trust it.
         if (gWords === 1) return gTrans;
-        
-        // If Google failed to give a single word but MyMemory did, use MyMemory
         if (mWords === 1) return mTrans;
-        
-        // If both are sentences, still trust Google's first word or the whole thing
         return gTrans;
     }
-
-    // For phrases, Google usually has better grammar
     return gTrans;
 }
 
 function init() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log("SW failed", err));
+    }
+
     document.getElementById('year').textContent = new Date().getFullYear();
     ui.progressBar = document.getElementById('progress-bar'); ui.question = document.getElementById('question-display'); ui.options = document.getElementById('options-grid');
     ui.score = document.getElementById('score-counter'); ui.streak = document.getElementById('streak-counter');
@@ -548,7 +555,6 @@ function init() {
         importer.classList.toggle('hidden');
     };
 
-    // Mobile Menu Listeners
     document.getElementById('menu-toggle').onclick = () => toggleMenu(true);
     document.getElementById('menu-close').onclick = () => toggleMenu(false);
     document.getElementById('menu-overlay').onclick = () => toggleMenu(false);
@@ -607,6 +613,7 @@ function init() {
 
 function startSession() {
     State.wrongQueue = [];
+    State.struggledWords.clear();
     State.currentDict = {};
     State.activeCats.forEach(c => { 
         if (c === 'custom') {
@@ -629,7 +636,6 @@ function startSession() {
     State.score = 0; State.streak = 0; State.qCount = 0; State.sessionAttempts = 0;
     
     if (State.isTestAll || State.isTeachMode) { 
-        State.maxQ = State.isTeachMode && !State.isTestAll ? Math.min(15, State.currentKeys.length) : State.currentKeys.length;
         State.testPool = [...State.currentKeys];
         if (State.isTeachMode && !State.isTestAll) State.testPool = State.testPool.slice(0, 15);
         State.maxQ = State.testPool.length;
@@ -653,16 +659,16 @@ function startSession() {
 
 function nextQuestion() {
     if (State.qCount >= State.maxQ && !['speedMatch', 'flashcards'].includes(State.mode)) { 
-        if (State.isTeachMode && State.wrongQueue.length > 0) {
-            State.testPool = [...State.wrongQueue]; State.wrongQueue = []; State.qCount = 0; State.maxQ = State.testPool.length;
-        } else { endSession(); return; }
+        endSession(); return;
     }
-    State.isProcessing = false; ui.question.style.color = "white"; 
+    State.isProcessing = false; 
+    ui.question.classList.remove('correct-glow', 'shake');
+    ui.question.style.color = "white"; 
     if (State.mode === 'typing') { State.typingInput = ''; updateTypingDisplay(); }
     
     let c;
     if (State.mode === 'flashcards') c = State.flashcards.pool[State.flashcards.index];
-    else c = State.testPool[State.qCount % State.testPool.length];
+    else c = State.testPool[State.qCount];
     
     let a = State.currentDict[c];
     const def = typeof a === 'object' ? a.def : a; 
@@ -712,23 +718,32 @@ function submitAnswer(s, b, e) {
 
         if (correct) { 
             SFX.correct();
+            haptic('success');
             State.score++; State.streak++; 
             if (State.streak > State.maxStreak) State.maxStreak = State.streak; 
-            if (b) b.classList.add('correct', 'pulse-success'); 
+            if (b) b.classList.add('correct', 'pulse-success', 'correct-glow'); 
+            ui.question.classList.add('correct-glow');
             ui.question.style.color = "#10b981";
             if (e) createConfetti(e.clientX, e.clientY);
             State.persistence.mastery[State.lang.id][mKey] = Math.min(5, State.persistence.mastery[State.lang.id][mKey] + 1);
             addXP(10);
         } else { 
             SFX.wrong();
-            document.body.classList.add('shake');
-            setTimeout(() => document.body.classList.remove('shake'), 400);
+            haptic('error');
+            ui.question.classList.add('shake');
+            setTimeout(() => ui.question.classList.remove('shake'), 400);
             State.streak = 0; 
             if (b) b.classList.add('wrong'); 
             ui.question.style.color = "#ef4444"; 
             Array.from(ui.options.children).forEach(btn => { if (btn.textContent.toLowerCase().trim() === target) btn.classList.add('correct'); });
-            if (State.isTeachMode && !State.wrongQueue.includes(State.currentQ.char)) State.wrongQueue.push(State.currentQ.char);
-             State.persistence.mastery[State.lang.id][mKey] = Math.max(0, State.persistence.mastery[State.lang.id][mKey] - 1);
+            
+            State.struggledWords.add(mKey);
+            if (State.isTeachMode) {
+                State.testPool.splice(State.qCount + 1, 0, mKey);
+                State.testPool.splice(State.qCount + 4, 0, mKey);
+                State.maxQ += 2;
+            }
+            State.persistence.mastery[State.lang.id][mKey] = Math.max(0, State.persistence.mastery[State.lang.id][mKey] - 1);
             addXP(2);
         }
         ui.score.textContent = State.score; ui.streak.textContent = State.streak;
@@ -742,6 +757,31 @@ function endSession() {
     document.getElementById('final-acc').textContent = Math.round((State.score/(State.sessionAttempts||1))*100) + '%'; 
     document.getElementById('final-streak').textContent = State.maxStreak; 
     
+    const summaryList = document.getElementById('struggled-list');
+    if (summaryList) {
+        summaryList.innerHTML = '';
+        if (State.struggledWords.size > 0) {
+            document.getElementById('struggled-section').classList.remove('hidden');
+            State.struggledWords.forEach(w => {
+                const item = document.createElement('div');
+                item.className = 'glass-panel !p-4 flex justify-between items-center cursor-pointer hover:bg-white/10 transition-colors';
+                const data = State.currentDict[w];
+                const def = typeof data === 'object' ? data.def : data;
+                item.innerHTML = `
+                    <div class="text-left">
+                        <p class="lang-font font-bold text-white">${w}</p>
+                        <p class="text-[10px] uppercase opacity-50">${def}</p>
+                    </div>
+                    <span class="text-xl">🔊</span>
+                `;
+                item.onclick = () => speak(w);
+                summaryList.appendChild(item);
+            });
+        } else {
+            document.getElementById('struggled-section').classList.add('hidden');
+        }
+    }
+
     const now = new Date().toDateString();
     if (State.score > 0 && State.persistence.lastStreakUpdate !== now) {
         State.persistence.streak++;

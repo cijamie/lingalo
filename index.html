@@ -174,18 +174,22 @@
             <section id="about-screen" class="hidden content-body fade-in">
                 <div class="max-w-2xl w-full glass-panel space-y-8 text-left">
                     <h2 class="text-5xl font-bold serif-font italic text-center mb-12">About Lingalo</h2>
-                    <p class="text-lg">Lingalo is a professional-grade language learning tool designed for rapid mastery of Japanese and Korean script and vocabulary.</p>
+                    <p class="text-lg">Lingalo is a professional-grade language learning tool designed for rapid mastery of Japanese and Korean script, as well as core vocabulary in French and Spanish.</p>
                     <div class="space-y-4">
                         <h4 class="font-bold text-xl">The Branding</h4>
-                        <p class="text-muted">You may notice our logo is an elephant. We chose this because an elephant never forgets, a perfect symbol for your journey toward language mastery and long-term memory retention.</p>
+                        <p class="text-muted">Our logo is an elephant because an elephant never forgets. This represents our commitment to helping you build long-term memory through scientifically-backed learning methods.</p>
                     </div>
                     <div class="space-y-4">
                         <h4 class="font-bold text-xl">The Methodology</h4>
-                        <p class="text-muted">We combine Spaced Repetition (SRS) logic with immediate sensory feedback to create an optimal learning environment. Every session adapts to your personal mastery levels.</p>
+                        <p class="text-muted">We combine Spaced Repetition (SRS) principles with immediate feedback and gamified XP progression. Whether you're learning Hiragana, Hangul, or European vocabulary, our system adapts to your personal performance to keep you in the "Goldilocks zone" of learning.</p>
                     </div>
                     <div class="space-y-4">
-                        <h4 class="font-bold text-xl">Privacy First</h4>
-                        <p class="text-muted">Lingalo does not collect or store your personal data on any server. All your progress is saved locally in your browser's memory. We respect your privacy.</p>
+                        <h4 class="font-bold text-xl">Privacy & Data</h4>
+                        <p class="text-muted">Your data belongs to you. Lingalo operates entirely in your browser; we do not use trackers, and we never store your progress on a server. Everything—your XP, levels, and custom vocabulary—is saved locally on your device via secure browser storage.</p>
+                    </div>
+                    <div class="pt-8 border-t border-white/5">
+                        <p class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-30">Legal & Compliance</p>
+                        <p class="text-xs text-muted mt-2">Lingalo is provided "as is" without warranty of any kind. All language data is curated for educational purposes. By using this site, you agree to local storage of your progress data.</p>
                     </div>
                     <button type="button" onclick="showScreen('language')" class="btn-primary w-full mt-12">Back to Dashboard</button>
                 </div>
@@ -244,7 +248,7 @@
                         <p class="text-sm tracking-widest text-blue-500 uppercase font-bold">Step 1: Choose Path</p>
                         <h2 class="text-6xl font-bold serif-font italic">What are we learning today?</h2>
                     </div>
-                    <div class="grid grid-cols-1 md\:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                    <div class="mode-cards-container">
                         <div class="hero-card" onclick="selectFlow('chars', event)">
                             <div class="flex items-center justify-center h-32 mb-4">
                                 <div class="text-7xl opacity-40 lang-font" id="path-chars-icon">あア</div>
@@ -272,14 +276,14 @@
                         <h2 class="text-5xl font-bold serif-font italic">Refine your focus</h2>
                     </div>
 
-                    <div id="filter-chars" class="hidden grid grid-cols-2 md\:grid-cols-4 gap-6"></div>
+                    <div id="filter-chars" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full px-4"></div>
 
-                    <div id="filter-vocab" class="hidden space-y-12 text-center">
-                        <div class="flex justify-center gap-6 mb-8">
-                            <button type="button" class="btn-outline segment-btn active" onclick="switchVocabTab('curated', event)">Curated</button>
-                            <button type="button" class="btn-outline segment-btn" onclick="switchVocabTab('library', event)">My Library</button>
+                    <div id="filter-vocab" class="hidden space-y-12 text-center w-full">
+                        <div class="flex flex-wrap justify-center gap-4 mb-8 px-4">
+                            <button type="button" class="btn-outline segment-btn active flex-1 min-w-[140px]" onclick="switchVocabTab('curated', event)">Curated</button>
+                            <button type="button" class="btn-outline segment-btn flex-1 min-w-[140px]" onclick="switchVocabTab('library', event)">My Library</button>
                         </div>
-                        <div id="vocab-curated" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+                        <div id="vocab-curated" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4"></div>
                         <div id="vocab-library" class="hidden space-y-8">
                             <div id="custom-word-bank" class="max-h-80 overflow-y-auto space-y-4 custom-scrollbar glass-panel text-left"></div>
                             <button type="button" class="btn-outline w-full" id="custom-cat-btn">+ Add More Words</button>
@@ -431,6 +435,10 @@
                             <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Best Streak</p>
                             <p id="final-streak" class="text-4xl md:text-5xl font-bold text-[var(--accent)]">0</p>
                         </div>
+                    </div>
+                    <div id="struggled-section" class="hidden space-y-4 pt-12">
+                        <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60">Review Struggled Words</p>
+                        <div id="struggled-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
                     </div>
                     <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 pt-8">
                         <button type="button" id="home-btn" class="btn-outline px-10">Main Menu</button>
