@@ -1,4 +1,5 @@
 const State = {
+    kana: 'hiragana',
     mode: 'quiz',
     isReverse: false,
     isTestAll: false,
@@ -31,13 +32,13 @@ const State = {
 };
 
 const DATA = {
-    consonants: { 'ㄱ': 'g', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄹ': 'r', 'ㅁ': 'm', 'ㅂ': 'b', 'ㅅ': 's', 'ㅇ': 'ng', 'ㅈ': 'j', 'ㅊ': 'ch', 'ㅋ': 'k', 'ㅌ': 't', 'ㅍ': 'p', 'ㅎ': 'h' },
-    doubleConsonants: { 'ㄲ': 'kk', 'ㄸ': 'tt', 'ㅃ': 'pp', 'ㅆ': 'ss', 'ㅉ': 'jj' },
-    vowels: { 'ㅏ': 'a', 'ㅑ': 'ya', 'ㅓ': 'eo', 'ㅕ': 'yeo', 'ㅗ': 'o', 'ㅛ': 'yo', 'ㅜ': 'u', 'ㅠ': 'yu', 'ㅡ': 'eu', 'ㅣ': 'i' },
-    diphthongs: { 'ㅐ': 'ae', 'ㅒ': 'yae', 'ㅔ': 'e', 'ㅖ': 'ye', 'ㅘ': 'wa', 'ㅙ': 'wae', 'ㅚ': 'oe', 'ㅝ': 'wo', 'ㅞ': 'we', 'ㅟ': 'wi', 'ㅢ': 'ui' },
-    vocabulary: { '사과': { rom: 'sagwa', def: 'Apple' }, '우유': { rom: 'uyu', def: 'Milk' }, '고기': { rom: 'gogi', def: 'Meat' }, '나라': { rom: 'nara', def: 'Country' }, '도시': { rom: 'dosi', def: 'City' }, '아이': { rom: 'ai', def: 'Child' }, '오이': { rom: 'oi', def: 'Cucumber' }, '모자': { rom: 'moja', def: 'Hat' }, '학교': { rom: 'hakgyo', def: 'School' }, '바다': { rom: 'bada', def: 'Sea' }, '하늘': { rom: 'haneul', def: 'Sky' }, '물': { rom: 'mul', def: 'Water' }, '사랑': { rom: 'sarang', def: 'Love' } },
-    travel: { '안녕하세요': { rom: 'annyeonghaseyo', def: 'Hello' }, '감사합니다': { rom: 'gamsahamnida', def: 'Thank you' }, '화장실': { rom: 'hwajangsil', def: 'Restroom' }, '여권': { rom: 'yeogwon', def: 'Passport' }, '비행기': { rom: 'bihaenggi', def: 'Airplane' }, '택시': { rom: 'taeksi', def: 'Taxi' }, '한국': { rom: 'hanguk', def: 'Korea' } },
-    school: { '선생님': { rom: 'seonsaengnim', def: 'Teacher' }, '학생': { rom: 'haksaeng', def: 'Student' }, '교실': { rom: 'gyosil', def: 'Classroom' }, '책': { rom: 'chaek', def: 'Book' }, '대학교': { rom: 'daehakgyo', def: 'University' }, '친구': { rom: 'chingu', def: 'Friend' } }
+    hiragana: { 'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o', 'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko', 'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so', 'た': 'ta', 'ち': 'chi', 'つ': 'tsu', 'て': 'te', 'と': 'to', 'な': 'na', 'に': 'ni', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no', 'は': 'ha', 'ひ': 'hi', 'ふ': 'fu', 'へ': 'he', 'ほ': 'ho', 'ま': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo', 'や': 'ya', 'ゆ': 'yu', 'よ': 'yo', 'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro', 'わ': 'wa', 'を': 'wo', 'ん': 'n' },
+    katakana: { 'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o', 'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko', 'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so', 'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'テ': 'te', 'ト': 'to', 'ナ': 'na', 'ニ': 'ni', 'ヌ': 'nu', 'ネ': 'ne', 'ノ': 'no', 'ハ': 'ha', 'ヒ': 'hi', 'フ': 'fu', 'ヘ': 'he', 'ホ': 'ho', 'マ': 'ma', 'ミ': 'mi', 'ム': 'mu', 'メ': 'me', 'モ': 'mo', 'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo', 'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro', 'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n' },
+    dakuten: { 'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go', 'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo', 'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do', 'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo', 'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po', 'ガ': 'ga', 'ギ': 'gi', 'グ': 'gu', 'ゲ': 'ge', 'ゴ': 'go', 'ザ': 'za', 'ジ': 'ji', 'ズ': 'zu', 'ゼ': 'ze', 'ゾ': 'zo', 'ダ': 'da', 'ヂ': 'ji', 'ヅ': 'zu', 'デ': 'de', 'ド': 'do', 'バ': 'ba', 'ビ': 'bi', 'ブ': 'bu', 'ベ': 'be', 'ボ': 'bo', 'パ': 'pa', 'ピ': 'pi', 'プ': 'pu', 'ペ': 'pe', 'ポ': 'po' },
+    combos: { 'きゃ': 'kya', 'きゅ': 'kyu', 'きょ': 'kyo', 'しゃ': 'sha', 'しゅ': 'shu', 'しょ': 'sho', 'ちゃ': 'cha', 'ちゅ': 'chu', 'ちょ': 'cho', 'にゃ': 'nya', 'にゅ': 'nyu', 'にょ': 'nyo', 'ひゃ': 'hya', 'ひゅ': 'hyu', 'ひょ': 'hyo', 'みゃ': 'mya', 'みゅ': 'myu', 'みょ': 'myo', 'りゃ': 'rya', 'りゅ': 'ryu', 'りょ': 'ryo', 'ぎゃ': 'gya', 'ぎゅ': 'gyu', 'ぎょ': 'gyo', 'じゃ': 'ja', 'じゅ': 'ju', 'じょ': 'jo', 'びゃ': 'bya', 'びゅ': 'byu', 'びょ': 'byo', 'ぴゃ': 'pya', 'ぴゅ': 'pyu', 'ぴょ': 'pyo' },
+    vocabulary: { 'りんご': { rom: 'ringo', def: 'Apple' }, 'ねこ': { rom: 'neko', def: 'Cat' }, 'いぬ': { rom: 'inu', def: 'Dog' }, 'みず': { rom: 'mizu', def: 'Water' }, 'おちゃ': { rom: 'ocha', def: 'Tea' }, 'さかな': { rom: 'sakana', def: 'Fish' }, 'とり': { rom: 'tori', def: 'Bird' }, 'いえ': { rom: 'ie', def: 'House' }, 'くるま': { rom: 'kuruma', def: 'Car' }, 'ほん': { rom: 'hon', def: 'Book' } },
+    travel: { 'こんにちは': { rom: 'konnichiwa', def: 'Hello' }, 'ありがとう': { rom: 'arigatou', def: 'Thank you' }, 'すみません': { rom: 'sumimasen', def: 'Excuse me' }, 'はい': { rom: 'hai', def: 'Yes' }, 'いいえ': { rom: 'iie', def: 'No' }, 'トイレ': { rom: 'toire', def: 'Toilet' }, 'えき': { rom: 'eki', def: 'Station' }, 'ホテル': { rom: 'hoteru', def: 'Hotel' } },
+    school: { 'せんせい': { rom: 'sensei', def: 'Teacher' }, 'がくせい': { rom: 'gakusei', def: 'Student' }, 'きょうしつ': { rom: 'kyoushitsu', def: 'Classroom' }, 'つくえ': { rom: 'tsukue', def: 'Desk' }, 'いす': { rom: 'isu', def: 'Chair' }, 'ともだち': { rom: 'tomodachi', def: 'Friend' } }
 };
 
 const ui = {};
@@ -62,13 +63,13 @@ function init() {
 
 function loadStats() {
     try {
-        const s = localStorage.getItem('quickhangul_stats');
+        const s = localStorage.getItem('quickkana_stats');
         if (s) State.persistence = JSON.parse(s);
     } catch(e) {}
 }
 
 function saveStats() {
-    localStorage.setItem('quickhangul_stats', JSON.stringify(State.persistence));
+    localStorage.setItem('quickkana_stats', JSON.stringify(State.persistence));
 }
 
 function showScreen(n) {
@@ -116,10 +117,16 @@ function setMode(m, el) {
     if (el) el.classList.add('selected');
 }
 
+function toggleOption(id, key) {
+    const el = document.getElementById(id);
+    State[key] = !State[key];
+    el.classList.toggle('selected', State[key]);
+}
+
 function startSession() {
     State.currentDict = {};
     if (State.topCategory === 'chars') {
-        ['consonants', 'vowels', 'doubleConsonants', 'diphthongs'].forEach(c => {
+        ['hiragana', 'katakana', 'dakuten', 'combos'].forEach(c => {
             if (State.activeCats && State.activeCats.includes(c)) Object.assign(State.currentDict, DATA[c]);
         });
     } else {
@@ -240,7 +247,7 @@ function startSpeedMatch() {
 function speak(t) {
     window.speechSynthesis.cancel();
     const m = new SpeechSynthesisUtterance(t);
-    m.lang = 'ko-KR';
+    m.lang = 'ja-JP';
     window.speechSynthesis.speak(m);
 }
 
@@ -255,7 +262,7 @@ function updateTypingDisplay() {
 }
 
 function renderKeyboard() {
-    const layout = [['ㅂ','ㅈ','ㄷ','ㄱ','ㅅ','ㅛ','ㅕ','ㅑ','ㅐ','ㅔ'], ['ㅁ','ㄴ','ㅇ','ㄹ','ㅎ','ㅗ','ㅓ','ㅏ','ㅣ'], ['ㅋ','ㅌ','ㅊ','ㅍ','ㅠ','ㅜ','ㅡ']];
+    const layout = [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l'], ['z','x','c','v','b','n','m']];
     const c = document.getElementById('virtual-keyboard');
     c.innerHTML = '';
     layout.forEach(r => {

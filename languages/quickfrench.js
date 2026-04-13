@@ -29,9 +29,9 @@ const State = {
 };
 
 const DATA = {
-    vocabulary: { 'Pomme': 'Apple', 'Pain': 'Bread', 'Eau': 'Water', 'Lait': 'Milk', 'Chat': 'Cat', 'Chien': 'Dog', 'Maison': 'House', 'Voiture': 'Car', 'Livre': 'Book', 'École': 'School', 'Ami': 'Friend', 'Famille': 'Family', 'Amour': 'Love' },
-    travel: { 'Bonjour': 'Hello', 'Merci': 'Thank you', 'Pardon': 'Excuse me', 'Oui': 'Yes', 'Non': 'No', 'Toilettes': 'Restroom', 'Gare': 'Station', 'Hôtel': 'Hotel', 'Aéroport': 'Airport', 'Taxi': 'Taxi', 'Passeport': 'Passport' },
-    school: { 'Professeur': 'Teacher', 'Étudiant': 'Student', 'Classe': 'Classroom', 'Bureau': 'Desk', 'Chaise': 'Chair', 'Crayon': 'Pencil', 'Stylo': 'Pen', 'Cahier': 'Notebook' }
+    vocabulary: { 'Pomme': { rom: 'Pomme', def: 'Apple' }, 'Pain': { rom: 'Pain', def: 'Bread' }, 'Eau': { rom: 'Eau', def: 'Water' }, 'Lait': { rom: 'Lait', def: 'Milk' }, 'Chat': { rom: 'Chat', def: 'Cat' }, 'Chien': { rom: 'Chien', def: 'Dog' }, 'Maison': { rom: 'Maison', def: 'House' }, 'Voiture': { rom: 'Voiture', def: 'Car' }, 'Livre': { rom: 'Livre', def: 'Book' }, 'École': { rom: 'École', def: 'School' }, 'Ami': { rom: 'Ami', def: 'Friend' }, 'Famille': { rom: 'Famille', def: 'Family' }, 'Amour': { rom: 'Amour', def: 'Love' } },
+    travel: { 'Bonjour': { rom: 'Bonjour', def: 'Hello' }, 'Merci': { rom: 'Merci', def: 'Thank you' }, 'Pardon': { rom: 'Pardon', def: 'Excuse me' }, 'Oui': { rom: 'Oui', def: 'Yes' }, 'Non': { rom: 'Non', def: 'No' }, 'Toilettes': { rom: 'Toilettes', def: 'Restroom' }, 'Gare': { rom: 'Gare', def: 'Station' }, 'Hôtel': { rom: 'Hôtel', def: 'Hotel' }, 'Aéroport': { rom: 'Aéroport', def: 'Airport' }, 'Taxi': { rom: 'Taxi', def: 'Taxi' }, 'Passeport': { rom: 'Passeport', def: 'Passport' } },
+    school: { 'Professeur': { rom: 'Professeur', def: 'Teacher' }, 'Étudiant': { rom: 'Étudiant', def: 'Student' }, 'Classe': { rom: 'Classe', def: 'Classroom' }, 'Bureau': { rom: 'Bureau', def: 'Desk' }, 'Chaise': { rom: 'Chaise', def: 'Chair' }, 'Crayon': { rom: 'Crayon', def: 'Pencil' }, 'Stylo': { rom: 'Stylo', def: 'Pen' }, 'Cahier': { rom: 'Cahier', def: 'Notebook' } }
 };
 
 const ui = {};
@@ -110,6 +110,12 @@ function setMode(m, el) {
     if (el) el.classList.add('selected');
 }
 
+function toggleOption(id, key) {
+    const el = document.getElementById(id);
+    State[key] = !State[key];
+    el.classList.toggle('selected', State[key]);
+}
+
 function startSession() {
     State.currentDict = {};
     ['vocabulary', 'travel', 'school'].forEach(c => {
@@ -152,15 +158,23 @@ function nextQuestion() {
     else c = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
 
     let a = State.currentDict[c];
+    const def = typeof a === 'object' ? a.def : a;
+    const rom = typeof a === 'object' ? a.rom : a;
 
-    State.currentQ = { display: c, answer: a };
+    State.currentQ = { 
+        char: c,
+        answer: State.isReverse ? c : def, 
+        display: State.isReverse ? def : c,
+        rom: rom,
+        def: def
+    };
     ui.question.textContent = State.currentQ.display;
 
     if (!['typing', 'flashcards'].includes(State.mode)) {
         const ops = [State.currentQ.answer];
         while (ops.length < Math.min(4, State.currentKeys.length)) {
             const k = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
-            const v = State.currentDict[k];
+            const v = State.isReverse ? k : (typeof State.currentDict[k] === 'object' ? State.currentDict[k].def : State.currentDict[k]);
             if (!ops.includes(v)) ops.push(v);
         }
         ops.sort(() => Math.random() - 0.5);
@@ -213,9 +227,17 @@ function startSpeedMatch() {
     nextQuestion();
 }
 
+function speak(t) {
+    window.speechSynthesis.cancel();
+    const m = new SpeechSynthesisUtterance(t);
+    m.lang = 'fr-FR';
+    window.speechSynthesis.speak(m);
+}
+
 function moveFlashcard(d) {
     State.flashcards.index = (State.flashcards.index + d + State.flashcards.pool.length) % State.flashcards.pool.length;
     nextQuestion();
+    speak(State.currentQ.char);
 }
 
 function updateTypingDisplay() {

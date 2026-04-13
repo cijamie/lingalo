@@ -29,9 +29,9 @@ const State = {
 };
 
 const DATA = {
-    vocabulary: { 'Manzana': 'Apple', 'Gato': 'Cat', 'Perro': 'Dog', 'Agua': 'Water', 'Té': 'Tea', 'Pescado': 'Fish', 'Pájaro': 'Bird', 'Casa': 'House', 'Coche': 'Car', 'Libro': 'Book', 'Sol': 'Sun', 'Luna': 'Moon', 'Cielo': 'Sky', 'Flor': 'Flower', 'Árbol': 'Tree' },
-    travel: { 'Hola': 'Hello', 'Gracias': 'Thank you', 'Perdón': 'Excuse me', 'Sí': 'Yes', 'No': 'No', 'Baño': 'Restroom', 'Estación': 'Station', 'Hotel': 'Hotel', 'Aeropuerto': 'Airport', 'Billete': 'Ticket', 'Pasaporte': 'Passport' },
-    school: { 'Profesor': 'Teacher', 'Estudiante': 'Student', 'Clase': 'Classroom', 'Escritorio': 'Desk', 'Silla': 'Chair', 'Lápiz': 'Pencil', 'Bolígrafo': 'Pen', 'Cuaderno': 'Notebook', 'Escuela': 'School' }
+    vocabulary: { 'Manzana': { rom: 'Manzana', def: 'Apple' }, 'Gato': { rom: 'Gato', def: 'Cat' }, 'Perro': { rom: 'Perro', def: 'Dog' }, 'Agua': { rom: 'Agua', def: 'Water' }, 'Té': { rom: 'Té', def: 'Tea' }, 'Pescado': { rom: 'Pescado', def: 'Fish' }, 'Pájaro': { rom: 'Pájaro', def: 'Bird' }, 'Casa': { rom: 'Casa', def: 'House' }, 'Coche': { rom: 'Coche', def: 'Car' }, 'Libro': { rom: 'Libro', def: 'Book' }, 'Sol': { rom: 'Sol', def: 'Sun' }, 'Luna': { rom: 'Luna', def: 'Moon' }, 'Cielo': { rom: 'Cielo', def: 'Sky' }, 'Flor': { rom: 'Flor', def: 'Flower' }, 'Árbol': { rom: 'Árbol', def: 'Tree' } },
+    travel: { 'Hola': { rom: 'Hola', def: 'Hello' }, 'Gracias': { rom: 'Gracias', def: 'Thank you' }, 'Perdón': { rom: 'Perdón', def: 'Excuse me' }, 'Sí': { rom: 'Sí', def: 'Yes' }, 'No': { rom: 'No', def: 'No' }, 'Baño': { rom: 'Baño', def: 'Restroom' }, 'Estación': { rom: 'Estación', def: 'Station' }, 'Hotel': { rom: 'Hotel', def: 'Hotel' }, 'Aeropuerto': { rom: 'Aeropuerto', def: 'Airport' }, 'Billete': { rom: 'Billete', def: 'Ticket' }, 'Pasaporte': { rom: 'Pasaporte', def: 'Passport' } },
+    school: { 'Profesor': { rom: 'Profesor', def: 'Teacher' }, 'Estudiante': { rom: 'Estudiante', def: 'Student' }, 'Clase': { rom: 'Clase', def: 'Classroom' }, 'Escritorio': { rom: 'Escritorio', def: 'Desk' }, 'Silla': { rom: 'Silla', def: 'Chair' }, 'Lápiz': { rom: 'Lápiz', def: 'Pencil' }, 'Bolígrafo': { rom: 'Bolígrafo', def: 'Pen' }, 'Cuaderno': { rom: 'Cuaderno', def: 'Notebook' }, 'Escuela': { rom: 'Escuela', def: 'School' } }
 };
 
 const ui = {};
@@ -110,6 +110,12 @@ function setMode(m, el) {
     if (el) el.classList.add('selected');
 }
 
+function toggleOption(id, key) {
+    const el = document.getElementById(id);
+    State[key] = !State[key];
+    el.classList.toggle('selected', State[key]);
+}
+
 function startSession() {
     State.currentDict = {};
     ['vocabulary', 'travel', 'school'].forEach(c => {
@@ -152,15 +158,23 @@ function nextQuestion() {
     else c = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
 
     let a = State.currentDict[c];
+    const def = typeof a === 'object' ? a.def : a;
+    const rom = typeof a === 'object' ? a.rom : a;
 
-    State.currentQ = { display: c, answer: a };
+    State.currentQ = { 
+        char: c,
+        answer: State.isReverse ? c : def, 
+        display: State.isReverse ? def : c,
+        rom: rom,
+        def: def
+    };
     ui.question.textContent = State.currentQ.display;
 
     if (!['typing', 'flashcards'].includes(State.mode)) {
         const ops = [State.currentQ.answer];
         while (ops.length < Math.min(4, State.currentKeys.length)) {
             const k = State.currentKeys[Math.floor(Math.random()*State.currentKeys.length)];
-            const v = State.currentDict[k];
+            const v = State.isReverse ? k : (typeof State.currentDict[k] === 'object' ? State.currentDict[k].def : State.currentDict[k]);
             if (!ops.includes(v)) ops.push(v);
         }
         ops.sort(() => Math.random() - 0.5);
@@ -213,9 +227,17 @@ function startSpeedMatch() {
     nextQuestion();
 }
 
+function speak(t) {
+    window.speechSynthesis.cancel();
+    const m = new SpeechSynthesisUtterance(t);
+    m.lang = 'es-ES';
+    window.speechSynthesis.speak(m);
+}
+
 function moveFlashcard(d) {
     State.flashcards.index = (State.flashcards.index + d + State.flashcards.pool.length) % State.flashcards.pool.length;
     nextQuestion();
+    speak(State.currentQ.char);
 }
 
 function updateTypingDisplay() {

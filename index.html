@@ -9,18 +9,18 @@
     <meta name="keywords" content="Japanese, Korean, Hiragana, Katakana, Hangul, SRS, Language Learning">
     <meta property="og:title" content="Lingalo - Master Languages">
     <meta property="og:description" content="Elevate your language skills with a professional, dashboard-driven learning experience.">
-    <meta property="og:image" content="logo.png">
+    <meta property="og:image" content="assets/logo.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0b0b0b">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="ambient-light">
@@ -31,7 +31,7 @@
     <!-- MOBILE HEADER -->
     <header class="mobile-header">
         <div class="flex items-center gap-3">
-            <img src="logo.png" alt="Logo" style="height: 32px; width: auto;">
+            <img src="assets/logo.png" alt="Logo" style="height: 32px; width: auto;">
             <h1 class="logo-text" style="font-size: 1.25rem;">Lingalo</h1>
         </div>
         <button type="button" id="menu-toggle" class="btn-outline" style="padding: 0.5rem 0.75rem;">
@@ -43,7 +43,7 @@
     <div id="mobile-drawer" class="mobile-drawer">
         <div class="flex justify-between items-center mb-8">
             <div class="flex items-center gap-3">
-                <img src="logo.png" alt="Logo" style="height: 32px; width: auto;">
+                <img src="assets/logo.png" alt="Logo" style="height: 32px; width: auto;">
                 <h1 class="logo-text" style="font-size: 1.5rem;">Lingalo</h1>
             </div>
             <button type="button" id="menu-close" class="text-white opacity-50">&times;</button>
@@ -57,35 +57,39 @@
             <div class="xp-bar-bg"><div class="xp-bar-fill m-xp-bar-fill"></div></div>
         </div>
 
-        <nav class="nav-links">
-            <div class="nav-item" data-lang="japanese" onclick="selectLanguage('japanese'); toggleMenu(false)">
-                <span>🇯🇵</span>
-                Japanese
-            </div>
-            <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean'); toggleMenu(false)">
-                <span>🇰🇷</span>
-                Korean
-            </div>
-            <div class="nav-item" data-lang="french" onclick="selectLanguage('french'); toggleMenu(false)">
-                <span>🇫🇷</span>
-                French
-            </div>
-            <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish'); toggleMenu(false)">
-                <span>🇪🇸</span>
-                Spanish
-            </div>
-            <div class="nav-item" onclick="showSettings(); toggleMenu(false)">
-                <span>⚙️</span>
-                Settings
-            </div>
-        </nav>
+            <nav class="nav-links">
+                <div class="nav-item" data-lang="japanese" onclick="selectLanguage('japanese'); toggleMenu(false)">
+                    <span>🇯🇵</span>
+                    Japanese
+                </div>
+                <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean'); toggleMenu(false)">
+                    <span>🇰🇷</span>
+                    Korean
+                </div>
+                <div class="nav-item" data-lang="french" onclick="selectLanguage('french'); toggleMenu(false)">
+                    <span>🇫🇷</span>
+                    French
+                </div>
+                <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish'); toggleMenu(false)">
+                    <span>🇪🇸</span>
+                    Spanish
+                </div>
+                <div class="nav-item" data-lang="german" onclick="selectLanguage('german'); toggleMenu(false)">
+                    <span>🇩🇪</span>
+                    German
+                </div>
+                <div class="nav-item" onclick="showSettings(); toggleMenu(false)">
+                    <span>⚙️</span>
+                    Settings
+                </div>
+            </nav>
     </div>
 
     <div class="app-container">
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="logo-container flex items-center gap-4">
-                <img src="logo.png" alt="Logo" style="height: 48px; width: auto;">
+                <img src="assets/logo.png" alt="Logo" style="height: 48px; width: auto;">
                 <h1 class="logo-text">Lingalo</h1>
             </div>
 
@@ -116,6 +120,10 @@
                 <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish')">
                     <span>🇪🇸</span>
                     Spanish
+                </div>
+                <div class="nav-item" data-lang="german" onclick="selectLanguage('german')">
+                    <span>🇩🇪</span>
+                    German
                 </div>
                 <div class="nav-item" id="nav-settings" onclick="showSettings()">
                     <span>⚙️</span>
@@ -223,6 +231,11 @@
                             <h3 class="text-2xl font-bold mb-2">Spanish</h3>
                             <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
                         </div>
+                        <div class="hero-card" onclick="selectLanguage('german')">
+                            <div class="text-6xl mb-6">🇩🇪</div>
+                            <h3 class="text-2xl font-bold mb-2">German</h3>
+                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -286,7 +299,10 @@
                         <div id="vocab-curated" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4"></div>
                         <div id="vocab-library" class="hidden space-y-8">
                             <div id="custom-word-bank" class="max-h-80 overflow-y-auto space-y-4 custom-scrollbar glass-panel text-left"></div>
-                            <button type="button" class="btn-outline w-full" id="custom-cat-btn">+ Add More Words</button>
+                            <div class="flex gap-4">
+                                <button type="button" class="btn-outline flex-grow" id="custom-cat-btn">+ Add More Words</button>
+                                <button type="button" class="btn-outline !text-red-500 !border-red-500/20 hover:!bg-red-500/10" onclick="if(confirm('Clear all words in this library?')) clearLibrary()">🗑️ Clear</button>
+                            </div>
                             <div id="custom-importer" class="hidden glass-panel text-left fade-in">
                                 <div id="importer-input-step" class="space-y-4">
                                     <textarea id="custom-input" placeholder="apple, water, cat..." class="w-full h-40 bg-black/60 border border-white/10 rounded-2xl p-6 text-white outline-none focus:border-blue-500 transition-all text-lg"></textarea>
@@ -449,6 +465,6 @@
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

@@ -114,6 +114,37 @@ const LANGUAGES = {
             "how are you": "cómo estás", "goodbye": "adiós", "please": "por favor", "thank you": "gracias"
         },
         keyboardLayout: [['q','w','e','r','t','y','u','i','o','p'], ['a','s','d','f','g','h','j','k','l','ñ'], ['z','x','c','v','b','n','m']]
+    },
+    german: {
+        id: 'german',
+        name: 'German',
+        accent: '#f39c12',
+        accentGlow: 'rgba(243, 156, 18, 0.4)',
+        font: "'Inter', sans-serif",
+        icon: '🇩🇪',
+        title: 'QuickGerman',
+        subtitle: 'Master German Vocabulary',
+        tags: 'Vocabulary • Phrases • Travel',
+        pathIcons: ['ABC', 'Apfel'],
+        fundamentals: [],
+        fundamentalLabels: [],
+        reverseDesc: 'Guess German from English',
+        speechLang: 'de-DE',
+        data: {
+            vocabulary: { 'Apfel': { rom: 'Apfel', def: 'Apple' }, 'Katze': { rom: 'Katze', def: 'Cat' }, 'Hund': { rom: 'Hund', def: 'Dog' }, 'Wasser': { rom: 'Wasser', def: 'Water' }, 'Tee': { rom: 'Tee', def: 'Tea' }, 'Fisch': { rom: 'Fisch', def: 'Fish' }, 'Vogel': { rom: 'Vogel', def: 'Bird' }, 'Haus': { rom: 'Haus', def: 'House' }, 'Auto': { rom: 'Auto', def: 'Car' }, 'Buch': { rom: 'Buch', def: 'Book' }, 'Sonne': { rom: 'Sonne', def: 'Sun' }, 'Mond': { rom: 'Mond', def: 'Moon' }, 'Himmel': { rom: 'Himmel', def: 'Sky' }, 'Blume': { rom: 'Blume', def: 'Flower' }, 'Baum': { rom: 'Baum', def: 'Tree' } },
+            travel: { 'Hallo': { rom: 'Hallo', def: 'Hello' }, 'Danke': { rom: 'Danke', def: 'Thank you' }, 'Entschuldigung': { rom: 'Entschuldigung', def: 'Excuse me' }, 'Ja': { rom: 'Ja', def: 'Yes' }, 'Nein': { rom: 'Nein', def: 'No' }, 'Toilette': { rom: 'Toilette', def: 'Toilet' }, 'Bahnhof': { rom: 'Bahnhof', def: 'Station' }, 'Hotel': { rom: 'Hotel', def: 'Hotel' }, 'Flughafen': { rom: 'Flughafen', def: 'Airport' }, 'Ticket': { rom: 'Ticket', def: 'Ticket' } },
+            school: { 'Lehrer': { rom: 'Lehrer', def: 'Teacher' }, 'Student': { rom: 'Student', def: 'Student' }, 'Klassenzimmer': { rom: 'Klassenzimmer', def: 'Classroom' }, 'Schreibtisch': { rom: 'Schreibtisch', def: 'Desk' }, 'Stuhl': { rom: 'Stuhl', def: 'Chair' }, 'Freund': { rom: 'Freund', def: 'Friend' }, 'Stift': { rom: 'Stift', def: 'Pen' }, 'Heft': { rom: 'Heft', def: 'Notebook' }, 'Schule': { rom: 'Schule', def: 'School' } }
+        },
+        romanMap: {},
+        basicWords: { 
+            "hello": "hallo", "hi": "hallo", "water": "wasser", "apple": "apfel", "love": "liebe", "school": "schule",
+            "mom": "mama", "mother": "mutter", "dad": "papa", "father": "vater", "daughter": "tochter", "son": "sohn",
+            "brother": "bruder", "sister": "schwester", "friend": "freund", "cat": "katze", "dog": "hund",
+            "house": "haus", "car": "auto", "book": "buch", "sun": "sonne", "moon": "mond",
+            "how are you": "wie geht es dir", "goodbye": "auf wiedersehen", "please": "bitte", "thank you": "danke",
+            "german": "deutsch"
+        },
+        keyboardLayout: [['q','w','e','r','t','z','u','i','o','p','ü'], ['a','s','d','f','g','h','j','k','l','ö','ä'], ['y','x','c','v','b','n','m','ß']]
     }
 };
 
@@ -204,6 +235,11 @@ function selectLanguage(langId) {
         charsCard.style.display = State.lang.fundamentals.length === 0 ? 'none' : 'flex';
     }
 
+    const kanaToggle = document.getElementById('opt-kana-only');
+    if (kanaToggle) {
+        kanaToggle.classList.toggle('hidden', langId !== 'japanese');
+    }
+
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.toggle('active', item.dataset.lang === langId);
     });
@@ -229,6 +265,17 @@ function selectLanguage(langId) {
         b.onclick = () => toggleCategory(f, b);
         vocabCurated.appendChild(b);
     });
+
+    // Reset Importer UI
+    document.getElementById('custom-input').value = '';
+    document.getElementById('preview-list').innerHTML = '';
+    document.getElementById('import-status').textContent = '';
+    document.getElementById('importer-input-step').classList.remove('hidden');
+    document.getElementById('importer-preview-step').classList.add('hidden');
+    document.getElementById('custom-importer').classList.add('hidden');
+
+    // Reset Vocab Tabs to 'Curated'
+    switchVocabTab('curated');
 
     loadStats();
     
@@ -538,6 +585,7 @@ function init() {
     });
 
     document.getElementById('opt-reverse').onclick = () => toggleOption('opt-reverse', 'isReverse');
+    document.getElementById('opt-kana-only').onclick = () => toggleOption('opt-kana-only', 'isKanaOnly');
     document.getElementById('opt-test-all').onclick = () => toggleOption('opt-test-all', 'isTestAll');
     document.getElementById('opt-teach').onclick = () => toggleOption('opt-teach', 'isTeachMode');
 
@@ -572,6 +620,7 @@ function init() {
         if (State.lang.id === 'korean') targetLang = 'ko';
         if (State.lang.id === 'french') targetLang = 'fr';
         if (State.lang.id === 'spanish') targetLang = 'es';
+        if (State.lang.id === 'german') targetLang = 'de';
 
         for (const word of words) {
             let trans = State.lang.basicWords[word.toLowerCase()] || '';
@@ -673,8 +722,13 @@ function nextQuestion() {
     let a = State.currentDict[c];
     const def = typeof a === 'object' ? a.def : a; 
     const rom = typeof a === 'object' ? a.rom : a;
+    const kana = (typeof a === 'object' && a.kana) ? a.kana : c;
     
-    State.currentQ = { char: c, answer: State.isReverse ? c : def, display: State.isReverse ? def : c, rom: rom, def: def };
+    let display = c;
+    if (State.isReverse) display = def;
+    else if (State.isKanaOnly && State.lang.id === 'japanese') display = kana;
+
+    State.currentQ = { char: c, answer: State.isReverse ? c : def, display: display, rom: rom, def: def, kana: kana };
     
     const score = (State.persistence.mastery[State.lang.id] || {})[c] || 0;
     let masteryHTML = '<div class="mastery-dots">';

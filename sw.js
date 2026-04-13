@@ -2,10 +2,10 @@ const CACHE_NAME = 'lingalo-v3';
 const ASSETS = [
   '/',
   'index.html',
-  'styles.css',
-  'app.js',
-  'logo.png',
-  'favicon.ico',
+  'css/styles.css',
+  'js/app.js',
+  'assets/logo.png',
+  'assets/favicon.ico',
   'manifest.json'
 ];
 

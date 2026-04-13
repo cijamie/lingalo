@@ -4,7 +4,7 @@ Lingalo is a sleek, professional language learning platform designed for masteri
 
 **🌐 Live Demo: [https://cijamie.github.io/lingalo/](https://cijamie.github.io/lingalo/)**
 
-![Lingalo Logo](logo.png)
+![Lingalo Logo](assets/logo.png)
 
 ## 🚀 Features
 
