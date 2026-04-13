@@ -215,24 +215,34 @@ function createConfetti(x, y) {
 
 function selectLanguage(langId) {
     State.lang = LANGUAGES[langId];
+    if (!State.lang) return;
+
     document.documentElement.style.setProperty('--accent', State.lang.accent);
     document.documentElement.style.setProperty('--accent-glow', State.lang.accentGlow);
     document.documentElement.style.setProperty('--font-current', State.lang.font);
     
-    document.getElementById('orb-1').style.background = `radial-gradient(circle, ${State.lang.accent}, transparent)`;
+    const orb1 = document.getElementById('orb-1');
+    if (orb1) orb1.style.background = `radial-gradient(circle, ${State.lang.accent}, transparent)`;
     
-    document.getElementById('intro-emoji').textContent = State.lang.icon;
-    document.getElementById('intro-title').textContent = State.lang.title;
-    document.getElementById('intro-subtitle').textContent = State.lang.subtitle;
-    document.getElementById('intro-tags').textContent = State.lang.tags;
-    document.getElementById('path-chars-icon').textContent = State.lang.pathIcons[0];
-    document.getElementById('path-vocab-icon').textContent = State.lang.pathIcons[1];
-    document.getElementById('reverse-desc').textContent = State.lang.reverseDesc;
+    const introEmoji = document.getElementById('intro-emoji');
+    if (introEmoji) introEmoji.textContent = State.lang.icon;
+    const introTitle = document.getElementById('intro-title');
+    if (introTitle) introTitle.textContent = State.lang.title;
+    const introSubtitle = document.getElementById('intro-subtitle');
+    if (introSubtitle) introSubtitle.textContent = State.lang.subtitle;
+    const introTags = document.getElementById('intro-tags');
+    if (introTags) introTags.textContent = State.lang.tags;
+    const pathCharsIcon = document.getElementById('path-chars-icon');
+    if (pathCharsIcon) pathCharsIcon.textContent = State.lang.pathIcons[0];
+    const pathVocabIcon = document.getElementById('path-vocab-icon');
+    if (pathVocabIcon) pathVocabIcon.textContent = State.lang.pathIcons[1];
+    const reverseDesc = document.getElementById('reverse-desc');
+    if (reverseDesc) reverseDesc.textContent = State.lang.reverseDesc;
     
     // Hide characters option if no fundamentals
-    const charsCard = document.querySelector('[onclick*="selectFlow(\'chars\'"]');
+    const charsCard = document.querySelector('div[onclick*="selectFlow(\'chars\'"]');
     if (charsCard) {
-        charsCard.style.display = State.lang.fundamentals.length === 0 ? 'none' : 'flex';
+        charsCard.style.display = (State.lang.fundamentals && State.lang.fundamentals.length === 0) ? 'none' : 'flex';
     }
 
     const kanaToggle = document.getElementById('opt-kana-only');
@@ -245,34 +255,47 @@ function selectLanguage(langId) {
     });
 
     const filterChars = document.getElementById('filter-chars');
-    filterChars.innerHTML = '';
-    State.lang.fundamentals.forEach((f, i) => {
-        const b = document.createElement('button');
-        b.className = 'btn-outline text-sm uppercase tracking-widest font-bold';
-        b.textContent = State.lang.fundamentalLabels[i];
-        b.dataset.cat = f;
-        b.onclick = () => toggleCategory(f, b);
-        filterChars.appendChild(b);
-    });
+    if (filterChars) {
+        filterChars.innerHTML = '';
+        if (State.lang.fundamentals) {
+            State.lang.fundamentals.forEach((f, i) => {
+                const b = document.createElement('button');
+                b.className = 'btn-outline text-sm uppercase tracking-widest font-bold';
+                b.textContent = State.lang.fundamentalLabels[i];
+                b.dataset.cat = f;
+                b.onclick = () => toggleCategory(f, b);
+                filterChars.appendChild(b);
+            });
+        }
+    }
 
     const vocabCurated = document.getElementById('vocab-curated');
-    vocabCurated.innerHTML = '';
-    ['travel', 'school', 'vocabulary'].forEach(f => {
-        const b = document.createElement('button');
-        b.className = 'btn-outline text-sm uppercase tracking-widest font-bold';
-        b.textContent = f === 'vocabulary' ? 'General' : f;
-        b.dataset.cat = f;
-        b.onclick = () => toggleCategory(f, b);
-        vocabCurated.appendChild(b);
-    });
+    if (vocabCurated) {
+        vocabCurated.innerHTML = '';
+        ['travel', 'school', 'vocabulary'].forEach(f => {
+            const b = document.createElement('button');
+            b.className = 'btn-outline text-sm uppercase tracking-widest font-bold';
+            b.textContent = f === 'vocabulary' ? 'General' : f;
+            b.dataset.cat = f;
+            b.onclick = () => toggleCategory(f, b);
+            vocabCurated.appendChild(b);
+        });
+    }
 
     // Reset Importer UI
-    document.getElementById('custom-input').value = '';
-    document.getElementById('preview-list').innerHTML = '';
-    document.getElementById('import-status').textContent = '';
-    document.getElementById('importer-input-step').classList.remove('hidden');
-    document.getElementById('importer-preview-step').classList.add('hidden');
-    document.getElementById('custom-importer').classList.add('hidden');
+    const customInput = document.getElementById('custom-input');
+    if (customInput) customInput.value = '';
+    const previewList = document.getElementById('preview-list');
+    if (previewList) previewList.innerHTML = '';
+    const importStatus = document.getElementById('import-status');
+    if (importStatus) importStatus.textContent = '';
+    
+    const inputStep = document.getElementById('importer-input-step');
+    if (inputStep) inputStep.classList.remove('hidden');
+    const previewStep = document.getElementById('importer-preview-step');
+    if (previewStep) previewStep.classList.add('hidden');
+    const customImporter = document.getElementById('custom-importer');
+    if (customImporter) customImporter.classList.add('hidden');
 
     // Reset Vocab Tabs to 'Curated'
     switchVocabTab('curated');
@@ -285,7 +308,8 @@ function selectLanguage(langId) {
     
     // Explicitly show flow step 0
     document.querySelectorAll('.step-container').forEach(s => s.classList.add('hidden'));
-    document.getElementById('flow-step-0').classList.remove('hidden');
+    const flowStep0 = document.getElementById('flow-step-0');
+    if (flowStep0) flowStep0.classList.remove('hidden');
     updateStepIndicator(0);
 }
 
@@ -575,39 +599,49 @@ function init() {
         navigator.serviceWorker.register('sw.js').catch(err => console.log("SW failed", err));
     }
 
-    document.getElementById('year').textContent = new Date().getFullYear();
-    ui.progressBar = document.getElementById('progress-bar'); ui.question = document.getElementById('question-display'); ui.options = document.getElementById('options-grid');
-    ui.score = document.getElementById('score-counter'); ui.streak = document.getElementById('streak-counter');
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+    
+    ui.progressBar = document.getElementById('progress-bar'); 
+    ui.question = document.getElementById('question-display'); 
+    ui.options = document.getElementById('options-grid');
+    ui.score = document.getElementById('score-counter'); 
+    ui.streak = document.getElementById('streak-counter');
     ui.timer = document.getElementById('timer-display');
     
     document.querySelectorAll('[data-mode]').forEach(b => {
         b.onclick = () => { document.querySelectorAll('[data-mode]').forEach(x => x.classList.remove('selected')); b.classList.add('selected'); State.mode = b.dataset.mode; };
     });
 
-    document.getElementById('opt-reverse').onclick = () => toggleOption('opt-reverse', 'isReverse');
-    document.getElementById('opt-kana-only').onclick = () => toggleOption('opt-kana-only', 'isKanaOnly');
-    document.getElementById('opt-test-all').onclick = () => toggleOption('opt-test-all', 'isTestAll');
-    document.getElementById('opt-teach').onclick = () => toggleOption('opt-teach', 'isTeachMode');
-
-    document.getElementById('start-button').onclick = startSession;
-    document.getElementById('quit-button').onclick = () => { clearInterval(State.timer.interval); showScreen('app'); };
-    document.getElementById('audio-button').onclick = () => speak(State.currentQ.char);
-    document.getElementById('home-btn').onclick = () => showScreen('language');
-    document.getElementById('retry-btn').onclick = startSession;
-    document.getElementById('flip-fc').onclick = () => { ui.question.textContent = (ui.question.textContent === State.currentQ.char) ? State.currentQ.def : State.currentQ.char; };
-    document.getElementById('next-fc').onclick = () => moveFlashcard(1);
-    document.getElementById('prev-fc').onclick = () => moveFlashcard(-1);
-    
-    document.getElementById('custom-cat-btn').onclick = () => {
-        const importer = document.getElementById('custom-importer');
-        importer.classList.toggle('hidden');
+    const setClick = (id, fn) => {
+        const el = document.getElementById(id);
+        if (el) el.onclick = fn;
     };
 
-    document.getElementById('menu-toggle').onclick = () => toggleMenu(true);
-    document.getElementById('menu-close').onclick = () => toggleMenu(false);
-    document.getElementById('menu-overlay').onclick = () => toggleMenu(false);
+    setClick('opt-reverse', () => toggleOption('opt-reverse', 'isReverse'));
+    setClick('opt-kana-only', () => toggleOption('opt-kana-only', 'isKanaOnly'));
+    setClick('opt-test-all', () => toggleOption('opt-test-all', 'isTestAll'));
+    setClick('opt-teach', () => toggleOption('opt-teach', 'isTeachMode'));
 
-    document.getElementById('translate-btn').onclick = async () => {
+    setClick('start-button', startSession);
+    setClick('quit-button', () => { clearInterval(State.timer.interval); showScreen('app'); });
+    setClick('audio-button', () => speak(State.currentQ.char));
+    setClick('home-btn', () => showScreen('language'));
+    setClick('retry-btn', startSession);
+    setClick('flip-fc', () => { ui.question.textContent = (ui.question.textContent === State.currentQ.char) ? State.currentQ.def : State.currentQ.char; });
+    setClick('next-fc', () => moveFlashcard(1));
+    setClick('prev-fc', () => moveFlashcard(-1));
+    
+    setClick('custom-cat-btn', () => {
+        const importer = document.getElementById('custom-importer');
+        if (importer) importer.classList.toggle('hidden');
+    });
+
+    setClick('menu-toggle', () => toggleMenu(true));
+    setClick('menu-close', () => toggleMenu(false));
+    setClick('menu-overlay', () => toggleMenu(false));
+
+    setClick('translate-btn', async () => {
         const input = document.getElementById('custom-input');
         const words = input.value.split(/[,|\n]/).map(w => w.trim()).filter(w => w.length > 0);
         const list = document.getElementById('preview-list');
@@ -635,19 +669,25 @@ function init() {
         document.getElementById('importer-input-step').classList.add('hidden');
         document.getElementById('importer-preview-step').classList.remove('hidden');
         status.textContent = 'Verify and click add.';
-    };
+        });
 
-    document.getElementById('add-to-list-btn').onclick = () => {
+    setClick('add-to-list-btn', () => {
         const dict = {};
         document.querySelectorAll('#preview-list input').forEach(i => { if (i.value) dict[i.value] = { rom: i.dataset.orig, def: i.dataset.orig }; });
         State.lang.data.custom = { ...(State.lang.data.custom || {}), ...dict };
         State.persistence.customList[State.lang.id] = State.lang.data.custom;
         saveStats(); renderCustomLibrary();
-        document.getElementById('custom-importer').classList.add('hidden');
-        document.getElementById('importer-input-step').classList.remove('hidden');
-        document.getElementById('importer-preview-step').classList.add('hidden');
-        document.getElementById('custom-input').value = '';
-    };
+        
+        const importer = document.getElementById('custom-importer');
+        const inputStep = document.getElementById('importer-input-step');
+        const previewStep = document.getElementById('importer-preview-step');
+        const customInput = document.getElementById('custom-input');
+
+        if (importer) importer.classList.add('hidden');
+        if (inputStep) inputStep.classList.remove('hidden');
+        if (previewStep) previewStep.classList.add('hidden');
+        if (customInput) customInput.value = '';
+    });
 
     window.addEventListener('keydown', (e) => {
         if (State.mode === 'typing' && document.getElementById('study-screen').classList.contains('hidden') === false) {
