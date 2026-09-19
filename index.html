@@ -100,32 +100,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- Mobile Navigation Sub-Strip (Scrollable on small screens) -->
-        <nav class="mobile-nav-strip">
-            <div class="nav-pill-strip">
-                <button type="button" class="nav-tab-button active" data-nav-tab="dashboard" onclick="switchTab('dashboard')">
-                    <span class="nav-tab-icon">🏠</span>
-                    <span>Dashboard</span>
-                </button>
-                <button type="button" class="nav-tab-button" data-nav-tab="practice" onclick="switchTab('practice')">
-                    <span class="nav-tab-icon">⚡</span>
-                    <span>Practice</span>
-                </button>
-                <button type="button" class="nav-tab-button" data-nav-tab="mastery" onclick="switchTab('mastery')">
-                    <span class="nav-tab-icon">📊</span>
-                    <span>Mastery</span>
-                </button>
-                <button type="button" class="nav-tab-button" data-nav-tab="library" onclick="switchTab('library')">
-                    <span class="nav-tab-icon">📚</span>
-                    <span>Word Bank</span>
-                </button>
-                <button type="button" class="nav-tab-button" data-nav-tab="settings" onclick="switchTab('settings')">
-                    <span class="nav-tab-icon">⚙️</span>
-                    <span>Settings</span>
-                </button>
-            </div>
-        </nav>
     </header>
 
     <!-- Fluid Centered Main Page Content (Natural Window Scrolling!) -->
@@ -501,14 +475,16 @@
                     </button>
 
                     <!-- Score Pill -->
-                    <div class="header-stat-chip">
-                        <span>Score:</span>
+                    <div class="header-stat-chip study-stat-score" title="Current Score">
+                        <span class="study-stat-label">Score: </span>
+                        <span class="study-stat-icon">⭐</span>
                         <span class="font-bold text-amber-600" id="study-score-val">0</span>
                     </div>
 
                     <!-- Streak Pill -->
-                    <div class="header-stat-chip">
-                        <span>Streak:</span>
+                    <div class="header-stat-chip study-stat-streak" title="Correct Streak">
+                        <span class="study-stat-label">Streak: </span>
+                        <span class="study-stat-icon">🔥</span>
                         <span class="font-bold text-emerald-600" id="study-streak-val">0</span>
                     </div>
                 </div>
@@ -702,6 +678,30 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile Bottom Navigation Bar (Fixed thumb-accessible tab bar) -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <button type="button" class="mobile-nav-btn active" data-nav-tab="dashboard" onclick="switchTab('dashboard')">
+            <span class="mobile-nav-icon">🏠</span>
+            <span class="mobile-nav-label">Home</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" data-nav-tab="practice" onclick="switchTab('practice')">
+            <span class="mobile-nav-icon">⚡</span>
+            <span class="mobile-nav-label">Practice</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" data-nav-tab="mastery" onclick="switchTab('mastery')">
+            <span class="mobile-nav-icon">📊</span>
+            <span class="mobile-nav-label">Mastery</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" data-nav-tab="library" onclick="switchTab('library')">
+            <span class="mobile-nav-icon">📚</span>
+            <span class="mobile-nav-label">Words</span>
+        </button>
+        <button type="button" class="mobile-nav-btn" data-nav-tab="settings" onclick="switchTab('settings')">
+            <span class="mobile-nav-icon">⚙️</span>
+            <span class="mobile-nav-label">Settings</span>
+        </button>
+    </nav>
 
     <!-- Application Script -->
     <script src="js/app.js"></script>

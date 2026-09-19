@@ -765,6 +765,7 @@ function switchTab(tabName) {
 
     const mainArea = document.querySelector('.main-content-scroll');
     if (mainArea) mainArea.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function selectLanguage(langId, targetTab = null) {
