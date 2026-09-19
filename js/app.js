@@ -632,6 +632,62 @@ function setTheme(theme) {
     }
 }
 
+// Cookie & Persistent Language Memory
+function setCookie(name, value, days = 365) {
+    try {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(value)};${expires};path=/;SameSite=Lax`;
+    } catch (e) {
+        console.warn("Could not set cookie", e);
+    }
+}
+
+function getCookie(name) {
+    try {
+        const cname = name + "=";
+        const decoded = decodeURIComponent(document.cookie);
+        const ca = decoded.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(cname) === 0) {
+                return c.substring(cname.length, c.length);
+            }
+        }
+    } catch (e) {
+        console.warn("Could not read cookie", e);
+    }
+    return null;
+}
+
+function saveLastLanguage(langId) {
+    if (!langId || !LANGUAGES[langId]) return;
+    setCookie('lingalo_last_lang', langId, 365);
+    try {
+        localStorage.setItem('lingalo_last_lang', langId);
+    } catch(e) {}
+    if (State.persistence) {
+        State.persistence.lastLanguage = langId;
+    }
+}
+
+function getLastLanguage() {
+    const fromCookie = getCookie('lingalo_last_lang');
+    if (fromCookie && LANGUAGES[fromCookie]) return fromCookie;
+
+    try {
+        const fromLocal = localStorage.getItem('lingalo_last_lang');
+        if (fromLocal && LANGUAGES[fromLocal]) return fromLocal;
+    } catch(e) {}
+
+    if (State.persistence && State.persistence.lastLanguage && LANGUAGES[State.persistence.lastLanguage]) {
+        return State.persistence.lastLanguage;
+    }
+
+    return 'japanese';
+}
+
 // Storage & Persistence
 function saveStats() {
     try {
@@ -775,6 +831,14 @@ function switchTab(tabName) {
 function selectLanguage(langId, targetTab = null) {
     if (!LANGUAGES[langId]) return;
     State.lang = LANGUAGES[langId];
+
+    saveLastLanguage(langId);
+
+    try {
+        const url = new URL(window.location);
+        url.searchParams.set('lang', langId);
+        window.history.replaceState({}, '', url);
+    } catch(e) {}
 
     document.documentElement.style.setProperty('--accent', State.lang.accent);
     document.documentElement.style.setProperty('--accent-glow', State.lang.accentGlow);
@@ -1953,7 +2017,8 @@ function initApp() {
     loadStats();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const initialLang = urlParams.get('lang') || 'japanese';
+    const paramLang = urlParams.get('lang');
+    const initialLang = (paramLang && LANGUAGES[paramLang]) ? paramLang : getLastLanguage();
     const initialTab = urlParams.get('tab') || 'dashboard';
 
     selectLanguage(initialLang, initialTab);
