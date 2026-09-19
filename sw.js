@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lingalo-v4';
+const CACHE_NAME = 'lingalo-v5';
 const ASSETS = [
   './',
   'index.html',

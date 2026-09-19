@@ -706,10 +706,13 @@ function addXP(amt) {
     State.persistence.totalXP += amt;
     State.persistence.todayXP = (State.persistence.todayXP || 0) + amt;
     
-    const xpNeeded = State.persistence.level * 100;
-    if (State.persistence.totalXP >= xpNeeded) {
+    let leveledUp = false;
+    while (State.persistence.totalXP >= State.persistence.level * 100) {
+        State.persistence.totalXP -= State.persistence.level * 100;
         State.persistence.level++;
-        State.persistence.totalXP -= xpNeeded;
+        leveledUp = true;
+    }
+    if (leveledUp) {
         SFX.levelUp();
         createConfetti();
     }
@@ -741,6 +744,7 @@ function updateHeaderStats() {
 
 // Navigation View Controller
 function switchTab(tabName) {
+    clearInterval(State.timer.interval);
     State.currentTab = tabName;
     
     document.getElementById('screen-study').classList.add('hidden');
@@ -1242,6 +1246,8 @@ function clearAllWordBank() {
 function toggleAddWordModal(open) {
     const modal = document.getElementById('modal-add-word');
     if (modal) modal.classList.toggle('hidden', !open);
+    const status = document.getElementById('custom-import-status');
+    if (status) status.textContent = '';
     if (open) {
         const input = document.getElementById('custom-word-input');
         if (input) input.focus();
@@ -1530,7 +1536,7 @@ function renderQuizOptions() {
     const allKeys = State.currentKeys;
 
     let attempts = 0;
-    while (poolOptions.length < Math.min(4, allKeys.length) && attempts < 50) {
+    while (poolOptions.length < 4 && attempts < 40 && allKeys.length > 0) {
         attempts++;
         const randKey = allKeys[Math.floor(Math.random() * allKeys.length)];
         const randData = State.currentDict[randKey];
@@ -1540,6 +1546,27 @@ function renderQuizOptions() {
 
         if (randVal && !poolOptions.includes(randVal)) {
             poolOptions.push(randVal);
+        }
+    }
+
+    if (poolOptions.length < 4 && State.lang && State.lang.data) {
+        const cats = Object.keys(State.lang.data);
+        let fbAttempts = 0;
+        while (poolOptions.length < 4 && fbAttempts < 40) {
+            fbAttempts++;
+            const randCat = cats[Math.floor(Math.random() * cats.length)];
+            const catObj = State.lang.data[randCat] || {};
+            const catKeys = Object.keys(catObj);
+            if (catKeys.length > 0) {
+                const randKey = catKeys[Math.floor(Math.random() * catKeys.length)];
+                const itemData = catObj[randKey];
+                const randVal = State.isReverse
+                    ? randKey
+                    : (typeof itemData === 'object' ? itemData.def : itemData);
+                if (randVal && !poolOptions.includes(randVal)) {
+                    poolOptions.push(randVal);
+                }
+            }
         }
     }
 
@@ -1932,6 +1959,24 @@ function initApp() {
     selectLanguage(initialLang, initialTab);
 
     window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const langModal = document.getElementById('modal-language-picker');
+            if (langModal && !langModal.classList.contains('hidden')) {
+                closeLanguageModal();
+                return;
+            }
+            const addWordModal = document.getElementById('modal-add-word');
+            if (addWordModal && !addWordModal.classList.contains('hidden')) {
+                toggleAddWordModal(false);
+                return;
+            }
+            const isStudy = !document.getElementById('screen-study').classList.contains('hidden');
+            if (isStudy) {
+                quitStudySession();
+                return;
+            }
+        }
+
         const isStudyActive = !document.getElementById('screen-study').classList.contains('hidden');
         if (!isStudyActive) return;
 
