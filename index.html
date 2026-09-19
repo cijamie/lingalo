@@ -4,475 +4,738 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Lingalo - Master Languages Professionally</title>
-    <!-- SEO & Social Meta Tags -->
-    <meta name="description" content="Master Japanese and Korean with Lingalo. Sleek, professional language learning with spaced repetition, XP gamification, and custom vocabulary tools.">
-    <meta name="keywords" content="Japanese, Korean, Hiragana, Katakana, Hangul, SRS, Language Learning">
-    <meta property="og:title" content="Lingalo - Master Languages">
-    <meta property="og:description" content="Elevate your language skills with a professional, dashboard-driven learning experience.">
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Master Japanese, Korean, French, Spanish, and German with Lingalo. Clean, intuitive language learning with spaced repetition and interactive game modes.">
+    <meta name="keywords" content="Japanese, Korean, French, Spanish, German, Hiragana, Katakana, Hangul, Spaced Repetition, Language Learning">
+    <meta property="og:title" content="Lingalo - Master Languages Professionally">
+    <meta property="og:description" content="Modern, intuitive language learning platform for script mastery and essential vocabulary.">
     <meta property="og:image" content="assets/logo.png">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    
+    <meta name="theme-color" content="#f8fafc">
+
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0b0b0b">
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="ambient-light">
-        <div class="orb orb-1" id="orb-1"></div>
-        <div class="orb orb-2" id="orb-2"></div>
+
+    <!-- Soft Ambient Dynamic Mesh Background -->
+    <div class="ambient-canvas">
+        <div class="ambient-orb ambient-orb-1" id="ambient-orb-1"></div>
+        <div class="ambient-orb ambient-orb-2" id="ambient-orb-2"></div>
     </div>
 
-    <!-- MOBILE HEADER -->
-    <header class="mobile-header">
-        <div class="flex items-center gap-3">
-            <img src="assets/logo.png" alt="Logo" style="height: 32px; width: auto;">
-            <h1 class="logo-text" style="font-size: 1.25rem;">Lingalo</h1>
+    <!-- Sticky Top Navigation Header (Zero Sidebar) -->
+    <header class="site-header">
+        <div class="site-header-inner">
+            <!-- Left: Brand Logo & Title -->
+            <div class="header-brand" onclick="switchTab('dashboard')">
+                <img src="assets/logo.png" alt="Lingalo Logo" class="brand-logo-img">
+                <span class="brand-title-text">Lingalo</span>
+            </div>
+
+            <!-- Center: Modern Navigation Tabs Pill Strip -->
+            <nav class="header-nav-center">
+                <div class="nav-pill-strip">
+                    <button type="button" class="nav-tab-button active" data-nav-tab="dashboard" onclick="switchTab('dashboard')">
+                        <span class="nav-tab-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </button>
+                    <button type="button" class="nav-tab-button" data-nav-tab="practice" onclick="switchTab('practice')">
+                        <span class="nav-tab-icon">⚡</span>
+                        <span>Practice</span>
+                    </button>
+                    <button type="button" class="nav-tab-button" data-nav-tab="mastery" onclick="switchTab('mastery')">
+                        <span class="nav-tab-icon">📊</span>
+                        <span>Mastery</span>
+                    </button>
+                    <button type="button" class="nav-tab-button" data-nav-tab="library" onclick="switchTab('library')">
+                        <span class="nav-tab-icon">📚</span>
+                        <span>Word Bank</span>
+                    </button>
+                    <button type="button" class="nav-tab-button" data-nav-tab="settings" onclick="switchTab('settings')">
+                        <span class="nav-tab-icon">⚙️</span>
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Right: Language Switcher & Quick Utilities -->
+            <div class="header-actions-right">
+                <!-- Language Selector Dropdown Pill -->
+                <button type="button" class="lang-selector-button" id="top-lang-pill" onclick="openLanguageModal()">
+                    <span id="top-lang-flag">🇯🇵</span>
+                    <span id="top-lang-name">Japanese</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+
+                <!-- Daily Streak Stat -->
+                <div class="header-stat-chip chip-streak" title="Daily Practice Streak">
+                    <span>🔥</span>
+                    <span class="stat-streak-val">0d</span>
+                </div>
+
+                <!-- Level & XP Stat -->
+                <div class="header-stat-chip chip-xp" title="Level Progress">
+                    <span>⭐</span>
+                    <span>Lvl <span class="stat-level-val">1</span></span>
+                </div>
+
+                <!-- Audio SFX Toggle -->
+                <button type="button" class="header-action-icon-btn" onclick="toggleSound()" title="Toggle Sound Effects">
+                    <span class="sfx-state-icon">🔊</span>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button type="button" class="header-action-icon-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <span class="theme-toggle-icon">🌙</span>
+                </button>
+            </div>
         </div>
-        <button type="button" id="menu-toggle" class="btn-outline" style="padding: 0.5rem 0.75rem;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
+
+        <!-- Mobile Navigation Sub-Strip (Scrollable on small screens) -->
+        <nav class="mobile-nav-strip">
+            <div class="nav-pill-strip">
+                <button type="button" class="nav-tab-button active" data-nav-tab="dashboard" onclick="switchTab('dashboard')">
+                    <span class="nav-tab-icon">🏠</span>
+                    <span>Dashboard</span>
+                </button>
+                <button type="button" class="nav-tab-button" data-nav-tab="practice" onclick="switchTab('practice')">
+                    <span class="nav-tab-icon">⚡</span>
+                    <span>Practice</span>
+                </button>
+                <button type="button" class="nav-tab-button" data-nav-tab="mastery" onclick="switchTab('mastery')">
+                    <span class="nav-tab-icon">📊</span>
+                    <span>Mastery</span>
+                </button>
+                <button type="button" class="nav-tab-button" data-nav-tab="library" onclick="switchTab('library')">
+                    <span class="nav-tab-icon">📚</span>
+                    <span>Word Bank</span>
+                </button>
+                <button type="button" class="nav-tab-button" data-nav-tab="settings" onclick="switchTab('settings')">
+                    <span class="nav-tab-icon">⚙️</span>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </nav>
     </header>
 
-    <div id="menu-overlay" class="mobile-menu-overlay"></div>
-    <div id="mobile-drawer" class="mobile-drawer">
-        <div class="flex justify-between items-center mb-8">
-            <div class="flex items-center gap-3">
-                <img src="assets/logo.png" alt="Logo" style="height: 32px; width: auto;">
-                <h1 class="logo-text" style="font-size: 1.5rem;">Lingalo</h1>
-            </div>
-            <button type="button" id="menu-close" class="text-white opacity-50">&times;</button>
-        </div>
-        
-        <div class="xp-container" style="margin-bottom: 2rem;">
-            <div class="flex justify-between items-center mb-1">
-                <span class="xp-text">Level <span class="m-user-level">1</span></span>
-                <span class="xp-text" style="opacity: 0.6;"><span class="m-user-xp">0</span> XP</span>
-            </div>
-            <div class="xp-bar-bg"><div class="xp-bar-fill m-xp-bar-fill"></div></div>
+    <!-- Fluid Centered Main Page Content (Natural Window Scrolling!) -->
+    <main class="app-main-content">
+
+        <div id="main-views-wrapper">
+
+            <!-- ========================================== -->
+            <!-- 1. DASHBOARD VIEW                         -->
+            <!-- ========================================== -->
+            <section id="view-dashboard" class="view-container">
+                <!-- Hero Banner -->
+                <div class="dash-hero-banner">
+                    <div class="flex flex-col gap-2 max-w-xl">
+                        <div class="flex items-center gap-2">
+                            <span class="chip-badge chip-accent text-xs">Active Language</span>
+                        </div>
+                        <h1 class="text-4xl font-extrabold text-primary" id="dash-welcome-title">🇯🇵 Japanese</h1>
+                        <p class="text-sm text-secondary" id="dash-welcome-sub">Master the Art of Japanese Script & Vocabulary</p>
+                        
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            <button type="button" class="btn-primary" onclick="switchTab('practice')">
+                                <span>⚡ Start Practice</span>
+                            </button>
+                            <button type="button" class="btn-outline" onclick="practiceWeakItems()">
+                                <span>🎯 Review Weak Items</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="dash-stats-row">
+                    <!-- Daily Goal Box -->
+                    <div class="dash-stat-box">
+                        <div class="flex justify-between items-center text-xs font-bold text-muted uppercase tracking-wider">
+                            <span>Daily Goal</span>
+                            <span id="dash-goal-label">0 / 50 XP</span>
+                        </div>
+                        <div class="w-full rounded-full h-2 overflow-hidden my-1" style="background: rgba(0, 0, 0, 0.06);">
+                            <div id="dash-goal-bar" class="h-full rounded-full" style="width: 0%; background: #d97706;"></div>
+                        </div>
+                        <span class="text-xs text-secondary">Earn XP each day to solidify long-term memory</span>
+                    </div>
+
+                    <!-- Language Mastery Box -->
+                    <div class="dash-stat-box">
+                        <div class="text-xs font-bold text-muted uppercase tracking-wider">Language Mastery</div>
+                        <div class="dash-stat-num" id="dash-stat-mastery">0%</div>
+                        <span class="text-xs text-secondary" id="dash-stat-mastered-count">0 items mastered</span>
+                    </div>
+
+                    <!-- Weak Items Box -->
+                    <div class="dash-stat-box">
+                        <div class="text-xs font-bold text-muted uppercase tracking-wider">Needs Review</div>
+                        <div class="dash-stat-num text-amber-600" id="dash-stat-weak">0</div>
+                        <span class="text-xs text-secondary">Items with low confidence scores</span>
+                    </div>
+                </div>
+
+                <!-- Languages Overview Section -->
+                <div class="mt-6 mb-4 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-primary">All Curricula</h3>
+                        <p class="text-xs text-secondary mt-1">Switch anytime between our 5 comprehensive language paths.</p>
+                    </div>
+                    <button type="button" class="btn-outline text-xs py-1.5 px-3.5" onclick="openLanguageModal()">Switch Language</button>
+                </div>
+                <div class="languages-hub-grid" id="dash-languages-grid">
+                    <!-- Injected by JavaScript -->
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 2. PRACTICE ARENA VIEW                     -->
+            <!-- ========================================== -->
+            <section id="view-practice" class="view-container hidden">
+                <div class="practice-arena-wrapper">
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-primary mb-1">Practice Arena</h1>
+                        <p class="text-sm text-secondary">Customize your focus topics, training mode, and session preferences.</p>
+                    </div>
+
+                    <!-- Step 1: Topics & Categories -->
+                    <div>
+                        <div class="section-label">
+                            <span>1. Select Focus Topics</span>
+                            <div class="flex gap-2">
+                                <button type="button" class="btn-outline text-xs py-1 px-3" onclick="selectAllTopics(true)">Select All</button>
+                                <button type="button" class="btn-outline text-xs py-1 px-3" onclick="selectAllTopics(false)">Reset</button>
+                            </div>
+                        </div>
+                        <div class="topic-chips-wrapper" id="practice-topics-container">
+                            <!-- Injected by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Training Modes -->
+                    <div>
+                        <div class="section-label">2. Choose Training Mode</div>
+                        <div class="mode-cards-grid">
+                            <div class="mode-select-card selected" data-practice-mode="quiz" onclick="setPracticeMode('quiz')">
+                                <div class="mode-card-icon">🎯</div>
+                                <div class="mode-card-title">Quiz</div>
+                                <div class="mode-card-desc">Rapid multiple-choice drills with keyboard hotkeys</div>
+                            </div>
+                            <div class="mode-select-card" data-practice-mode="flashcards" onclick="setPracticeMode('flashcards')">
+                                <div class="mode-card-icon">🃏</div>
+                                <div class="mode-card-title">Flashcards</div>
+                                <div class="mode-card-desc">3D flip card with spaced repetition rating</div>
+                            </div>
+                            <div class="mode-select-card" data-practice-mode="typing" onclick="setPracticeMode('typing')">
+                                <div class="mode-card-icon">⌨️</div>
+                                <div class="mode-card-title">Typing</div>
+                                <div class="mode-card-desc">Spelling & direct keyboard input training</div>
+                            </div>
+                            <div class="mode-select-card" data-practice-mode="speedMatch" onclick="setPracticeMode('speedMatch')">
+                                <div class="mode-card-icon">⚡</div>
+                                <div class="mode-card-title">Speed Sprint</div>
+                                <div class="mode-card-desc">60-second high-intensity rapid quiz sprint</div>
+                            </div>
+                            <div class="mode-select-card" data-practice-mode="matchPairs" onclick="setPracticeMode('matchPairs')">
+                                <div class="mode-card-icon">🧩</div>
+                                <div class="mode-card-title">Match Pairs</div>
+                                <div class="mode-card-desc">Connect terms to their English definitions</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Session Customization -->
+                    <div>
+                        <div class="section-label">3. Session Options</div>
+                        <div class="options-grid">
+                            <div class="session-toggle-card" id="opt-reverse" onclick="toggleSessionOpt('isReverse', 'opt-reverse')">
+                                <div>
+                                    <div class="font-bold text-sm text-primary">Reverse Mode</div>
+                                    <div class="text-xs text-muted">Prompt in English, guess target language</div>
+                                </div>
+                                <span class="status-indicator">●</span>
+                            </div>
+                            <div class="session-toggle-card" id="opt-kana-only" onclick="toggleSessionOpt('isKanaOnly', 'opt-kana-only')">
+                                <div>
+                                    <div class="font-bold text-sm text-primary">Script Only</div>
+                                    <div class="text-xs text-muted">Hide romanization pronunciation guide</div>
+                                </div>
+                                <span class="status-indicator">●</span>
+                            </div>
+                            <div class="session-toggle-card" id="opt-teach" onclick="toggleSessionOpt('isTeachMode', 'opt-teach')">
+                                <div>
+                                    <div class="font-bold text-sm text-primary">Teach Mode</div>
+                                    <div class="text-xs text-muted">Auto-repeat missed questions until mastered</div>
+                                </div>
+                                <span class="status-indicator">●</span>
+                            </div>
+                            <div class="session-toggle-card" id="opt-test-all" onclick="toggleSessionOpt('isTestAll', 'opt-test-all')">
+                                <div>
+                                    <div class="font-bold text-sm text-primary">Test Entire Pool</div>
+                                    <div class="text-xs text-muted">Practice all items in selected categories</div>
+                                </div>
+                                <span class="status-indicator">●</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Button & Estimate -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-surface-elevated border border-slate-200 rounded-2xl">
+                        <div>
+                            <div class="font-bold text-base text-primary">Ready for your session?</div>
+                            <div class="text-xs text-muted" id="practice-item-estimate">Preparing pool...</div>
+                        </div>
+                        <button type="button" class="btn-primary w-full sm:w-auto px-8 py-3.5 text-base" onclick="startSession()">
+                            🚀 Start Session
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 3. MASTERY MATRIX VIEW                    -->
+            <!-- ========================================== -->
+            <section id="view-mastery" class="view-container hidden">
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h1 class="text-3xl font-extrabold text-primary mb-1">Mastery Matrix</h1>
+                            <p class="text-sm text-secondary">Browse your complete curriculum, hear pronunciation, and monitor retention.</p>
+                        </div>
+                        <button type="button" class="btn-primary text-xs py-2.5 px-5" onclick="practiceWeakItems()">
+                            🎯 Drill Weak Items (&lt;3 ★)
+                        </button>
+                    </div>
+
+                    <!-- Filter & Search Controls -->
+                    <div class="mastery-controls">
+                        <div class="filter-pills-row">
+                            <button type="button" class="filter-pill active" data-mastery-filter="all" onclick="setMasteryFilter('all')">All Items</button>
+                            <button type="button" class="filter-pill" data-mastery-filter="chars" onclick="setMasteryFilter('chars')">Characters</button>
+                            <button type="button" class="filter-pill" data-mastery-filter="vocab" onclick="setMasteryFilter('vocab')">Vocabulary</button>
+                            <button type="button" class="filter-pill" data-mastery-filter="weak" onclick="setMasteryFilter('weak')">Needs Review</button>
+                            <button type="button" class="filter-pill" data-mastery-filter="mastered" onclick="setMasteryFilter('mastered')">Mastered</button>
+                        </div>
+
+                        <div class="flex items-center gap-3 w-full md:w-auto">
+                            <div class="search-input-wrapper flex-grow md:flex-grow-0">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" id="mastery-search" placeholder="Search characters, romaji, meanings..." class="search-input" oninput="handleMasterySearch(this.value)">
+                            </div>
+                            <span class="text-xs text-muted whitespace-nowrap" id="mastery-count-indicator">Showing 0 items</span>
+                        </div>
+                    </div>
+
+                    <!-- Mastery Matrix Grid -->
+                    <div class="mastery-grid" id="mastery-items-grid">
+                        <!-- Injected by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 4. WORD BANK / LIBRARY VIEW               -->
+            <!-- ========================================== -->
+            <section id="view-library" class="view-container hidden">
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h1 class="text-3xl font-extrabold text-primary mb-1">Custom Word Bank</h1>
+                            <p class="text-sm text-secondary">Save custom vocabulary lists, travel phrases, or notes to practice anytime.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" class="btn-primary text-xs py-2 px-4" onclick="toggleAddWordModal(true)">+ Add Words</button>
+                            <button type="button" class="btn-outline text-xs py-2 px-3 text-red-500 hover:text-red-600" onclick="clearAllWordBank()">🗑️ Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-muted uppercase tracking-wider" id="word-bank-count">0 custom words</span>
+                    </div>
+
+                    <div id="word-bank-list">
+                        <!-- Injected by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- 5. SETTINGS VIEW                          -->
+            <!-- ========================================== -->
+            <section id="view-settings" class="view-container hidden">
+                <div class="flex flex-col gap-8 max-w-2xl">
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-primary mb-1">Settings</h1>
+                        <p class="text-sm text-secondary">Manage theme, audio, study goals, shortcuts, and personal data.</p>
+                    </div>
+
+                    <!-- Theme Selection Section -->
+                    <div class="card space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-muted">Theme & Appearance</h3>
+                        <p class="text-xs text-secondary">Switch between clean minimal light and refined matte dark mode.</p>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" class="btn-outline active text-center py-3 flex items-center justify-center gap-2" id="theme-btn-light" onclick="setTheme('light')">
+                                <span>☀️</span>
+                                <span class="font-bold text-sm">Clean Light</span>
+                            </button>
+                            <button type="button" class="btn-outline text-center py-3 flex items-center justify-center gap-2" id="theme-btn-dark" onclick="setTheme('dark')">
+                                <span>🌙</span>
+                                <span class="font-bold text-sm">Matte Dark</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Audio Section -->
+                    <div class="card space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-muted">Audio & Speech</h3>
+                        
+                        <div class="flex justify-between items-center py-2">
+                            <div>
+                                <div class="font-bold text-sm text-primary">Sound Effects (SFX)</div>
+                                <div class="text-xs text-muted">Synthesized audio cues for correct/wrong answers</div>
+                            </div>
+                            <button type="button" id="setting-sfx-toggle" class="btn-toggle active" onclick="toggleSound()">ON</button>
+                        </div>
+
+                        <div class="flex justify-between items-center py-2 border-t border-slate-200 pt-4">
+                            <div>
+                                <div class="font-bold text-sm text-primary">Speech Pronunciation Rate</div>
+                                <div class="text-xs text-muted">Adjust speech speed for audio playback</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <input type="range" id="setting-speech-rate" min="0.75" max="1.25" step="0.05" value="1.0" class="w-28 cursor-pointer" oninput="updateSpeechRate(this.value)">
+                                <span class="text-xs font-bold text-primary w-10 text-right" id="setting-speech-val">1.0x</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Goal Section -->
+                    <div class="card space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-muted">Daily XP Goal</h3>
+                        <p class="text-xs text-secondary">Consistent daily practice builds long-term fluency and retention.</p>
+                        
+                        <div class="grid grid-cols-3 gap-3">
+                            <button type="button" class="btn-outline text-center py-3 flex flex-col items-center gap-1" data-daily-goal="30" onclick="setDailyGoal(30)">
+                                <span class="font-bold text-sm">Casual</span>
+                                <span class="text-xs text-muted">30 XP / day</span>
+                            </button>
+                            <button type="button" class="btn-outline active text-center py-3 flex flex-col items-center gap-1" data-daily-goal="50" onclick="setDailyGoal(50)">
+                                <span class="font-bold text-sm">Regular</span>
+                                <span class="text-xs text-muted">50 XP / day</span>
+                            </button>
+                            <button type="button" class="btn-outline text-center py-3 flex flex-col items-center gap-1" data-daily-goal="100" onclick="setDailyGoal(100)">
+                                <span class="font-bold text-sm">Serious</span>
+                                <span class="text-xs text-muted">100 XP / day</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Keyboard Shortcuts Cheat Sheet -->
+                    <div class="card space-y-3">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-muted">Keyboard Shortcuts</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-muted">Select Quiz Options:</span>
+                                <span class="font-mono text-primary font-bold">1, 2, 3, 4</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-muted">Flip Flashcard:</span>
+                                <span class="font-mono text-primary font-bold">Spacebar / Enter</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-muted">Flashcard Again / Mastered:</span>
+                                <span class="font-mono text-primary font-bold">← / →</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-slate-200">
+                                <span class="text-muted">Replay Audio:</span>
+                                <span class="font-mono text-primary font-bold">R Key</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data & Reset Section -->
+                    <div class="card space-y-4">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-muted">Data & Privacy</h3>
+                        <p class="text-xs text-secondary">
+                            Lingalo runs entirely in your browser. All progress, XP, and word lists are saved securely on your device.
+                        </p>
+                        <button type="button" class="btn-outline !text-red-500 !border-red-300 hover:!bg-red-50 text-xs py-2.5 px-4" onclick="resetAllProgress()">
+                            Reset All Progress
+                        </button>
+                    </div>
+                </div>
+            </section>
         </div>
 
-            <nav class="nav-links">
-                <div class="nav-item" data-lang="japanese" onclick="selectLanguage('japanese'); toggleMenu(false)">
-                    <span>🇯🇵</span>
-                    Japanese
+        <!-- ========================================== -->
+        <!-- ACTIVE STUDY SCREEN                        -->
+        <!-- ========================================== -->
+        <section id="screen-study" class="study-screen-container hidden">
+            <!-- Study Top Bar -->
+            <div class="study-top-bar">
+                <button type="button" class="btn-outline text-xs py-1.5 px-3.5 !border-red-300 text-red-500" onclick="quitStudySession()">
+                    ✕ Exit
+                </button>
+
+                <div class="flex items-center gap-3">
+                    <!-- Speed Timer Pill -->
+                    <div id="study-timer-pill" class="header-stat-chip text-amber-600 hidden">
+                        ⚡ <span id="study-timer-val">60s</span>
+                    </div>
+
+                    <!-- Audio Pronunciation Button -->
+                    <button type="button" class="header-action-icon-btn" onclick="speak(State.currentQ ? State.currentQ.char : null)" title="Replay Pronunciation">
+                        🔊
+                    </button>
+
+                    <!-- Score Pill -->
+                    <div class="header-stat-chip">
+                        <span>Score:</span>
+                        <span class="font-bold text-amber-600" id="study-score-val">0</span>
+                    </div>
+
+                    <!-- Streak Pill -->
+                    <div class="header-stat-chip">
+                        <span>Streak:</span>
+                        <span class="font-bold text-emerald-600" id="study-streak-val">0</span>
+                    </div>
                 </div>
-                <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean'); toggleMenu(false)">
-                    <span>🇰🇷</span>
-                    Korean
+            </div>
+
+            <!-- Progress Bar Track -->
+            <div class="study-progress-track">
+                <div id="study-progress-fill" class="study-progress-fill" style="width: 0%;"></div>
+            </div>
+
+            <!-- Study Body Area -->
+            <div class="study-body-center">
+                <!-- Standard Question Display (for Quiz, Flashcards, Typing, Speed) -->
+                <div id="study-question-box" class="question-hero-box">
+                    <div id="study-mastery-indicator" class="mastery-stars justify-center mb-2"></div>
+                    <div id="study-question-text" class="question-hero-char font-lang">...</div>
+                    <div id="study-question-sub" class="question-hero-sub"></div>
                 </div>
-                <div class="nav-item" data-lang="french" onclick="selectLanguage('french'); toggleMenu(false)">
-                    <span>🇫🇷</span>
-                    French
+
+                <!-- 1. Quiz Mode Options (2x2 Grid) -->
+                <div id="study-quiz-options" class="quiz-options-grid">
+                    <!-- Injected by JavaScript -->
                 </div>
-                <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish'); toggleMenu(false)">
-                    <span>🇪🇸</span>
-                    Spanish
+
+                <!-- 2. Flashcard Mode (3D Flip Card) -->
+                <div id="study-flashcard-area" class="hidden flex flex-col items-center w-full">
+                    <div class="flashcard-wrapper" onclick="flipFlashcard()">
+                        <div class="flashcard-inner" id="flashcard-3d">
+                            <div class="flashcard-face flashcard-front">
+                                <div class="question-hero-char font-lang" id="fc-front-char">あ</div>
+                                <span class="text-xs text-muted mt-4">Tap or press Spacebar to flip</span>
+                            </div>
+                            <div class="flashcard-face flashcard-back">
+                                <div class="text-2xl font-bold text-amber-600 mb-1" id="fc-back-rom">a</div>
+                                <div class="text-3xl font-extrabold text-primary" id="fc-back-def">Apple</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fc-rating-buttons">
+                        <button type="button" class="btn-outline !border-red-300 text-red-500 py-3 flex-1" onclick="rateFlashcard('again')">
+                            ❌ Again [←]
+                        </button>
+                        <button type="button" class="btn-outline !border-amber-300 text-amber-600 py-3 flex-1" onclick="rateFlashcard('good')">
+                            ⚡ Good [↓]
+                        </button>
+                        <button type="button" class="btn-primary py-3 flex-1" onclick="rateFlashcard('mastered')">
+                            ✅ Mastered [→]
+                        </button>
+                    </div>
                 </div>
-                <div class="nav-item" data-lang="german" onclick="selectLanguage('german'); toggleMenu(false)">
-                    <span>🇩🇪</span>
-                    German
+
+                <!-- 3. Typing Mode Area -->
+                <div id="study-typing-area" class="hidden flex flex-col items-center w-full">
+                    <div class="w-full max-w-md bg-surface-elevated border border-slate-200 rounded-2xl p-6 text-center mb-4">
+                        <span class="text-xs text-muted block mb-2 uppercase font-bold tracking-wider">Type the spelling or romaji</span>
+                        <div class="text-3xl font-bold text-primary tracking-widest min-h-[44px]" id="typing-input-display">&nbsp;</div>
+                    </div>
+                    <div id="virtual-keyboard-grid" class="virtual-keyboard">
+                        <!-- Injected by JavaScript -->
+                    </div>
                 </div>
-                <div class="nav-item" onclick="showSettings(); toggleMenu(false)">
-                    <span>⚙️</span>
-                    Settings
+
+                <!-- 4. Match Pairs Mode Area -->
+                <div id="study-match-area" class="hidden flex flex-col items-center w-full">
+                    <div class="text-sm font-bold text-muted mb-4 uppercase tracking-wider">Connect the matching pairs</div>
+                    <div id="study-match-grid" class="match-pairs-grid">
+                        <!-- Injected by JavaScript -->
+                    </div>
                 </div>
-            </nav>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SESSION RESULTS SCREEN                     -->
+        <!-- ========================================== -->
+        <section id="screen-results" class="view-container hidden py-12 text-center">
+            <div class="max-w-xl mx-auto flex flex-col items-center gap-6">
+                <div class="text-6xl mb-2">🏆</div>
+                <h2 class="text-4xl font-extrabold text-primary">Session Complete!</h2>
+                <p class="text-sm text-secondary">Great work! You're making measurable progress toward fluency.</p>
+
+                <!-- Score Summary Cards -->
+                <div class="grid grid-cols-3 gap-3 w-full my-4">
+                    <div class="card text-center p-4">
+                        <span class="text-xs text-muted uppercase font-bold">Score</span>
+                        <div class="text-3xl font-extrabold text-primary mt-1" id="res-final-score">0</div>
+                    </div>
+                    <div class="card text-center p-4">
+                        <span class="text-xs text-muted uppercase font-bold">Accuracy</span>
+                        <div class="text-3xl font-extrabold text-emerald-600 mt-1" id="res-final-acc">0%</div>
+                    </div>
+                    <div class="card text-center p-4">
+                        <span class="text-xs text-muted uppercase font-bold">Best Streak</span>
+                        <div class="text-3xl font-extrabold text-amber-600 mt-1" id="res-final-streak">0</div>
+                    </div>
+                </div>
+
+                <!-- Struggled Items Section -->
+                <div id="res-struggled-section" class="w-full text-left space-y-3 hidden">
+                    <span class="text-xs font-bold uppercase tracking-wider text-muted">Review Missed Words</span>
+                    <div class="space-y-2" id="res-struggled-list">
+                        <!-- Injected by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full justify-center mt-6">
+                    <button type="button" class="btn-primary py-3.5 px-8" onclick="startSession()">
+                        🔄 Retry Session
+                    </button>
+                    <button type="button" class="btn-outline py-3.5 px-8" onclick="switchTab('dashboard')">
+                        🏠 Dashboard Home
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- LANGUAGE PICKER MODAL                      -->
+    <!-- ========================================== -->
+    <div id="modal-language-picker" class="modal-overlay hidden" onclick="closeLanguageModal()">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-primary">Select Language</h3>
+                <button type="button" class="header-action-icon-btn" onclick="closeLanguageModal()">✕</button>
+            </div>
+            <p class="text-xs text-secondary mb-4">Choose a language to switch your current curriculum and practice topics.</p>
+
+            <div class="lang-picker-grid">
+                <button type="button" class="lang-picker-btn" data-lang-select="japanese" onclick="selectLanguage('japanese')">
+                    <span class="text-3xl">🇯🇵</span>
+                    <div>
+                        <div class="font-bold text-primary">Japanese</div>
+                        <div class="text-xs text-muted">日本語 • Kana & Vocab</div>
+                    </div>
+                </button>
+                <button type="button" class="lang-picker-btn" data-lang-select="korean" onclick="selectLanguage('korean')">
+                    <span class="text-3xl">🇰🇷</span>
+                    <div>
+                        <div class="font-bold text-primary">Korean</div>
+                        <div class="text-xs text-muted">한국어 • Hangul & Words</div>
+                    </div>
+                </button>
+                <button type="button" class="lang-picker-btn" data-lang-select="french" onclick="selectLanguage('french')">
+                    <span class="text-3xl">🇫🇷</span>
+                    <div>
+                        <div class="font-bold text-primary">French</div>
+                        <div class="text-xs text-muted">Français • Vocabulary</div>
+                    </div>
+                </button>
+                <button type="button" class="lang-picker-btn" data-lang-select="spanish" onclick="selectLanguage('spanish')">
+                    <span class="text-3xl">🇪🇸</span>
+                    <div>
+                        <div class="font-bold text-primary">Spanish</div>
+                        <div class="text-xs text-muted">Español • Vocabulary</div>
+                    </div>
+                </button>
+                <button type="button" class="lang-picker-btn" data-lang-select="german" onclick="selectLanguage('german')">
+                    <span class="text-3xl">🇩🇪</span>
+                    <div>
+                        <div class="font-bold text-primary">German</div>
+                        <div class="text-xs text-muted">Deutsch • Vocabulary</div>
+                    </div>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="app-container">
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo-container flex items-center gap-4">
-                <img src="assets/logo.png" alt="Logo" style="height: 48px; width: auto;">
-                <h1 class="logo-text">Lingalo</h1>
+    <!-- ========================================== -->
+    <!-- ADD WORDS / IMPORTER MODAL                 -->
+    <!-- ========================================== -->
+    <div id="modal-add-word" class="modal-overlay hidden" onclick="toggleAddWordModal(false)">
+        <div class="modal-dialog" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-primary">Add Custom Words</h3>
+                <button type="button" class="header-action-icon-btn" onclick="toggleAddWordModal(false)">✕</button>
             </div>
+            <p class="text-xs text-secondary mb-3">
+                Enter English words separated by commas or new lines. They will be translated and saved to your Word Bank.
+            </p>
 
-            <!-- XP / LEVEL CARD -->
-            <div class="xp-container">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="xp-text">Level <span id="user-level">1</span></span>
-                    <span class="xp-text" style="opacity: 0.6;"><span id="user-xp">0</span> / <span id="xp-next">100</span> XP</span>
-                </div>
-                <div class="xp-bar-bg">
-                    <div id="xp-bar-fill" class="xp-bar-fill"></div>
-                </div>
-            </div>
-
-            <nav class="nav-links">
-                <div class="nav-item active" data-lang="japanese" onclick="selectLanguage('japanese')">
-                    <span>🇯🇵</span>
-                    Japanese
-                </div>
-                <div class="nav-item" data-lang="korean" onclick="selectLanguage('korean')">
-                    <span>🇰🇷</span>
-                    Korean
-                </div>
-                <div class="nav-item" data-lang="french" onclick="selectLanguage('french')">
-                    <span>🇫🇷</span>
-                    French
-                </div>
-                <div class="nav-item" data-lang="spanish" onclick="selectLanguage('spanish')">
-                    <span>🇪🇸</span>
-                    Spanish
-                </div>
-                <div class="nav-item" data-lang="german" onclick="selectLanguage('german')">
-                    <span>🇩🇪</span>
-                    German
-                </div>
-                <div class="nav-item" id="nav-settings" onclick="showSettings()">
-                    <span>⚙️</span>
-                    Settings
-                </div>
-            </nav>
+            <textarea id="custom-word-input" rows="4" placeholder="apple, water, house, friend, thank you..." class="w-full bg-surface-elevated border border-slate-200 rounded-xl p-3.5 text-primary text-sm outline-none focus:border-rose-500 mb-3"></textarea>
             
-            <div style="margin-top: 2rem;">
-                <p class="stat-label" style="font-size: 9px; margin-bottom: 0.5rem;">Global Stats</p>
-                <div class="flex flex-col gap-2">
-                    <div class="pill-stat" style="background: transparent; padding: 0;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-                        <span id="global-streak" style="font-size: 11px;">0 Day Streak</span>
-                    </div>
-                </div>
+            <div id="custom-import-status" class="text-xs text-amber-600 font-bold mb-3 min-h-[16px]"></div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" class="btn-outline text-xs py-2 px-4" onclick="toggleAddWordModal(false)">Cancel</button>
+                <button type="button" id="custom-import-btn" class="btn-primary text-xs py-2 px-5">Translate & Import</button>
             </div>
-
-            <div style="margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border);">
-                <button onclick="showAbout()" class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40 hover:opacity-100 transition-opacity">About & Legal</button>
-                <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold opacity-40 mt-2">© <span id="year"></span> Lingalo</p>
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
-            <div id="progress-container" class="hidden progress-container">
-                <div id="progress-bar" class="progress-bar"></div>
-            </div>
-
-            <!-- SETTINGS VIEW -->
-            <section id="settings-screen" class="hidden content-body fade-in">
-                <div class="max-w-2xl w-full glass-panel space-y-12">
-                    <h2 class="text-5xl font-bold serif-font italic text-center">Settings</h2>
-                    
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl border border-white/5">
-                            <div>
-                                <h4 class="font-bold">Sound Effects</h4>
-                                <p class="text-sm text-muted">Audio feedback for answers</p>
-                            </div>
-                            <button id="toggle-sfx" class="btn-primary" style="padding: 0.5rem 1.5rem;">ON</button>
-                        </div>
-                        <div class="flex justify-between items-center p-6 bg-white/5 rounded-2xl border border-white/5">
-                            <div>
-                                <h4 class="font-bold">Reset Progress</h4>
-                                <p class="text-sm text-muted">Clear all XP, Levels, and Mastery</p>
-                            </div>
-                            <button onclick="resetAllProgress()" class="btn-outline !text-red-500 !border-red-500/20">RESET</button>
-                        </div>
-                    </div>
-                    <button type="button" onclick="showScreen('language')" class="btn-primary w-full">Save & Close</button>
-                </div>
-            </section>
-
-            <!-- ABOUT VIEW -->
-            <section id="about-screen" class="hidden content-body fade-in">
-                <div class="max-w-2xl w-full glass-panel space-y-8 text-left">
-                    <h2 class="text-5xl font-bold serif-font italic text-center mb-12">About Lingalo</h2>
-                    <p class="text-lg">Lingalo is a professional-grade language learning tool designed for rapid mastery of Japanese and Korean script, as well as core vocabulary in French and Spanish.</p>
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-xl">The Branding</h4>
-                        <p class="text-muted">Our logo is an elephant because an elephant never forgets. This represents our commitment to helping you build long-term memory through scientifically-backed learning methods.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-xl">The Methodology</h4>
-                        <p class="text-muted">We combine Spaced Repetition (SRS) principles with immediate feedback and gamified XP progression. Whether you're learning Hiragana, Hangul, or European vocabulary, our system adapts to your personal performance to keep you in the "Goldilocks zone" of learning.</p>
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-xl">Privacy & Data</h4>
-                        <p class="text-muted">Your data belongs to you. Lingalo operates entirely in your browser; we do not use trackers, and we never store your progress on a server. Everything—your XP, levels, and custom vocabulary—is saved locally on your device via secure browser storage.</p>
-                    </div>
-                    <div class="pt-8 border-t border-white/5">
-                        <p class="text-[10px] uppercase tracking-[0.2em] font-bold opacity-30">Legal & Compliance</p>
-                        <p class="text-xs text-muted mt-2">Lingalo is provided "as is" without warranty of any kind. All language data is curated for educational purposes. By using this site, you agree to local storage of your progress data.</p>
-                    </div>
-                    <button type="button" onclick="showScreen('language')" class="btn-primary w-full mt-12">Back to Dashboard</button>
-                </div>
-            </section>
-
-            <!-- LANGUAGE SCREEN -->
-            <section id="language-screen" class="content-body fade-in">
-                <div class="text-center space-y-8 max-w-4xl">
-                    <div class="space-y-4 mb-12">
-                        <h2 class="text-6xl font-bold serif-font italic">Select Your Journey</h2>
-                        <p class="text-base tracking-widest text-blue-500 font-bold opacity-80 uppercase">Empower your mind through language</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="hero-card" onclick="selectLanguage('japanese')">
-                            <div class="text-6xl mb-6">🇯🇵</div>
-                            <h3 class="text-2xl font-bold mb-2">Japanese</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Hiragana, Katakana & More</p>
-                        </div>
-                        <div class="hero-card" onclick="selectLanguage('korean')">
-                            <div class="text-6xl mb-6">🇰🇷</div>
-                            <h3 class="text-2xl font-bold mb-2">Korean</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Hangul & Vocabulary</p>
-                        </div>
-                        <div class="hero-card" onclick="selectLanguage('french')">
-                            <div class="text-6xl mb-6">🇫🇷</div>
-                            <h3 class="text-2xl font-bold mb-2">French</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
-                        </div>
-                        <div class="hero-card" onclick="selectLanguage('spanish')">
-                            <div class="text-6xl mb-6">🇪🇸</div>
-                            <h3 class="text-2xl font-bold mb-2">Spanish</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
-                        </div>
-                        <div class="hero-card" onclick="selectLanguage('german')">
-                            <div class="text-6xl mb-6">🇩🇪</div>
-                            <h3 class="text-2xl font-bold mb-2">German</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Vocabulary & Phrases</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- APP SCREEN (Flow Steps) -->
-            <section id="app-screen" class="hidden content-body">
-                <!-- STEP 0: INTRO -->
-                <div id="flow-step-0" class="step-container text-center space-y-12">
-                    <div class="space-y-6">
-                        <div class="text-8xl mb-4" id="intro-emoji">🇯🇵</div>
-                        <h1 class="text-8xl font-bold serif-font italic" id="intro-title">QuickKana</h1>
-                        <p class="text-lg tracking-widest text-blue-500 uppercase font-bold opacity-80" id="intro-subtitle">Master the Art of Japanese</p>
-                    </div>
-                    <button type="button" onclick="nextStep(1)" class="btn-primary">GET STARTED →</button>
-                    <div class="pt-8 opacity-30 text-sm uppercase tracking-widest font-bold" id="intro-tags">
-                        Hiragana • Katakana • Vocabulary
-                    </div>
-                </div>
-
-                <!-- STEP 1: PATH SELECTOR -->
-                <div id="flow-step-1" class="hidden step-container space-y-10">
-                    <div class="text-center space-y-2">
-                        <p class="text-sm tracking-widest text-blue-500 uppercase font-bold">Step 1: Choose Path</p>
-                        <h2 class="text-6xl font-bold serif-font italic">What are we learning today?</h2>
-                    </div>
-                    <div class="mode-cards-container">
-                        <div class="hero-card" onclick="selectFlow('chars', event)">
-                            <div class="flex items-center justify-center h-32 mb-4">
-                                <div class="text-7xl opacity-40 lang-font" id="path-chars-icon">あア</div>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Characters</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">The Fundamentals</p>
-                        </div>
-                        <div class="hero-card" onclick="selectFlow('vocab', event)">
-                            <div class="flex items-center justify-center h-32 mb-4">
-                                <div class="text-7xl opacity-40 lang-font" id="path-vocab-icon">りんご</div>
-                            </div>
-                            <h3 class="text-2xl font-bold mb-2">Vocabulary</h3>
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-medium">Applied Language</p>
-                        </div>
-                    </div>
-                    <div class="text-center pt-8">
-                        <button type="button" onclick="prevStep(0)" class="btn-outline">← Back to Intro</button>
-                    </div>
-                </div>
-
-                <!-- STEP 2: CATEGORY SELECTOR -->
-                <div id="flow-step-2" class="hidden step-container space-y-12">
-                    <div class="text-center space-y-4">
-                        <p id="step-2-label" class="text-sm tracking-widest text-blue-500 uppercase font-bold">Step 2</p>
-                        <h2 class="text-5xl font-bold serif-font italic">Refine your focus</h2>
-                    </div>
-
-                    <div id="filter-chars" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full px-4"></div>
-
-                    <div id="filter-vocab" class="hidden space-y-12 text-center w-full">
-                        <div class="flex flex-wrap justify-center gap-4 mb-8 px-4">
-                            <button type="button" class="btn-outline segment-btn active flex-1 min-w-[140px]" onclick="switchVocabTab('curated', event)">Curated</button>
-                            <button type="button" class="btn-outline segment-btn flex-1 min-w-[140px]" onclick="switchVocabTab('library', event)">My Library</button>
-                        </div>
-                        <div id="vocab-curated" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4"></div>
-                        <div id="vocab-library" class="hidden space-y-8">
-                            <div id="custom-word-bank" class="max-h-80 overflow-y-auto space-y-4 custom-scrollbar glass-panel text-left"></div>
-                            <div class="flex gap-4">
-                                <button type="button" class="btn-outline flex-grow" id="custom-cat-btn">+ Add More Words</button>
-                                <button type="button" class="btn-outline !text-red-500 !border-red-500/20 hover:!bg-red-500/10" onclick="if(confirm('Clear all words in this library?')) clearLibrary()">🗑️ Clear</button>
-                            </div>
-                            <div id="custom-importer" class="hidden glass-panel text-left fade-in">
-                                <div id="importer-input-step" class="space-y-4">
-                                    <textarea id="custom-input" placeholder="apple, water, cat..." class="w-full h-40 bg-black/60 border border-white/10 rounded-2xl p-6 text-white outline-none focus:border-blue-500 transition-all text-lg"></textarea>
-                                    <button type="button" id="translate-btn" class="btn-primary w-full">Translate Words</button>
-                                </div>
-                                <div id="importer-preview-step" class="hidden space-y-6">
-                                    <div id="preview-list" class="max-h-80 overflow-y-auto space-y-3 custom-scrollbar"></div>
-                                    <button type="button" id="add-to-list-btn" class="btn-primary w-full">Add All to Library</button>
-                                </div>
-                                <div id="import-status" class="mt-4 text-sm uppercase opacity-50 font-bold text-center"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center gap-6 pt-12">
-                        <button type="button" onclick="prevStep(1)" class="btn-outline">← Back</button>
-                        <button type="button" onclick="nextStep(3)" class="btn-primary px-12">Continue →</button>
-                    </div>
-                </div>
-
-                <!-- STEP 3: MODE SELECTOR -->
-                <div id="flow-step-3" class="hidden step-container space-y-12">
-                    <div class="text-center space-y-4">
-                        <p class="text-sm tracking-widest text-blue-500 uppercase font-bold">Final Step</p>
-                        <h2 class="text-5xl font-bold serif-font italic">Select training mode</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 md\:grid-cols-2 gap-12">
-                        <div class="space-y-8">
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60 text-left">1. Choose Activity</p>
-                            <div class="grid gap-4">
-                                <div class="mode-card" data-mode="quiz">
-                                    <div class="mode-card-icon">🎯</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">QUIZ</span>
-                                        <span class="mode-card-desc">Multiple choice practice</span>
-                                    </div>
-                                </div>
-                                <div class="mode-card" data-mode="flashcards">
-                                    <div class="mode-card-icon">🃏</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">CARDS</span>
-                                        <span class="mode-card-desc">Spaced repetition deck</span>
-                                    </div>
-                                </div>
-                                <div class="mode-card" data-mode="typing">
-                                    <div class="mode-card-icon">⌨️</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">TYPE</span>
-                                        <span class="mode-card-desc">Keyboard input training</span>
-                                    </div>
-                                </div>
-                                <div class="mode-card" data-mode="speedMatch">
-                                    <div class="mode-card-icon">⚡</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">SPEED</span>
-                                        <span class="mode-card-desc">Timed rapid-fire challenge</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="space-y-8">
-                            <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60 text-left">2. Customize Session</p>
-                            <div class="grid gap-4">
-                                <div class="mode-card" id="opt-reverse">
-                                    <div class="mode-card-icon">🔄</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">REVERSE MODE</span>
-                                        <p id="reverse-desc" class="mode-card-desc"></p>
-                                    </div>
-                                    <div class="status-dot"></div>
-                                </div>
-                                <div class="mode-card" id="opt-kana-only">
-                                    <div class="mode-card-icon">🇯🇵</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">KANA ONLY</span>
-                                        <span class="mode-card-desc">Hide all romaji help</span>
-                                    </div>
-                                    <div class="status-dot"></div>
-                                </div>
-                                <div class="mode-card" id="opt-test-all">
-                                    <div class="mode-card-icon">♾️</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">TEST ALL</span>
-                                        <span class="mode-card-desc">Practice every single item</span>
-                                    </div>
-                                    <div class="status-dot"></div>
-                                </div>
-                                <div class="mode-card" id="opt-teach">
-                                    <div class="mode-card-icon">👨‍🏫</div>
-                                    <div class="mode-card-content">
-                                        <span class="mode-card-title">TEACH MODE</span>
-                                        <span class="mode-card-desc">Repeat missed questions</span>
-                                    </div>
-                                    <div class="status-dot"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center gap-6 pt-12">
-                        <button type="button" onclick="prevStep(2)" class="btn-outline">← Back</button>
-                        <button type="button" id="start-button" class="btn-primary px-12">Start Session</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- STUDY SCREEN -->
-            <section id="study-screen" class="hidden w-full flex-grow flex flex-col">
-                <header class="screen-header">
-                    <button type="button" id="quit-button" class="btn-outline !text-red-500 !border-red-500/20 hover:!bg-red-500/10">🚪 Quit</button>
-                    <div class="flex gap-4">
-                        <div id="timer-display" class="hidden pill-stat !text-yellow-500 border-yellow-500/20">⚡ <span id="timer-val">60s</span></div>
-                        <button type="button" id="audio-button" class="pill-stat">🔊 REPLAY</button>
-                        <div class="pill-stat">SCORE: <span id="score-counter">0</span></div>
-                        <div class="pill-stat">STREAK: <span id="streak-counter" class="text-[var(--accent)]">0</span></div>
-                    </div>
-                </header>
-                <div class="content-body">
-                    <div class="quiz-container">
-                        <div id="question-display" class="question-display"></div>
-                        <div id="options-grid" class="options-grid"></div>
-                        <div id="typing-controls" class="hidden space-y-8">
-                            <div id="typing-display" class="text-4xl font-bold tracking-widest bg-white/5 p-8 rounded-2xl border border-white/10 min-w-[300px]"></div>
-                            <div id="virtual-keyboard" class="virtual-keyboard"></div>
-                        </div>
-                        <div id="fc-controls" class="hidden flex justify-center gap-8">
-                            <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" id="prev-fc">←</button>
-                            <button type="button" class="btn-primary !rounded-full w-24 h-24 text-4xl" id="flip-fc">↻</button>
-                            <button type="button" class="btn-outline !rounded-full w-20 h-20 text-2xl" id="next-fc">→</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- RESULTS SCREEN -->
-            <section id="results-screen" class="hidden content-body fade-in">
-                <div class="text-center space-y-12 w-full max-w-4xl">
-                    <div class="space-y-4">
-                        <div class="text-8xl mb-4">🏆</div>
-                        <h2 class="text-5xl font-bold serif-font italic">Session Complete</h2>
-                        <p class="text-base tracking-widest text-blue-500 uppercase font-bold">Outstanding Performance!</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                        <div class="glass-panel text-center p-6 md:p-8">
-                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Final Score</p>
-                            <p id="final-score" class="text-4xl md:text-5xl font-bold">0</p>
-                        </div>
-                        <div class="glass-panel text-center p-6 md:p-8">
-                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Accuracy</p>
-                            <p id="final-acc" class="text-4xl md:text-5xl font-bold">0%</p>
-                        </div>
-                        <div class="glass-panel text-center p-6 md:p-8">
-                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-2">Best Streak</p>
-                            <p id="final-streak" class="text-4xl md:text-5xl font-bold text-[var(--accent)]">0</p>
-                        </div>
-                    </div>
-                    <div id="struggled-section" class="hidden space-y-4 pt-12">
-                        <p class="text-sm text-gray-500 uppercase tracking-widest font-bold opacity-60">Review Struggled Words</p>
-                        <div id="struggled-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 pt-8">
-                        <button type="button" id="home-btn" class="btn-outline px-10">Main Menu</button>
-                        <button type="button" id="retry-btn" class="btn-primary px-10">Retry Session</button>
-                    </div>
-                </div>
-            </section>
-        </main>
+        </div>
     </div>
 
+    <!-- Application Script -->
     <script src="js/app.js"></script>
+    <script>
+        // Inline UI Helper Functions
+        function toggleSound() {
+            State.persistence.sfxEnabled = State.persistence.sfxEnabled === false;
+            saveStats();
+            renderSettings();
+        }
+
+        function updateSpeechRate(val) {
+            State.persistence.speechRate = parseFloat(val);
+            document.getElementById('setting-speech-val').textContent = `${val}x`;
+            saveStats();
+        }
+
+        function setPracticeMode(mode) {
+            State.mode = mode;
+            document.querySelectorAll('[data-practice-mode]').forEach(c => {
+                c.classList.toggle('selected', c.dataset.practiceMode === mode);
+            });
+        }
+
+        function toggleSessionOpt(prop, elId) {
+            State[prop] = !State[prop];
+            const el = document.getElementById(elId);
+            if (el) el.classList.toggle('active', State[prop]);
+        }
+
+        function handleMasterySearch(val) {
+            currentMasterySearch = val;
+            renderMasteryMatrix();
+        }
+    </script>
 </body>
 </html>

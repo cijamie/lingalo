@@ -1,6 +1,6 @@
-const CACHE_NAME = 'lingalo-v3';
+const CACHE_NAME = 'lingalo-v4';
 const ASSETS = [
-  '/',
+  './',
   'index.html',
   'css/styles.css',
   'js/app.js',
@@ -13,12 +13,7 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
-});
-
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
@@ -28,5 +23,12 @@ self.addEventListener('activate', (e) => {
         keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
       );
     })
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    caches.match(e.request).then((res) => res || fetch(e.request).catch(() => caches.match('index.html')))
   );
 });
