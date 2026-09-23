@@ -1865,3 +1865,297 @@ button, input, textarea, select {
         font-size: 1rem;
     }
 }
+
+/* ==========================================================================
+   KOREAN CLASS WORD LIST STYLES
+   ========================================================================== */
+.korean-class-hero-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+}
+
+.korean-class-hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d97706, #f59e0b, #e11d48);
+}
+
+.korean-class-hero-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(217, 119, 6, 0.45);
+}
+
+.korean-class-hero-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.korean-class-hero-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .korean-class-hero-body {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.korean-class-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.korean-class-progress-strip {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* Lesson Selector Tabs */
+.class-lesson-selector-wrap {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.class-lesson-tabs {
+    display: flex;
+    gap: 0.5rem;
+    min-width: max-content;
+}
+
+.class-lesson-tab {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-full);
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.class-lesson-tab:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--bg-card-hover);
+}
+
+.class-lesson-tab.active {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+    box-shadow: 0 3px 10px var(--accent-glow);
+}
+
+.class-lesson-tab-count {
+    font-size: 0.7rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.06);
+    color: inherit;
+    font-weight: 700;
+}
+
+.class-lesson-tab.active .class-lesson-tab-count {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .class-lesson-tab-count {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Lesson Summary Info Bar */
+.class-lesson-info-bar {
+    background: var(--bg-card-elevated);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .class-lesson-info-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.class-lesson-info-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.class-lesson-title-badge {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+}
+
+.class-lesson-theme-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.class-lesson-meta-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Class Words Grid */
+.class-words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .class-words-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.class-word-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    position: relative;
+}
+
+.class-word-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.class-word-card.pulse-light {
+    animation: pulseBorder 0.35s ease;
+}
+
+@keyframes pulseBorder {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); border-color: var(--accent); }
+    100% { transform: scale(1); }
+}
+
+.class-word-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.class-word-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-ui);
+}
+
+.class-word-note-chip {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .class-word-note-chip {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.class-word-speaker-btn {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    padding: 0.2rem;
+    border-radius: var(--radius-sm);
+}
+
+.class-word-card:hover .class-word-speaker-btn {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+.class-word-hangul {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-family: var(--font-lang);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+}
+
+.class-word-rom {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: var(--font-ui);
+}
+
+.class-word-def {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.35;
+}
+
+.class-word-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-subtle);
+}
+

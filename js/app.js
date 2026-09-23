@@ -436,6 +436,29 @@ Object.keys(LANGUAGES).forEach(lang => {
     }
 });
 
+// Initialize Korean Class Word List Curriculum Data
+function initKoreanClassData() {
+    if (typeof KOREAN_CLASS_LESSONS === 'undefined' || typeof KOREAN_CLASS_WORDS === 'undefined') return;
+    LANGUAGES.korean.classLessons = KOREAN_CLASS_LESSONS;
+    LANGUAGES.korean.classWords = KOREAN_CLASS_WORDS;
+    LANGUAGES.korean.classDict = (typeof KOREAN_CLASS_DICT !== 'undefined') ? KOREAN_CLASS_DICT : {};
+
+    KOREAN_CLASS_LESSONS.forEach(l => {
+        const catKey = `class_${l.id}`;
+        LANGUAGES.korean.data[catKey] = {};
+        l.words.forEach(w => {
+            LANGUAGES.korean.data[catKey][w.word] = {
+                rom: w.rom,
+                def: w.def,
+                lesson: w.lesson,
+                num: w.num,
+                note: w.note
+            };
+        });
+    });
+}
+initKoreanClassData();
+
 // Global Application State
 const State = {
     lang: null,
@@ -673,19 +696,22 @@ function saveLastLanguage(langId) {
 }
 
 function getLastLanguage() {
-    const fromCookie = getCookie('lingalo_last_lang');
-    if (fromCookie && LANGUAGES[fromCookie]) return fromCookie;
+    const userSelected = localStorage.getItem('lingalo_user_has_selected_lang');
+    if (userSelected) {
+        const fromCookie = getCookie('lingalo_last_lang');
+        if (fromCookie && LANGUAGES[fromCookie]) return fromCookie;
 
-    try {
-        const fromLocal = localStorage.getItem('lingalo_last_lang');
-        if (fromLocal && LANGUAGES[fromLocal]) return fromLocal;
-    } catch(e) {}
+        try {
+            const fromLocal = localStorage.getItem('lingalo_last_lang');
+            if (fromLocal && LANGUAGES[fromLocal]) return fromLocal;
+        } catch(e) {}
 
-    if (State.persistence && State.persistence.lastLanguage && LANGUAGES[State.persistence.lastLanguage]) {
-        return State.persistence.lastLanguage;
+        if (State.persistence && State.persistence.lastLanguage && LANGUAGES[State.persistence.lastLanguage]) {
+            return State.persistence.lastLanguage;
+        }
     }
 
-    return 'japanese';
+    return 'korean';
 }
 
 // Storage & Persistence
@@ -801,13 +827,19 @@ function updateHeaderStats() {
 // Navigation View Controller
 function switchTab(tabName) {
     clearInterval(State.timer.interval);
+    
+    // Redirect if trying to view class-words on non-Korean language
+    if (tabName === 'class-words' && (!State.lang || State.lang.id !== 'korean')) {
+        tabName = 'dashboard';
+    }
+
     State.currentTab = tabName;
     
     document.getElementById('screen-study').classList.add('hidden');
     document.getElementById('screen-results').classList.add('hidden');
     document.getElementById('main-views-wrapper').classList.remove('hidden');
 
-    const views = ['dashboard', 'practice', 'mastery', 'library', 'settings'];
+    const views = ['dashboard', 'practice', 'mastery', 'class-words', 'library', 'settings'];
     views.forEach(v => {
         const el = document.getElementById(`view-${v}`);
         if (el) el.classList.toggle('hidden', v !== tabName);
@@ -820,6 +852,7 @@ function switchTab(tabName) {
     if (tabName === 'dashboard') renderDashboard();
     else if (tabName === 'practice') renderPracticeView();
     else if (tabName === 'mastery') renderMasteryMatrix();
+    else if (tabName === 'class-words') renderClassWordListView();
     else if (tabName === 'library') renderWordBank();
     else if (tabName === 'settings') renderSettings();
 
@@ -857,6 +890,22 @@ function selectLanguage(langId, targetTab = null) {
     const activeName = document.getElementById('top-lang-name');
     if (activeName) activeName.textContent = State.lang.name;
 
+    // Toggle Class Words navigation button visibility
+    const classWordsNavBtn = document.getElementById('nav-btn-class-words');
+    const mobileClassWordsBtn = document.getElementById('mobile-nav-btn-class-words');
+    if (classWordsNavBtn) {
+        classWordsNavBtn.classList.toggle('hidden', langId !== 'korean');
+    }
+    if (mobileClassWordsBtn) {
+        mobileClassWordsBtn.classList.toggle('hidden', langId !== 'korean');
+    }
+
+    // Toggle Korean class card on dashboard
+    const dashClassCard = document.getElementById('dash-korean-class-card');
+    if (dashClassCard) {
+        dashClassCard.classList.toggle('hidden', langId !== 'korean');
+    }
+
     if (!State.persistence.customList) State.persistence.customList = {};
     State.lang.data.custom = State.persistence.customList[State.lang.id] || {};
     if (!State.persistence.mastery[State.lang.id]) State.persistence.mastery[State.lang.id] = {};
@@ -872,6 +921,10 @@ function selectLanguage(langId, targetTab = null) {
     }
 
     closeLanguageModal();
+
+    if (State.currentTab === 'class-words' && langId !== 'korean') {
+        targetTab = 'dashboard';
+    }
 
     if (targetTab) {
         switchTab(targetTab);
@@ -904,18 +957,20 @@ function renderDashboard() {
     if (goalBar) goalBar.style.width = `${goalPercent}%`;
 
     const masteryData = State.persistence.mastery[lang.id] || {};
-    let totalItems = 0;
+    const uniqueKeys = new Set();
+    Object.keys(lang.data).forEach(cat => {
+        const dict = lang.data[cat];
+        Object.keys(dict).forEach(k => uniqueKeys.add(k));
+    });
+
+    let totalItems = uniqueKeys.size;
     let masteredCount = 0;
     let weakCount = 0;
 
-    Object.keys(lang.data).forEach(cat => {
-        const dict = lang.data[cat];
-        Object.keys(dict).forEach(k => {
-            totalItems++;
-            const m = masteryData[k] || 0;
-            if (m >= 4) masteredCount++;
-            else if (m > 0 && m < 3) weakCount++;
-        });
+    uniqueKeys.forEach(k => {
+        const m = masteryData[k] || 0;
+        if (m >= 4) masteredCount++;
+        else if (m > 0 && m < 3) weakCount++;
     });
 
     const langMasteryPercent = totalItems > 0 ? Math.round((masteredCount / totalItems) * 100) : 0;
@@ -929,19 +984,37 @@ function renderDashboard() {
     const statWeakCount = document.getElementById('dash-stat-weak');
     if (statWeakCount) statWeakCount.textContent = weakCount;
 
+    // Update Korean Class Word List Card stats if on Korean
+    const dashClassCard = document.getElementById('dash-korean-class-card');
+    if (dashClassCard) {
+        dashClassCard.classList.toggle('hidden', lang.id !== 'korean');
+        if (lang.id === 'korean' && typeof KOREAN_CLASS_WORDS !== 'undefined') {
+            const classMastered = KOREAN_CLASS_WORDS.filter(w => (masteryData[w.word] || 0) >= 4).length;
+            const classTotal = KOREAN_CLASS_WORDS.length;
+            const classPct = classTotal > 0 ? Math.round((classMastered / classTotal) * 100) : 0;
+
+            const txt = document.getElementById('dash-class-mastery-val');
+            if (txt) txt.textContent = `${classMastered} / ${classTotal} words mastered (${classPct}%)`;
+
+            const bar = document.getElementById('dash-class-progress-bar');
+            if (bar) bar.style.width = `${classPct}%`;
+        }
+    }
+
     const hubGrid = document.getElementById('dash-languages-grid');
     if (hubGrid) {
         hubGrid.innerHTML = '';
         Object.values(LANGUAGES).forEach(l => {
             const lMastery = State.persistence.mastery[l.id] || {};
-            let lTotal = 0;
-            let lMastered = 0;
+            const lKeys = new Set();
             Object.keys(l.data).forEach(c => {
                 const dict = l.data[c];
-                Object.keys(dict).forEach(k => {
-                    lTotal++;
-                    if ((lMastery[k] || 0) >= 4) lMastered++;
-                });
+                Object.keys(dict).forEach(k => lKeys.add(k));
+            });
+            let lTotal = lKeys.size;
+            let lMastered = 0;
+            lKeys.forEach(k => {
+                if ((lMastery[k] || 0) >= 4) lMastered++;
             });
             const pct = lTotal > 0 ? Math.round((lMastered / lTotal) * 100) : 0;
             const isCurrent = l.id === lang.id;
@@ -1037,6 +1110,35 @@ function renderPracticeView() {
         `;
         customChip.onclick = () => toggleTopicCategory('custom', customChip);
         topicContainer.appendChild(customChip);
+
+        // Korean Class Word List Topic Group (When Korean is active)
+        if (lang.id === 'korean' && typeof KOREAN_CLASS_LESSONS !== 'undefined' && KOREAN_CLASS_LESSONS.length > 0) {
+            const classHeader = document.createElement('div');
+            classHeader.className = 'w-full flex items-center justify-between mt-6 mb-2';
+            classHeader.innerHTML = `
+                <div class="text-xs font-bold uppercase tracking-wider text-muted">📖 Korean Class Word List (10 Lessons + Reading)</div>
+                <div class="flex gap-2">
+                    <button type="button" class="btn-outline text-[11px] py-1 px-2.5" onclick="selectAllClassLessons(true)">Select All Lessons</button>
+                    <button type="button" class="btn-outline text-[11px] py-1 px-2.5" onclick="selectAllClassLessons(false)">Reset Lessons</button>
+                </div>
+            `;
+            topicContainer.appendChild(classHeader);
+
+            KOREAN_CLASS_LESSONS.forEach(l => {
+                const catKey = `class_${l.id}`;
+                const count = l.words.length;
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.className = `topic-chip ${State.activeCats.includes(catKey) ? 'selected' : ''}`;
+                chip.dataset.cat = catKey;
+                chip.innerHTML = `
+                    <span class="topic-chip-name">${l.id}: ${l.theme}</span>
+                    <span class="topic-chip-count">${count}</span>
+                `;
+                chip.onclick = () => toggleTopicCategory(catKey, chip);
+                topicContainer.appendChild(chip);
+            });
+        }
     }
 
     const kanaOnlyOpt = document.getElementById('opt-kana-only');
@@ -1048,6 +1150,27 @@ function renderPracticeView() {
         card.classList.toggle('selected', card.dataset.practiceMode === State.mode);
     });
 
+    updatePracticeItemEstimates();
+}
+
+function selectAllClassLessons(select = true) {
+    if (!LANGUAGES.korean || !LANGUAGES.korean.classLessons) return;
+    LANGUAGES.korean.classLessons.forEach(l => {
+        const catKey = `class_${l.id}`;
+        if (select) {
+            if (!State.activeCats.includes(catKey)) State.activeCats.push(catKey);
+        } else {
+            State.activeCats = State.activeCats.filter(c => c !== catKey);
+        }
+    });
+    if (State.activeCats.length === 0) {
+        State.activeCats = LANGUAGES.korean.fundamentals && LANGUAGES.korean.fundamentals.length > 0
+            ? [LANGUAGES.korean.fundamentals[0]]
+            : ['vocabulary'];
+    }
+    document.querySelectorAll('.topic-chip').forEach(chip => {
+        chip.classList.toggle('selected', State.activeCats.includes(chip.dataset.cat));
+    });
     updatePracticeItemEstimates();
 }
 
@@ -1072,6 +1195,9 @@ function selectAllTopics(selectAll = true) {
         State.activeCats = [];
         if (lang.fundamentals) State.activeCats.push(...lang.fundamentals);
         State.activeCats.push('vocabulary', 'travel', 'school');
+        if (lang.id === 'korean' && typeof KOREAN_CLASS_LESSONS !== 'undefined') {
+            KOREAN_CLASS_LESSONS.forEach(l => State.activeCats.push(`class_${l.id}`));
+        }
         if (Object.keys(lang.data.custom || {}).length > 0) State.activeCats.push('custom');
     } else {
         State.activeCats = lang.fundamentals && lang.fundamentals.length > 0
@@ -1124,11 +1250,15 @@ function renderMasteryMatrix() {
     const query = (currentMasterySearch || '').toLowerCase().trim();
 
     const items = [];
+    const seenKeys = new Set();
     Object.keys(lang.data).forEach(cat => {
         const isFund = lang.fundamentals && lang.fundamentals.includes(cat);
         const dict = lang.data[cat];
 
         Object.entries(dict).forEach(([key, val]) => {
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
             const def = typeof val === 'object' ? val.def : val;
             const rom = typeof val === 'object' ? val.rom : val;
             const score = langMastery[key] || 0;
@@ -1223,6 +1353,235 @@ function practiceWeakItems() {
 
     State.isTeachMode = true;
     switchTab('practice');
+}
+
+// -------------------------------------------------------------
+// KOREAN CLASS WORD LIST VIEW
+// -------------------------------------------------------------
+let selectedClassLesson = 'all';
+let currentClassFilter = 'all'; // 'all', 'weak', 'mastered'
+let currentClassSearch = '';
+
+function setClassWordFilter(filterType) {
+    currentClassFilter = filterType;
+    document.querySelectorAll('[data-class-filter]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.classFilter === filterType);
+    });
+    renderClassWordListView();
+}
+
+function selectClassLesson(lessonId) {
+    selectedClassLesson = lessonId;
+    renderClassWordListView();
+}
+
+function handleClassWordSearch(query) {
+    currentClassSearch = query;
+    renderClassWordListView();
+}
+
+function renderClassWordListView() {
+    if (!LANGUAGES.korean || !LANGUAGES.korean.classLessons) return;
+
+    const lessons = LANGUAGES.korean.classLessons;
+    const allWords = LANGUAGES.korean.classWords || [];
+    const masteryData = (State.persistence && State.persistence.mastery && State.persistence.mastery.korean) || {};
+
+    // 1. Render Lesson Selector Tabs
+    const tabsContainer = document.getElementById('class-lesson-tabs-container');
+    if (tabsContainer) {
+        tabsContainer.innerHTML = '';
+
+        // "All Lessons" Tab
+        const allTab = document.createElement('button');
+        allTab.type = 'button';
+        allTab.className = `class-lesson-tab ${selectedClassLesson === 'all' ? 'active' : ''}`;
+        allTab.innerHTML = `
+            <span>📚 All Lessons</span>
+            <span class="class-lesson-tab-count">${allWords.length}</span>
+        `;
+        allTab.onclick = () => selectClassLesson('all');
+        tabsContainer.appendChild(allTab);
+
+        // Individual Lesson Tabs
+        lessons.forEach(l => {
+            const tab = document.createElement('button');
+            tab.type = 'button';
+            tab.className = `class-lesson-tab ${selectedClassLesson === l.id ? 'active' : ''}`;
+            tab.innerHTML = `
+                <span>${l.id}</span>
+                <span class="class-lesson-tab-count">${l.words.length}</span>
+            `;
+            tab.onclick = () => selectClassLesson(l.id);
+            tabsContainer.appendChild(tab);
+        });
+    }
+
+    // 2. Filter words by current selected lesson
+    let lessonWords = [];
+    let currentLessonObj = null;
+    if (selectedClassLesson === 'all') {
+        lessonWords = allWords;
+    } else {
+        currentLessonObj = lessons.find(l => l.id === selectedClassLesson);
+        lessonWords = currentLessonObj ? currentLessonObj.words : allWords;
+    }
+
+    // Compute status counts for the current lesson pool
+    let cntAll = lessonWords.length;
+    let cntWeak = 0;
+    let cntMastered = 0;
+    lessonWords.forEach(w => {
+        const score = masteryData[w.word] || 0;
+        if (score >= 4) cntMastered++;
+        else if (score > 0 && score < 3) cntWeak++;
+    });
+
+    const cntAllEl = document.getElementById('class-cnt-all');
+    if (cntAllEl) cntAllEl.textContent = cntAll;
+    const cntWeakEl = document.getElementById('class-cnt-weak');
+    if (cntWeakEl) cntWeakEl.textContent = cntWeak;
+    const cntMasteredEl = document.getElementById('class-cnt-mastered');
+    if (cntMasteredEl) cntMasteredEl.textContent = cntMastered;
+
+    // 3. Render Lesson Summary Banner
+    const infoBar = document.getElementById('class-lesson-info-bar');
+    if (infoBar) {
+        const titleText = currentLessonObj ? `${currentLessonObj.id}: ${currentLessonObj.theme}` : 'All 10 Lessons & Reading Units';
+        const masteryPct = cntAll > 0 ? Math.round((cntMastered / cntAll) * 100) : 0;
+        
+        infoBar.innerHTML = `
+            <div class="class-lesson-info-left">
+                <span class="class-lesson-title-badge">${selectedClassLesson === 'all' ? 'All Curricula' : currentLessonObj.id}</span>
+                <div>
+                    <div class="class-lesson-theme-text">${titleText}</div>
+                    <div class="class-lesson-meta-text">${cntAll} words • ${cntMastered} mastered (${masteryPct}%)</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" class="btn-primary text-xs py-1.5 px-3" onclick="practiceSelectedClassLesson('flashcards', '${selectedClassLesson}')">
+                    🃏 Study Flashcards
+                </button>
+                <button type="button" class="btn-outline text-xs py-1.5 px-3" onclick="practiceSelectedClassLesson('quiz', '${selectedClassLesson}')">
+                    🎯 Quiz
+                </button>
+            </div>
+        `;
+    }
+
+    // 4. Apply status filter and search query
+    const q = (currentClassSearch || '').toLowerCase().trim();
+    const displayWords = lessonWords.filter(w => {
+        const score = masteryData[w.word] || 0;
+        if (currentClassFilter === 'weak' && (score === 0 || score >= 3)) return false;
+        if (currentClassFilter === 'mastered' && score < 4) return false;
+
+        if (q) {
+            const matchWord = w.word.toLowerCase().includes(q);
+            const matchDef = w.def.toLowerCase().includes(q);
+            const matchRom = (w.rom || '').toLowerCase().includes(q);
+            const matchNote = (w.note || '').toLowerCase().includes(q);
+            if (!matchWord && !matchDef && !matchRom && !matchNote) return false;
+        }
+        return true;
+    });
+
+    const indicator = document.getElementById('class-count-indicator');
+    if (indicator) indicator.textContent = `Showing ${displayWords.length} of ${cntAll} words`;
+
+    // 5. Render Word Cards Grid
+    const grid = document.getElementById('class-words-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    if (displayWords.length === 0) {
+        grid.innerHTML = `
+            <div class="col-span-full py-16 text-center text-muted">
+                <div class="text-4xl mb-3">🔍</div>
+                <p class="font-medium">No class vocabulary items match your search or filter.</p>
+                <p class="text-xs opacity-60 mt-1">Try resetting the filter or typing a different keyword.</p>
+            </div>
+        `;
+        return;
+    }
+
+    displayWords.forEach(w => {
+        const card = document.createElement('div');
+        card.className = 'class-word-card';
+        card.onclick = () => {
+            speak(w.word);
+            card.classList.add('pulse-light');
+            setTimeout(() => card.classList.remove('pulse-light'), 350);
+        };
+
+        const score = masteryData[w.word] || 0;
+        let starsHTML = '<div class="mastery-stars">';
+        for (let i = 0; i < 5; i++) {
+            starsHTML += `<span class="mastery-star ${i < score ? 'filled' : ''}">★</span>`;
+        }
+        starsHTML += '</div>';
+
+        card.innerHTML = `
+            <div class="class-word-card-top">
+                <span class="class-word-tag">${w.lesson} #${w.num}</span>
+                ${w.note ? `<span class="class-word-note-chip" title="Note: ${w.note}">${w.note}</span>` : ''}
+                <span class="class-word-speaker-btn" title="Hear pronunciation">🔊</span>
+            </div>
+            <div class="class-word-hangul font-lang">${w.word}</div>
+            <div class="class-word-rom">${w.rom}</div>
+            <div class="class-word-def">${w.def}</div>
+            <div class="class-word-footer">
+                ${starsHTML}
+                <button type="button" class="btn-outline text-[11px] py-1 px-2.5" onclick="event.stopPropagation(); practiceSingleWord('${w.word}')">
+                    ⚡ Drill
+                </button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function practiceSelectedClassLesson(mode = 'flashcards', lessonId = null) {
+    const targetLesson = (lessonId && lessonId !== 'null' && lessonId !== 'undefined') ? lessonId : selectedClassLesson;
+    if (!State.lang || State.lang.id !== 'korean') {
+        selectLanguage('korean');
+    }
+    State.mode = mode;
+
+    if (targetLesson === 'all') {
+        State.activeCats = LANGUAGES.korean.classLessons.map(l => `class_${l.id}`);
+    } else {
+        State.activeCats = [`class_${targetLesson}`];
+    }
+
+    startSession();
+}
+
+function practiceSingleWord(word) {
+    if (!State.lang || State.lang.id !== 'korean') {
+        selectLanguage('korean');
+    }
+    const dict = (typeof KOREAN_CLASS_DICT !== 'undefined') ? KOREAN_CLASS_DICT : {};
+    const itemData = dict[word] || (State.lang.data.vocabulary && State.lang.data.vocabulary[word]);
+    if (!itemData) return;
+
+    State.currentDict = { [word]: itemData };
+    State.currentKeys = [word];
+    State.testPool = [word];
+    State.maxQ = 1;
+    State.qCount = 0;
+    State.score = 0;
+    State.streak = 0;
+    State.wrongQueue = [];
+    State.struggledWords.clear();
+    State.mode = 'flashcards';
+    State.flashcards = { pool: [word], index: 0 };
+
+    document.getElementById('main-views-wrapper').classList.add('hidden');
+    document.getElementById('screen-results').classList.add('hidden');
+    document.getElementById('screen-study').classList.remove('hidden');
+    setupStudyModeLayout();
+    nextQuestion();
 }
 
 // -------------------------------------------------------------
@@ -2013,6 +2372,7 @@ function initApp() {
         });
     }
 
+    initKoreanClassData();
     initTheme();
     loadStats();
 
